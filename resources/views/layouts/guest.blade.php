@@ -18,7 +18,10 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/" wire:navigate>
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                   {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" />--}}
+                   <h1 class="text-2xl md:text-3xl font-bold text-blue-600 tracking-tight">
+                    {{ config('app.name', 'Laravel') }}
+                    </h1>
                 </a>
             </div>
 
@@ -26,5 +29,14 @@
                 {{ $slot }}
             </div>
         </div>
+        <!-- Version information -->
+        <div class="mt-auto py-6 text-center">
+            <p class="text-xs text-gray-500 tracking-wide">
+                {{ config('app.name') }} &copy; {{ date('Y') }}
+                <span class="mx-2">|</span>
+                v{{ config('app.version', '1.0.0') }}
+            </p>
+        </div>
     </body>
 </html>
+
