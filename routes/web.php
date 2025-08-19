@@ -23,7 +23,7 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-// Accessed by authenticated users
+// Protected Routes: Accessed by authenticated users
 Route::group(
     [
         'middleware' => ['auth', 'verified'],
