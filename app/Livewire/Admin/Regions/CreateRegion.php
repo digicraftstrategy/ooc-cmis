@@ -39,9 +39,9 @@ class CreateRegion extends Component
             'code' => $this->code,
         ]);
 
-        $this->closeModal();
         $this->dispatch('refreshRegions');
         session()->flash('message', 'Region created successfully.');
+        $this->closeModal();
     }
 
     public function render()

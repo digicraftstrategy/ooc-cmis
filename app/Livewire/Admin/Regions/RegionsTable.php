@@ -16,6 +16,7 @@ class RegionsTable extends Component
     public $perPage = 10;
     public $showDeleteModal = false;
     public $regionIdBeingDeleted;
+    public $regions; // Holds full regions list
 
     protected $listeners = [
         'openCreateModal',
@@ -24,6 +25,11 @@ class RegionsTable extends Component
         'closeModal',
         'refreshRegions' => '$refresh'
     ];
+
+    public function mount()
+    {
+        $this->regions = Region::orderBy('name')->get();
+    }
 
     public function sortBy($field)
     {
@@ -74,19 +80,22 @@ class RegionsTable extends Component
         $region = Region::findOrFail($this->regionIdBeingDeleted);
         $region->delete();
 
+        // Refresh regions list
+        $this->regions = Region::orderBy('name')->get();
+
         session()->flash('message', 'Region deleted successfully.');
         $this->closeModal();
     }
 
     public function render()
     {
-        $regions = Region::where('name', 'like', '%' . $this->search . '%')
+        $paginatedRegions = Region::where('name', 'like', '%' . $this->search . '%')
             ->orWhere('code', 'like', '%' . $this->search . '%')
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
         return view('livewire.admin.regions.regions-table', [
-            'regions' => $regions,
+            'paginatedRegions' => $paginatedRegions,
         ]);
     }
 }
