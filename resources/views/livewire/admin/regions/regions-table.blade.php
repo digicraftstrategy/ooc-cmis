@@ -33,7 +33,7 @@
 
     <!-- Flash Messages -->
     @if (session()->has('message'))
-        <div class="p-4 mb-2 bg-green-50 border-l-4 border-green-500"
+        <div class="p-4 mb-2 bg-green-50 border-l-8 border-green-500"
             x-data="{ show: true, timeLeft: 5 }"
             x-init="
                 setTimeout(() => { show = false }, 5000);
@@ -46,14 +46,15 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
                     <svg class="h-5 w-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd" d="M10 极速赛车开奖直播官网
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                     </svg>
                     <p class="text-sm font-medium text-green-800">{{ session('message') }}</p>
                 </div>
-                <button 
+                <button
                 @click="show = false"
                 type="button" class="text-green-500 hover:text-green-700 focus:outline-none">
-                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="h-5 w-5" fill="current极速赛车开奖直播官网
                         <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </button>
@@ -85,7 +86,8 @@
                 <tr>
                     <th scope="col"
                         class="px-6 py-6 text-xs font-medium tracking-wider text-left text-blue-700 uppercase cursor-pointer">
-                        #</th>
+                        #
+                    </th>
                     <th scope="col"
                         class="px-6 py-6 text-xs font-medium tracking-wider text-left text-blue-700 uppercase cursor-pointer"
                         wire:click="sortBy('name')">
@@ -96,7 +98,7 @@
                     </th>
                     <th scope="col"
                         class="px-6 py-6 text-xs font-medium tracking-wider text-left text-blue-700 uppercase cursor-pointer"
-                        wire:click="sortBy('code')">
+                        wire:click极速赛车开奖直播官网
                         Code
                         @if ($sortField === 'code')
                             <span>{!! $sortDirection === 'asc' ? '&uarr;' : '&darr;' !!}</span>
@@ -112,7 +114,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @forelse ($regions as $region)
+                @forelse ($paginatedRegions as $region)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
@@ -140,13 +142,13 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
                                 </x-blue-button-sm>
-                                
+
                                 <x-blue-button-sm wire:click="openEditModal({{ $region->id }})">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
                                 </x-blue-button-sm>
-                                
+
                                 <x-blue-button-sm wire:click="openDeleteModal({{ $region->id }})">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -165,10 +167,10 @@
             </tbody>
         </table>
     </div>
-    
+
     <!-- Pagination -->
     <div class="mt-4">
-        {{ $regions->links('vendor.pagination.tailwind') }}
+        {{ $paginatedRegions->links('vendor.pagination.tailwind') }}
     </div>
 
     <!-- Delete Confirmation Modal -->
@@ -233,7 +235,7 @@
                     Livewire.dispatch('closeModal');
                 }
             });
-            
+
             // Handle click outside for all modals
             document.addEventListener('click', (e) => {
                 if (e.target.classList.contains('modal-overlay')) {

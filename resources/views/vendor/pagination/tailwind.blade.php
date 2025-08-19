@@ -4,12 +4,12 @@
             {{-- Previous Button --}}
             @if ($paginator->onFirstPage())
                 <span
-                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-gray-500 bg-yellow-200 border border-yellow-300 rounded-md cursor-default">
+                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-gray-500 bg-blue-200 border border-blue-300 rounded-md cursor-default">
                     {!! __('pagination.previous') !!}
                 </span>
             @else
                 <button wire:click.prevent="previousPage"
-                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out bg-yellow-600 border border-yellow-700 rounded-md hover:bg-yellow-700">
+                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out bg-blue-600 border border-blue-700 rounded-md hover:bg-blue-700">
                     {!! __('pagination.previous') !!}
                 </button>
             @endif
@@ -17,7 +17,7 @@
             {{-- Next Button --}}
             @if ($paginator->hasMorePages())
                 <button wire:click.prevent="nextPage"
-                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-white transition duration-150 ease-in-out border border-yellow-700 rounded-md bg-gold-600 hover:bg-yellow-700">
+                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-white transition duration-150 ease-in-out border border-blue-700 rounded-md bg-blue-600 hover:bg-blue-700">
                     {!! __('pagination.next') !!}
                 </button>
             @else
@@ -54,7 +54,7 @@
                         </span>
                     @else
                         <button wire:click.prevent="previousPage"
-                            class="relative inline-flex items-center px-3 py-2 text-white transition bg-yellow-600 border border-yellow-700 rounded-l-md hover:bg-yellow-700">
+                            class="relative inline-flex items-center px-3 py-2 text-white transition bg-blue-600 border border-blue-700 rounded-l-md hover:bg-blue-700">
                             &laquo;
                         </button>
                     @endif
@@ -72,12 +72,12 @@
                             @foreach ($element as $page => $url)
                                 @if ($page == $paginator->currentPage())
                                     <span
-                                        class="relative inline-flex items-center px-4 py-2 font-semibold leading-5 text-white bg-yellow-600 border border-yellow-700 cursor-default">
+                                        class="relative inline-flex items-center px-4 py-2 font-semibold leading-5 text-white bg-blue-600 border border-blue-700 cursor-default">
                                         {{ $page }}
                                     </span>
                                 @else
                                     <button wire:click.prevent="gotoPage({{ $page }})"
-                                        class="relative inline-flex items-center px-4 py-2 text-gray-700 transition bg-white border border-gray-500 hover:bg-yellow-400 hover:text-white">
+                                        class="relative inline-flex items-center px-4 py-2 text-gray-700 transition bg-white border border-gray-500 hover:bg-blue-400 hover:text-white">
                                         {{ $page }}
                                     </button>
                                 @endif
@@ -88,7 +88,7 @@
                     {{-- Next Page --}}
                     @if ($paginator->hasMorePages())
                         <button wire:click.prevent="nextPage"
-                            class="relative inline-flex items-center px-3 py-2 text-white transition border border-yellow-700 bg-gold-600 rounded-r-md hover:bg-yellow-700">
+                            class="relative inline-flex items-center px-3 py-2 text-white transition border border-yellow-700 bg-blue-600 rounded-r-md hover:bg-blue-700">
                             &raquo;
                         </button>
                     @else
