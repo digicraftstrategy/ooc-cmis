@@ -120,6 +120,7 @@
             @else
                 @include('components.layouts.client-sidebar')
             @endif--}}
+            @include('components.sidebar')
         </aside>
 
         <!-- Main Content -->
