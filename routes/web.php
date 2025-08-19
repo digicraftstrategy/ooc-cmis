@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Dashboard;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +17,40 @@ use Illuminate\Support\Facades\Route;
 
 //Route::view('/', 'welcome');
 
+Route::get('/', function () {
+    if (Auth::check()) {
+        $user = Auth::user();
+        // Check if user email is verified
+        /*if (!$user->verified()) {
+            return redirect()->route('verification.notice')
+                ->with('info', 'Please verify your email address to continue.');
+        }
+
+        // Check if user has vehicle owner setup using the same method as middleware
+        if ($user->isClientUser() && !$user->isVehicleOwner()) {
+            return redirect()->route('app.client.onbaord.index');
+        } else if ($user->isClientUser() && !$user->isVehicleOwner() && !$user->vehicleOwner->isAtive()) {
+            return redirect()->route('app.client.onbaord.account-pending-approval');
+        }*/
+        // All checks passed, redirect to dashboard
+        return redirect()->route('dashboard');
+    } else {
+        return redirect()->route('login');
+    }
+});
+
+Route::get('dashboard', Dashboard::class)
+    ->middleware([
+        'auth',
+        'verified',
+        //'verify_user_account_setup',
+        //'validate_active_vehicle_owner'
+    ])->name('dashboard');
+/*
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-
+*/
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
