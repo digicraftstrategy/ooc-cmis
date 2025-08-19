@@ -15,7 +15,7 @@ class RegionSeeder extends Seeder
     {
         DB::table('regions')->insert([
             [
-                'code' => 'HL',
+                'code' => 'HR',
                 'name' => 'Highlands Region',
                 'created_at' => now(),
                 'updated_at' => now()
@@ -29,7 +29,7 @@ class RegionSeeder extends Seeder
             ],
 
             [
-                'code' => 'SL',
+                'code' => 'SR',
                 'name' => 'Southern Region',
                 'created_at' => now(),
                 'updated_at' => now()
