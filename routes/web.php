@@ -95,6 +95,15 @@ Route::group(
                 Route::get('/edit/{id}', \App\Livewire\System\Permissions\EditPermission::class)->name('system.permissions.edit');
                 Route::get('/view/{id}', \App\Livewire\System\Permissions\ViewPermission::class)->name('system.permissions.view');
             });
+
+            // User types
+        Route::prefix('user-types')
+            ->group(function () {
+                Route::get('/', \App\Livewire\System\UserTypes\UserTypesTable::class)->name('system.user-types');
+                Route::get('/register', \App\Livewire\System\UserTypes\CreateUserType::class)->name('system.user-types.create');
+                Route::get('/edit/{id}', \App\Livewire\System\UserTypes\EditUserType::class)->name('system.user-types.edit');
+                Route::get('/view/{id}', \App\Livewire\System\UserTypes\ViewUserType::class)->name('system.user-types.view');
+            });
     }
 );
 require __DIR__.'/auth.php';

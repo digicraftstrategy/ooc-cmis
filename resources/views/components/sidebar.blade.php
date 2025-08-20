@@ -266,11 +266,11 @@ new class extends Component {
                     <x-sidebar-link route="users.create" wire:navigate
                         class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
                         New User
-                    </x-sidebar-link>
+                    </x-sidebar-link>--}}
                     <x-sidebar-link route="system.user-types" wire:navigate
                         class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
                         User Types
-                    </x-sidebar-link>--}}
+                    </x-sidebar-link>
                     <x-sidebar-link route="system.regions" wire:navigate
                         class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
                         Regions
