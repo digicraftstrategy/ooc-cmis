@@ -167,11 +167,11 @@ new class extends Component {
             </div>--}}
 
             <!-- Client Management -->
-            {{--<div class="py-1">
+            <div class="py-1">
                 <button @click="toggleDropdown('clientManagementOpen')"
-                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-yellow-50 hover:text-yellow-700 group">
+                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="w-5 h-5 text-yellow-600" viewBox="0 0 16 16">
+                        class="w-5 h-5 text-blue-600" viewBox="0 0 16 16">
                         <path
                             d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
                         <path
@@ -187,33 +187,33 @@ new class extends Component {
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
-                <div x-show="(!sidebarCollapsed || isMobile) && clientManagementOpen" x-collapse
+                {{--<div x-show="(!sidebarCollapsed || isMobile) && clientManagementOpen" x-collapse
                     class="mt-1 space-y-1">
                     <x-sidebar-link route="admin.vehicle-owners" wire:navigate
                         class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
                         Vehicle Owners
                     </x-sidebar-link>
-                </div>
-            </div>--}}
+                </div>--}}
+            </div>
 
-            <!-- Vehicle Management -->
-            {{--<div class="py-1">
+            <!-- Films & Publication Management -->
+            <div class="py-1">
                 <button @click="toggleDropdown('settingsOpen')"
-                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-yellow-50 hover:text-yellow-700 group">
+                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="w-5 h-5 text-yellow-600" viewBox="0 0 16 16">
+                        class="w-5 h-5 text-blue-600" viewBox="0 0 16 16">
                         <path
                             d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
                     </svg>
                     <span x-show="!sidebarCollapsed || isMobile"
-                        class="ml-3 transition-opacity duration-300">Management</span>
+                        class="ml-3 transition-opacity duration-300">Films & Publications</span>
                     <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': settingsOpen }"
                         class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
-                <div x-show="(!sidebarCollapsed || isMobile) && settingsOpen" x-collapse class="mt-1 space-y-1">
+                {{--<div x-show="(!sidebarCollapsed || isMobile) && settingsOpen" x-collapse class="mt-1 space-y-1">
                     <x-sidebar-link route="admin.vehicle-classifications" wire:navigate
                         class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
                         Vehicle Classification
@@ -238,8 +238,8 @@ new class extends Component {
                         class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
                         Vehicle Make Model
                     </x-sidebar-link>
-                </div>
-            </div>--}}
+                </div>--}}
+            </div>
 
             <!-- System -->
             <div class="py-1">
