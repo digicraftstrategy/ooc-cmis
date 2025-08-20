@@ -84,7 +84,8 @@ Route::group(
                 Route::get('/', \App\Livewire\System\Roles\RolesTable::class)->name('system.roles');
                 Route::get('/register', \App\Livewire\System\Roles\CreateRole::class)->name('system.roles.create');
                 Route::get('/edit/{id}', \App\Livewire\System\Roles\EditRole::class)->name('system.roles.edit');
-                Route::get('/view/{id}', \App\Livewire\System\Roles\ViewRole::class)->name('system.roles.view');     
+                Route::get('/view/{id}', \App\Livewire\System\Roles\ViewRole::class)->name('system.roles.view');
+                Route::get('/{id}/permissions', \App\Livewire\System\Roles\RolePermissions::class)->name('system.roles.permissions');     
             });
 
             //Permissions
