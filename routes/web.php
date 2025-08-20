@@ -77,6 +77,24 @@ Route::group(
                 Route::get('/edit/{id}', \App\Livewire\Admin\Province\EditProvince::class)->name('system.provinces.edit');
                 Route::get('/view/{provinceId}', \App\Livewire\Admin\Province\ViewProvince::class)->name('system.provinces.view');
             });
+
+            //Roles
+        Route::prefix('roles')
+            ->group(function () {
+                Route::get('/', \App\Livewire\System\Roles\RolesTable::class)->name('system.roles');
+                Route::get('/register', \App\Livewire\System\Roles\CreateRole::class)->name('system.roles.create');
+                Route::get('/edit/{id}', \App\Livewire\System\Roles\EditRole::class)->name('system.roles.edit');
+                Route::get('/view/{id}', \App\Livewire\System\Roles\ViewRole::class)->name('system.roles.view');     
+            });
+
+            //Permissions
+        Route::prefix('premissions')
+            ->group(function () {
+                Route::get('/', \App\Livewire\System\Permissions\PermissionsTable::class)->name('system.permissions');
+                Route::get('/register', \App\Livewire\System\Permissions\CreatePremission::class)->name('system.permissions.create');
+                Route::get('/edit/{id}', \App\Livewire\System\Permissions\EditPermission::class)->name('system.permissions.edit');
+                Route::get('/view/{id}', \App\Livewire\System\Permissions\ViewPermission::class)->name('system.permissions.view');
+            });
     }
 );
 require __DIR__.'/auth.php';
