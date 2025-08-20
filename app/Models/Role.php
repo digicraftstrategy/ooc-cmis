@@ -76,4 +76,25 @@ class Role extends Model
             'permission_id'
         );
     }
+
+    public function hasPermission($permissionSlug)
+    {
+
+        return $this->permission->slug === $permissionSlug;
+    }
+
+    public function hasAnyPermission(array $permissionSlugs): bool
+    {
+        return $this->permissions()
+            ->whereIn('slug', $permissionSlugs)
+            ->exists();
+    }
+
+    /**
+     * Get formatted status for display.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 }
