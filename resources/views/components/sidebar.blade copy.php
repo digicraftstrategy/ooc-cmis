@@ -24,11 +24,7 @@ new class extends Component {
     systemOpen: localStorage.getItem('systemOpen') === 'true',
     licenseManagement: localStorage.getItem('licenseManagement') === 'true',
     systemSecurityOpen: localStorage.getItem('systemSecurityOpen') === 'true',
-    clientManagementOpen: localStorage.getItem('clientManagementOpen') === 'true',
-    publicationPremisesOpen: localStorage.getItem('publicationPremisesOpen') === 'true',
-    filmsPublicationOpen: localStorage.getItem('filmsPublicationOpen') === 'true',
-    
-
+    clientManagementOpen: localStorage.getItem('clientManagementOpen') === 'true', // S.O.N Add this line
     userMenuOpen: false,
     //sidebarCollapsed: false,
     //isMobile: window.innerWidth < 1024,
@@ -46,9 +42,7 @@ new class extends Component {
         this.watchDropdownState('systemOpen');
         this.watchDropdownState('licenseManagement');
         this.watchDropdownState('systemSecurityOpen');
-        this.watchDropdownState('clientManagementOpen');
-        this.watchDropdownState('publicationPremisesOpen');
-        this.watchDropdownState('filmsPublicationOpen');
+        this.watchDropdownState('clientManagementOpen'); // S.O.N Add this line
     },
 
     // Persist dropdown state to localStorage
@@ -201,55 +195,10 @@ new class extends Component {
                     </x-sidebar-link>
                 </div>--}}
             </div>
-            
-            <!-- Publication Premises -->
-            <div class="py-1">
-                <button @click="toggleDropdown('publicationPremisesOpen')"
-                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="w-5 h-5 text-blue-600" viewBox="0 0 16 16">
-                        <path
-                            d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
-                    </svg>
-                    <span x-show="!sidebarCollapsed || isMobile"
-                        class="ml-3 transition-opacity duration-300">Publication Premsies</span>
-                    <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': publicationPremisesOpen }"
-                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-                {{--<div x-show="(!sidebarCollapsed || isMobile) && settingsOpen" x-collapse class="mt-1 space-y-1">
-                    <x-sidebar-link route="admin.vehicle-classifications" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Classification
-                    </x-sidebar-link>
-                    <x-sidebar-link route="admin.vehicle-routes.index" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Routes
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.vehicle-types" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Types
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.owner-types" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Owner Type
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.makes" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Make
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.make-model" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Make Model
-                    </x-sidebar-link>
-                </div>--}}
-            </div>
 
             <!-- Films & Publication Management -->
             <div class="py-1">
-                <button @click="toggleDropdown('filmsPublicationOpen')"
+                <button @click="toggleDropdown('settingsOpen')"
                     class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="w-5 h-5 text-blue-600" viewBox="0 0 16 16">
@@ -258,7 +207,7 @@ new class extends Component {
                     </svg>
                     <span x-show="!sidebarCollapsed || isMobile"
                         class="ml-3 transition-opacity duration-300">Films & Publications</span>
-                    <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': filmsPublicationOpen }"
+                    <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': settingsOpen }"
                         class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
@@ -322,28 +271,24 @@ new class extends Component {
                         class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
                         User Types
                     </x-sidebar-link>
-                    <x-sidebar-link route="system.prescribed-activities" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Prescribed Activities
-                    </x-sidebar-link>
                     <x-sidebar-link route="system.prescribed-activity-types" wire:navigate
                         class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Prescribed Activity Types
-                    </x-sidebar-link>
-                    <x-sidebar-link route="system.provinces" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Provinces
+                        Prescribed Activity Type
                     </x-sidebar-link>
                     <x-sidebar-link route="system.regions" wire:navigate
                         class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
                         Regions
                     </x-sidebar-link>
-                    {{--<x-sidebar-link route="system.district" wire:navigate
+                    <x-sidebar-link route="system.provinces" wire:navigate
+                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
+                        Provinces
+                    </x-sidebar-link>
+                    <x-sidebar-link route="system.prescribed-activity-types" wire:navigate
                         class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
                         District
                     </x-sidebar-link>
                     <hr />
-                    <x-sidebar-link route="pulse" wire:navigate>
+                    {{--<x-sidebar-link route="pulse" wire:navigate>
                         System Metrics
                     </x-sidebar-link>--}}
                 </div>

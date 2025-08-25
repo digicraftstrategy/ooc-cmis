@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -68,5 +69,15 @@ class User extends Authenticatable
         } while ($exists);
 
         return $uuid;
+    }
+
+    public function user_type(): BelongsTo
+    {
+        return $this->belongsTo(UserType::class);
+    }
+
+    public function account_status(): BelongsTo
+    {
+        return $this->belongsTo(AccountStatus::class);
     }
 }
