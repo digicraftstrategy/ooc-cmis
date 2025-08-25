@@ -6,19 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class UserType extends Model
+class PrescribedActivityType extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'type_name',
-        'slug',
-        'description',
-        'access_code'
+        'type',
+        'description'
     ];
 
-    public function users(): HasMany
+    public function prescribedActivities()
     {
-        return $this->has(User::class);
+        return $this->hasMany(PrescribedActivity::class, 'prescribed_activity_type_id');
     }
 }

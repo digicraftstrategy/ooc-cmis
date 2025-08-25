@@ -85,7 +85,7 @@ Route::group(
                 Route::get('/register', \App\Livewire\System\Roles\CreateRole::class)->name('system.roles.create');
                 Route::get('/edit/{id}', \App\Livewire\System\Roles\EditRole::class)->name('system.roles.edit');
                 Route::get('/view/{id}', \App\Livewire\System\Roles\ViewRole::class)->name('system.roles.view');
-                Route::get('/{id}/permissions', \App\Livewire\System\Roles\RolePermissions::class)->name('system.roles.permissions');     
+                Route::get('/{id}/permissions', \App\Livewire\System\Roles\RolePermissions::class)->name('system.roles.permissions');
             });
 
             //Permissions
@@ -104,6 +104,24 @@ Route::group(
                 Route::get('/register', \App\Livewire\System\UserTypes\CreateUserType::class)->name('system.user-types.create');
                 Route::get('/edit/{id}', \App\Livewire\System\UserTypes\EditUserType::class)->name('system.user-types.edit');
                 Route::get('/view/{id}', \App\Livewire\System\UserTypes\ViewUserType::class)->name('system.user-types.view');
+            });
+
+            // Prescribed Actvity Types
+        Route::prefix('prescribed-activity-types')
+            ->group(function () {
+                Route::get('/', \App\Livewire\System\PrescribedActivityType\PrescribedActivityTypeTable::class)->name('system.prescribed-activity-types');
+                Route::get('/register', \App\Livewire\System\PrescribedActivityType\CreatePrescribedActivityType::class)->name('system.prescribed-activity-types.create');
+                Route::get('/edit/{id}', \App\Livewire\System\PrescribedActivityType\EditPrescribedActivityType::class)->name('system.prescribed-activity-types.edit');
+                Route::get('/view/{id}', \App\Livewire\System\PrescribedActivityType\ViewPrescribedActivityType::class)->name('system.prescribed-activity-types.view');
+            });
+
+            // Prescribed Activities
+        Route::prefix('prescribed-activities')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\PrescribedActivities\PrescribedActivityTable::class)->name('system.prescribed-activities');
+                Route::get('/register', \App\Livewire\Admin\PrescribedActivities\CreatePrescribedActivity::class)->name('system.prescribed-activities.create');
+                Route::get('/edit/{id}', \App\Livewire\Admin\PrescribedActivities\EditPrescribedActivity::class)->name('system.prescribed-activities.edit');
+                Route::get('/view/{id}', \App\Livewire\Admin\PrescribedActivities\ViewPrescribedActivity::class)->name('system.prescribed-activities.view');
             });
     }
 );
