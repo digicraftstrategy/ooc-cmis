@@ -2,7 +2,7 @@
     <x-slot name='header'>
         <div class="px-4 py-2 bg-blue-100">
             <h2 class="text-xl font-semibold">
-                Manage Provinces
+                Manage Prescribed Activities
             </h2>
         </div>
     </x-slot>
@@ -13,14 +13,14 @@
             <div class="flex-1 min-w-[250px]">
                 <input wire:model.live.debounce.300ms="search" type="text"
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    placeholder="Search provinces...">
+                    placeholder="Search prescribed activities...">
             </div>
             <div class="flex-1 min-w-[250px]">
-                <select wire:model.live="regionFilter"
+                <select wire:model.live="prescribedTypeFilter"
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    <option value="">All Regions</option>
-                    @foreach($regions as $region)
-                        <option value="{{ $region->id }}">{{ $region->name }}</option>
+                    <option value="">All Prescribed Types</option>
+                    @foreach($prescribedTypes as $prescribedType)
+                        <option value="{{ $prescribedType->id }}">{{ $prescribedType->type }}</option>
                     @endforeach
                 </select>
             </div>
@@ -33,7 +33,7 @@
                             d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                             clip-rule="evenodd" />
                     </svg>
-                    Add Province
+                    Add Prescribed Activity
                 </x-blue-button>
             </div>
         </div>
@@ -96,23 +96,23 @@
                         #</th>
                     <th scope="col"
                         class="px-6 py-6 text-xs font-medium tracking-wider text-left text-blue-700 uppercase cursor-pointer"
-                        wire:click="sortBy('name')">
-                        Name
-                        @if ($sortField === 'name')
-                            <span>{!! $sortDirection === 'asc' ? '&uarr;' : '&darr;' !!}</span>
-                        @endif
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-6 text-xs font-medium tracking-wider text-left text-blue-700 uppercase cursor-pointer"
-                        wire:click="sortBy('code')">
-                        Code
-                        @if ($sortField === 'code')
+                        wire:click="sortBy('activity_type')">
+                        Activity Type
+                        @if ($sortField === 'activity_type')
                             <span>{!! $sortDirection === 'asc' ? '&uarr;' : '&darr;' !!}</span>
                         @endif
                     </th>
                     <th scope="col"
                         class="px-6 py-6 text-xs font-medium tracking-wider text-left text-blue-700 uppercase">
-                        Region
+                        Prescribed Fees/Charges
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-6 text-xs font-medium tracking-wider text-left text-blue-700 uppercase">
+                        Status
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-6 text-xs font-medium tracking-wider text-left text-blue-700 uppercase">
+                        Prescribed Type
                     </th>
                     <th scope="col" class="px-6 py-6 text-xs font-medium tracking-wider text-left text-blue-700 uppercase">
                         Actions
@@ -120,7 +120,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @forelse ($provinces as $province)
+                @forelse ($prescribedActivities as $prescribedActivity)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
@@ -129,46 +129,71 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
-                                {{ $province->name }}
+                                {{ $prescribedActivity->activity_type }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">
-                                {{ $province->code ?? 'M/A' }}
+                            <div class="text-sm font-medium text-gray-900">
+                                PGK{{ number_format($prescribedActivity->prescribed_fee, 2) }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full {{ $prescribedActivity->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                {{ $prescribedActivity->is_active ? 'Active' : 'Inactive' }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-500">
-                                {{ $province->region->name ?? 'N/A' }}
+                                {{ $prescribedActivity->prescribedType->type ?? 'N/A' }}
                             </div>
                         </td>
                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                            <div class="flex items-center space-x-2">
-                                <x-blue-button-sm wire:click="openViewModal({{ $province->id }})">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            <div class="relative text-left" x-data="{ open: false }">
+                                <button x-on:click="open = !open" class="flex items-center text-gray-400 hover:text-gray-600 focus:outline-none">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                                     </svg>
-                                </x-blue-button-sm>
+                                </button>
 
-                                <x-blue-button-sm wire:click="openEditModal({{ $province->id }})">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                </x-blue-button-sm>
+                                <div x-show="open" x-cloak @click.away="open = false"
+                                    class="absolute right-0 z-10 w-48 mt-2 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg">
+                                    <div class="py-1" role="menu" aria-orientation="vertical">
+                                        <button wire:click="openViewModal({{ $prescribedActivity->id }})"
+                                            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                                            role="menuitem">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                            View
+                                        </button>
 
-                                <x-blue-button-sm wire:click="openDeleteModal({{ $province->id }})">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                </x-blue-button-sm>
+                                        <button wire:click="openEditModal({{ $prescribedActivity->id }})"
+                                            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                                            role="menuitem">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                            Edit
+                                        </button>
+
+                                        <button wire:click="openDeleteModal({{ $prescribedActivity->id }})"
+                                            class="flex items-center px-4 py-2 text-sm text-red-700 hover:bg-red-100 hover:text-red-900 w-full text-left"
+                                            role="menuitem">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-4 text-sm text-center text-gray-500 whitespace-nowrap">
-                            No provinces found.
+                        <td colspan="6" class="px-6 py-4 text-sm text-center text-gray-500 whitespace-nowrap">
+                            No prescribed activities found.
                         </td>
                     </tr>
                 @endforelse
@@ -178,7 +203,7 @@
 
     <!-- Pagination -->
     <div class="mt-4">
-        {{ $provinces->links('vendor.pagination.tailwind') }}
+        {{ $prescribedActivities->links('vendor.pagination.tailwind') }}
     </div>
 
     <!-- Delete Confirmation Modal -->
@@ -187,7 +212,7 @@
             @keydown.window.escape="$wire.closeModal()">
             <div class="w-full max-w-md bg-white rounded-lg shadow-xl">
                 <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-                    <h3 class="text-lg font-medium text-gray-900">Delete Province</h3>
+                    <h3 class="text-lg font-medium text-gray-900">Delete Prescribed Activity</h3>
                     <button wire:click="closeModal" class="text-gray-400 hover:text-gray-500">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -208,13 +233,13 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm text-gray-700">
-                                Are you sure you want to delete this province? This action cannot be undone.
+                                Are you sure you want to delete this Prescribed Activity? This action cannot be undone.
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" wire:click="deleteProvince"
+                    <button type="button" wire:click="deletePrescribedActivity"
                         class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Delete
                     </button>
@@ -229,15 +254,15 @@
 
     <!-- Conditionally include components -->
     @if($showCreateModal)
-        @livewire('admin.province.create-province', key('create-province'))
+        @livewire('admin.prescribed-activities.create-prescribed-activity', key('create-prescribed-activity'))
     @endif
 
-    @if($provinceIdBeingEdited)
-        @livewire('admin.province.edit-province', ['provinceId' => $provinceIdBeingEdited], key('edit-province-'.$provinceIdBeingEdited))
+    @if($prescribedActivityIdBeingEdited)
+        @livewire('admin.prescribed-activities.edit-prescribed-activity', ['prescribedActivityId' => $prescribedActivityIdBeingEdited], key('edit-prescribed-activity-'.$prescribedActivityIdBeingEdited))
     @endif
 
-    @if($provinceIdBeingViewed)
-        @livewire('admin.province.view-province', ['provinceId' => $provinceIdBeingViewed], key('view-province-'.$provinceIdBeingViewed))
+    @if($prescribedActivityIdBeingViewed)
+        @livewire('admin.prescribed-activities.view-prescribed-activity', ['prescribedActivityId' => $prescribedActivityIdBeingViewed], key('view-prescribed-activity-'.$prescribedActivityIdBeingViewed))
     @endif
 
     <!-- JavaScript for Event Listeners -->
