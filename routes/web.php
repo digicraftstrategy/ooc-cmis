@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Dashboard;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -123,6 +124,61 @@ Route::group(
                 Route::get('/edit/{id}', \App\Livewire\Admin\PrescribedActivities\EditPrescribedActivity::class)->name('system.prescribed-activities.edit');
                 Route::get('/view/{id}', \App\Livewire\Admin\PrescribedActivities\ViewPrescribedActivity::class)->name('system.prescribed-activities.view');
             });
+
+            // Publication Premises Ower Types
+        Route::prefix('premises-owner-types')
+            ->group(function () {
+                 Route::get('/', \App\Livewire\Admin\PublicationPremises\PremisesOwnerTypes\PremisesOwnerTypesTable::class)
+                    ->name('admin.publication-premises.premises-owner-types');
+                 Route::get('/register', \App\Livewire\Admin\PublicationPremises\PremisesOwnerTypes\CreatePremisesOwnerTypes::class)
+                    ->name('admin.publication-premises.premises-owner-types.create');
+                 Route::get('/edit/{id}', \App\Livewire\Admin\PublicationPremises\PremisesOwnerTypes\EditPremisesOwnerTypes::class)
+                    ->name('admin.publication-premises.premises-owner-types.edit');
+                 Route::get('/view/{id}', \App\Livewire\Admin\PublicationPremises\PremisesOwnerTypes\ViewPremisesOwnerTypes::class)
+                    ->name('admin.publication-premises.premises-owner-types.view');
+            });
+
+            // Publication Premises Owners
+        Route::prefix('premises-owners')
+            ->group(function () {
+                 Route::get('/', \App\Livewire\Admin\PublicationPremises\PremisesOwner\PremisesOwnersTable::class)
+                    ->name('admin.publication-premises.premises-owner');
+                /*Route::get('/', [\App\Http\Controllers\Administration\PremisesOwnerController::class, 'index'])
+                    ->name('admin.publication-premises.premises-owner');*/
+                 Route::get('/register', \App\Livewire\Admin\PublicationPremises\PremisesOwner\CreatePremisesOwners::class)
+                    ->name('admin.publication-premises.premises-owner.create');
+                 Route::get('/edit/{id}', \App\Livewire\Admin\PublicationPremises\PremisesOwner\EditPremisesOwners::class)
+                    ->name('admin.publication-premises.premises-owner.edit');
+                 Route::get('/view/{id}', \App\Livewire\Admin\PublicationPremises\PremisesOwner\ViewPremisesOwners::class)
+                     ->name('admin.publication-premises.premises-owner.view');
+                Route::get('/{id}/manage', \App\Livewire\Admin\PublicationPremises\PremisesOwner\ManagePremises::class)
+                     ->name('admin.publication-premises.premises-owner.manage');
+
+                Route::group(['prefix' => '/{id}/publication-premises', 'middleware' => []], function () {
+                    Route::get('/', \App\Livewire\Admin\PublicationPremises\PublicationPremises\PublicationPremisesTable::class)
+                        ->name('admin.publication-premises.premises');
+                    Route::get('/register', \App\Livewire\Admin\PublicationPremises\PublicationPremises\CreatePublicationPremises::class)
+                        ->name('admin.publication-premises.premises.create');
+                });
+            });
+
+            // Publication Premises
+        Route::prefix('publication-premises')
+            ->group(function () {
+                /* Route::get('/', \App\Livewire\Admin\PublicationPremises\PublicationPremises\PublicationPremisesTable::class)
+                    ->name('admin.publication-premises.premises');
+                Route::get('/register', \App\Livewire\Admin\PublicationPremises\PublicationPremises\CreatePublicationPremises::class)
+                    ->name('admin.publication-premises.premises.create');*/
+                Route::get('/edit/{id}', \App\Livewire\Admin\PublicationPremises\PublicationPremises\EditPublicationPremises::class)
+                    ->name('admin.publication-premises.premises.edit');
+                Route::get('/view/{id}', \App\Livewire\Admin\PublicationPremises\PublicationPremises\ViewPublicationPremises::class)
+                    ->name('admin.publication-premises.premises.view');
+            });
+
+        /*Route::group(['prefix' => '/{id}/publication-premises', 'middleware' => []], function () {
+            Route::get('/', \App\Livewire\Admin\PublicationPremises\PublicationPremises\PublicationPremisesTable::class)
+                    ->name('admin.publication-premises.premises');
+        });*/
     }
 );
 require __DIR__.'/auth.php';
