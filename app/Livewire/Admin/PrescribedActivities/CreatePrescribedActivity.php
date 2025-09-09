@@ -30,7 +30,7 @@ class CreatePrescribedActivity extends Component
     public function save()
     {
         $this->validate([
-            'activity_type' => 'required|string|max:255',
+            'activity_type' => 'required|string|max:255|unique:prescribed_activities,activity_type',
             'prescribed_fee' => 'required|numeric|min:0',
             'prescribed_activity_type_id' => 'required|exists:prescribed_activity_types,id',
         ]);

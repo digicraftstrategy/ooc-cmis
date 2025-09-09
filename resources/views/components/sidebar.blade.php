@@ -27,14 +27,15 @@ new class extends Component {
     clientManagementOpen: localStorage.getItem('clientManagementOpen') === 'true',
     publicationPremisesOpen: localStorage.getItem('publicationPremisesOpen') === 'true',
     filmsPublicationOpen: localStorage.getItem('filmsPublicationOpen') === 'true',
-    
 
     userMenuOpen: false,
-    //sidebarCollapsed: false,
-    //isMobile: window.innerWidth < 1024,
+    sidebarCollapsed: false,
+    isMobile: window.innerWidth < 1024,
 
     // Watch window resize for mobile detection
     init() {
+        this.isMobile = window.innerWidth < 1024;
+        
         window.addEventListener('resize', () => {
             this.isMobile = window.innerWidth < 1024;
         });
@@ -68,344 +69,194 @@ new class extends Component {
             this[dropdownName] = !this[dropdownName];
         }
     }
-}" class="flex flex-col h-full">
+}" class="flex flex-col h-full bg-gradient-to-b from-slate-900 to-slate-800 text-white">
     <!-- Header -->
-    <div class="sticky top-0 z-10 flex items-center justify-between h-16 px-4 border-b bg-gray-50">
+    <div class="sticky top-0 z-10 flex items-center justify-between h-16 px-4 border-b border-slate-700 bg-slate-900">
         <span x-show="!sidebarCollapsed || isMobile"
-            class="px-4 text-lg font-bold text-blue-600 transition-opacity duration-300">{{ config('app.name') }}</span>
+            class="px-4 text-lg font-bold text-blue-400 transition-opacity duration-300">{{ config('app.name') }}</span>
         <div class="flex-shrink-0">
-            <x-application-logo />
+            <x-application-logo class="text-white" />
         </div>
         <!-- Collapse/Expand Button (Desktop only) -->
         <button @click="sidebarCollapsed = !sidebarCollapsed"
-            class="hidden p-1 text-gray-500 rounded-md hover:bg-gray-100 focus:outline-none lg:block">
-            <svg x-show="!sidebarCollapsed" class="w-10 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="5"
-                    d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            class="hidden p-2 rounded-md hover:bg-slate-700 focus:outline-none lg:block transition-colors duration-200">
+            <svg x-show="!sidebarCollapsed" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
             <svg x-show="sidebarCollapsed" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
         </button>
     </div>
 
     <!-- Navigation (Scrollable) -->
-    <nav class="flex-1 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+    <nav class="flex-1 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800">
         <div class="py-1 space-y-1">
             <!-- Dashboard Link -->
             <x-sidebar-link route="dashboard" wire:navigate
-                class="flex items-center w-full px-3 py-2 text-gray-700 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
-                <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                class="flex items-center w-full px-4 py-3 text-slate-200 rounded-lg hover:bg-blue-600/20 hover:text-white group transition-colors duration-200 mx-2">
+                <svg class="w-5 h-5 text-blue-400 group-hover:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                 </svg>
-                <span x-show="!sidebarCollapsed || isMobile"
-                    class="ml-3 transition-opacity duration-300">Dashboard
-                </span>
+                <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Dashboard</span>
             </x-sidebar-link>
 
             <!-- Reports -->
             <div class="py-1">
                 <button @click="toggleDropdown('reportsOpen')"
-                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
-                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    class="flex items-center w-full px-4 py-3 text-slate-200 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white group mx-2">
+                    <svg class="w-5 h-5 text-purple-400 group-hover:text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
-                    <span x-show="!sidebarCollapsed || isMobile"
-                        class="ml-3 transition-opacity duration-300">Reports
-                    </span>
+                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Reports</span>
                     <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': reportsOpen }"
-                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
+                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
-                <div x-show="(!sidebarCollapsed || isMobile) && reportsOpen" x-collapse class="mt-1 space-y-1">
+                <div x-show="(!sidebarCollapsed || isMobile) && reportsOpen" x-collapse class="mt-1 space-y-1 ml-4">
                     <!-- Report items would go here -->
                 </div>
             </div>
 
-            <!-- Licensing -->
-            {{--<div class="py-1">
-                <button @click="toggleDropdown('licenseManagement')"
-                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-yellow-50 hover:text-yellow-700 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="w-5 h-5 text-yellow-600" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
-                    </svg>
-                    <span x-show="!sidebarCollapsed || isMobile"
-                        class="ml-3 transition-opacity duration-300">Licensing</span>
-                    <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': licenseManagement }"
-                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-                <div x-show="(!sidebarCollapsed || isMobile) && licenseManagement" x-collapse class="mt-1 space-y-1">
-                    <x-sidebar-link route="license" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        License List
-                    </x-sidebar-link>
-                    <x-sidebar-link route="admin.license-types" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        License Type
-                    </x-sidebar-link>
-                    <x-sidebar-link route="admin.license-purpose" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        License Purpose
-                    </x-sidebar-link>
-                    <x-sidebar-link route="license.create" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        New License
-                    </x-sidebar-link>
-                    <x-sidebar-link route="admin.license.applications" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        License Applications
-                    </x-sidebar-link>
-                    <x-sidebar-link route="admin.license.renewals.applications" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Renewal Applications
-                    </x-sidebar-link>
-                </div>
-            </div>--}}
-
             <!-- Client Management -->
             <div class="py-1">
                 <button @click="toggleDropdown('clientManagementOpen')"
-                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="w-5 h-5 text-blue-600" viewBox="0 0 16 16">
-                        <path
-                            d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
-                        <path
-                            d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
-                        <path
-                            d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+                    class="flex items-center w-full px-4 py-3 text-slate-200 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white group mx-2">
+                    <svg class="w-5 h-5 text-cyan-400 group-hover:text-cyan-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Client
-                        Management</span>
+                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Client Management</span>
                     <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': clientManagementOpen }"
-                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
+                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
-                {{--<div x-show="(!sidebarCollapsed || isMobile) && clientManagementOpen" x-collapse
-                    class="mt-1 space-y-1">
-                    <x-sidebar-link route="admin.vehicle-owners" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Owners
+                <div x-show="(!sidebarCollapsed || isMobile) && clientManagementOpen" x-collapse class="mt-1 space-y-1 ml-4">
+                    <x-sidebar-link route="admin.publication-premises.premises-owner" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        Premises Owners
                     </x-sidebar-link>
-                </div>--}}
+                </div>
             </div>
-            
+
             <!-- Publication Premises -->
             <div class="py-1">
                 <button @click="toggleDropdown('publicationPremisesOpen')"
-                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="w-5 h-5 text-blue-600" viewBox="0 0 16 16">
-                        <path
-                            d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+                    class="flex items-center w-full px-4 py-3 text-slate-200 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white group mx-2">
+                    <svg class="w-5 h-5 text-emerald-400 group-hover:text-emerald-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
-                    <span x-show="!sidebarCollapsed || isMobile"
-                        class="ml-3 transition-opacity duration-300">Publication Premsies</span>
+                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Publication Premises</span>
                     <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': publicationPremisesOpen }"
-                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
+                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
-                {{--<div x-show="(!sidebarCollapsed || isMobile) && settingsOpen" x-collapse class="mt-1 space-y-1">
-                    <x-sidebar-link route="admin.vehicle-classifications" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Classification
-                    </x-sidebar-link>
-                    <x-sidebar-link route="admin.vehicle-routes.index" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Routes
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.vehicle-types" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Types
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.owner-types" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Owner Type
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.makes" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Make
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.make-model" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Make Model
-                    </x-sidebar-link>
-                </div>--}}
+                <div x-show="(!sidebarCollapsed || isMobile) && publicationPremisesOpen" x-collapse class="mt-1 space-y-1 ml-4">
+                    <!-- Publication Premises items would go here -->
+                </div>
             </div>
 
             <!-- Films & Publication Management -->
             <div class="py-1">
                 <button @click="toggleDropdown('filmsPublicationOpen')"
-                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="w-5 h-5 text-blue-600" viewBox="0 0 16 16">
-                        <path
-                            d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+                    class="flex items-center w-full px-4 py-3 text-slate-200 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white group mx-2">
+                    <svg class="w-5 h-5 text-amber-400 group-hover:text-amber-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
                     </svg>
-                    <span x-show="!sidebarCollapsed || isMobile"
-                        class="ml-3 transition-opacity duration-300">Films & Publications</span>
+                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Films & Publications</span>
                     <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': filmsPublicationOpen }"
-                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
+                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
-                {{--<div x-show="(!sidebarCollapsed || isMobile) && settingsOpen" x-collapse class="mt-1 space-y-1">
-                    <x-sidebar-link route="admin.vehicle-classifications" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Classification
-                    </x-sidebar-link>
-                    <x-sidebar-link route="admin.vehicle-routes.index" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Routes
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.vehicle-types" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Types
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.owner-types" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Owner Type
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.makes" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Make
-                    </x-sidebar-link>
-                    <x-sidebar-link route="vehicles.make-model" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Vehicle Make Model
-                    </x-sidebar-link>
-                </div>--}}
+                <div x-show="(!sidebarCollapsed || isMobile) && filmsPublicationOpen" x-collapse class="mt-1 space-y-1 ml-4">
+                    <!-- Films & Publications items would go here -->
+                </div>
             </div>
 
             <!-- System -->
             <div class="py-1">
                 <button @click="toggleDropdown('systemOpen')"
-                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="w-5 h-5 text-blue-600" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                    class="flex items-center w-full px-4 py-3 text-slate-200 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white group mx-2">
+                    <svg class="w-5 h-5 text-blue-400 group-hover:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
                     </svg>
-                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">System
-                        Variables</span>
+                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">System Variables</span>
                     <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': systemOpen }"
-                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
+                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
-                <div x-show="(!sidebarCollapsed || isMobile) && systemOpen" x-collapse class="mt-1 space-y-1">
-                    {{--<x-sidebar-link route="users" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        User List
-                    </x-sidebar-link>
-                    <x-sidebar-link route="users.create" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        New User
-                    </x-sidebar-link>--}}
+                <div x-show="(!sidebarCollapsed || isMobile) && systemOpen" x-collapse class="mt-1 space-y-1 ml-4">
                     <x-sidebar-link route="system.user-types" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         User Types
                     </x-sidebar-link>
                     <x-sidebar-link route="system.prescribed-activities" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Prescribed Activities
                     </x-sidebar-link>
                     <x-sidebar-link route="system.prescribed-activity-types" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Prescribed Activity Types
                     </x-sidebar-link>
                     <x-sidebar-link route="system.provinces" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Provinces
                     </x-sidebar-link>
                     <x-sidebar-link route="system.regions" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Regions
                     </x-sidebar-link>
-                    {{--<x-sidebar-link route="system.district" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        District
-                    </x-sidebar-link>
-                    <hr />
-                    <x-sidebar-link route="pulse" wire:navigate>
-                        System Metrics
-                    </x-sidebar-link>--}}
                 </div>
             </div>
 
             <!-- System Security -->
             <div class="py-1">
                 <button @click="toggleDropdown('systemSecurityOpen')"
-                    class="flex items-center w-full px-3 py-2 text-gray-700 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" width="16"
-                        height="16" fill="currentColor" class="bi bi-shield" viewBox="0 0 16 16">
-                        <path
-                            d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56" />
+                    class="flex items-center w-full px-4 py-3 text-slate-200 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white group mx-2">
+                    <svg class="w-5 h-5 text-red-400 group-hover:text-red-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
-                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">System
-                        Security</span>
+                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">System Security</span>
                     <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': systemSecurityOpen }"
-                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
+                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
-                <div x-show="(!sidebarCollapsed || isMobile) && systemSecurityOpen" x-collapse class="mt-1 space-y-1">
+                <div x-show="(!sidebarCollapsed || isMobile) && systemSecurityOpen" x-collapse class="mt-1 space-y-1 ml-4">
                     <x-sidebar-link route="system.roles" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Roles Management
                     </x-sidebar-link>
                     <x-sidebar-link route="system.permissions" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Permissions Management
                     </x-sidebar-link>
-                    {{--<x-sidebar-link route="settings" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Account Status
-                    </x-sidebar-link>
-                    <x-sidebar-link route="settings" wire:navigate
-                        class="block px-3 py-2 ml-8 text-gray-600 transition duration-150 rounded-md hover:bg-blue-50 hover:text-blue-700">
-                        Password and Security
-                    </x-sidebar-link>--}}
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- User Profile Section (Fixed to bottom) -->
-    <div class="sticky bottom-0 mt-auto bg-white border-t border-gray-200">
+    <div class="sticky bottom-0 mt-auto bg-slate-900 border-t border-slate-700">
         <div class="p-4">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <img src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }}"
-                        class="object-cover w-10 h-10 border-2 border-gray-200 rounded-full">
+                        class="object-cover w-10 h-10 border-2 border-slate-600 rounded-full">
                 </div>
                 <div x-show="!sidebarCollapsed || isMobile" class="ml-3 overflow-hidden">
-                    <p class="text-sm font-medium text-gray-700 truncate">{{ auth()->user()->name }}</p>
-                    <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email }}</p>
+                    <p class="text-sm font-medium text-white truncate">{{ auth()->user()->name }}</p>
+                    <p class="text-xs text-slate-400 truncate">{{ auth()->user()->email }}</p>
                 </div>
                 <div x-show="!sidebarCollapsed || isMobile" class="ml-auto">
-                    <div class="relative" x-data="{ open: false }">
+                    <div class="relative" x-data="{ userMenuOpen: false }">
                         <button @click="userMenuOpen = !userMenuOpen"
-                            class="p-1 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            class="p-1 rounded-full hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200">
+                            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
                                 </path>
@@ -419,19 +270,19 @@ new class extends Component {
                             x-transition:leave="transition ease-in duration-150"
                             x-transition:leave-start="opacity-100 transform scale-100"
                             x-transition:leave-end="opacity-0 transform scale-95"
-                            class="absolute right-0 z-50 w-48 py-1 mb-2 bg-white rounded-md shadow-lg bottom-full">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            class="absolute right-0 z-50 w-48 py-1 mb-2 bg-slate-800 rounded-md shadow-lg bottom-full">
+                            <a href="#" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
                                 wire:navigate>
                                 Your Profile
                             </a>
-                            <a href="#" wire:navigate>
+                            <a href="#" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700" wire:navigate>
                                 Account Settings
                             </a>
-                            <div class="my-1 border-t border-gray-200"></div>
+                            <div class="my-1 border-t border-slate-700"></div>
                             <form method="POST" action="{{ route('logout') }}" class="block w-full">
                                 @csrf
                                 <button type="submit"
-                                    class="w-full px-4 py-2 ml-4 text-sm text-left text-red-600 hover:bg-gray-100">
+                                    class="w-full px-4 py-2 text-sm text-left text-red-400 hover:bg-slate-700">
                                     <div class="flex items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
@@ -450,14 +301,14 @@ new class extends Component {
     </div>
 
     <!-- Footer (only visible when sidebar is expanded) -->
-    <div x-show="!sidebarCollapsed && !isMobile" class="px-4 py-2 text-center border-t border-gray-200">
-        <span class="text-xs text-gray-400">© 2025 {{ config('app.name') }} v{{ config('app.version') }}</span>
+    <div x-show="!sidebarCollapsed && !isMobile" class="px-4 py-2 text-center border-t border-slate-700">
+        <span class="text-xs text-slate-500">© 2025 {{ config('app.name') }} v{{ config('app.version') }}</span>
     </div>
 </div>
 
 <!-- Mobile Toggle Button (Fixed Position) -->
 <button x-show="isMobile" @click="sidebarOpen = !sidebarOpen"
-    class="fixed z-40 p-2 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 lg:hidden bottom-4 right-4">
+    class="fixed z-40 p-3 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 lg:hidden bottom-4 right-4 transition-colors duration-200">
     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             :d="sidebarOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'" />

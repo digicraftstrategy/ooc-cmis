@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\PremisesOwner;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +25,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PrescribedActivityTypeSeeder::class,
             PrescribedActivitySeeder::class,
+            PremisesOwnersTypeSeeder::class,
+            PremisesOwnerSeeder::class,
         ]);
     }
 }
