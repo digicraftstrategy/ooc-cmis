@@ -7,20 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-//use Illuminate\Database\Eloquent\SoftDeletes;
-
-class PrescribedActivity extends Model
+class PremisesOwner extends Model
 {
-    use HasFactory; //SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'uuid',
-        'activity_type',
-        'prescribed_fee',
-        //'description',
-        'is_active',
-        'prescribed_activity_type_id'
+        'owners_name',
+        'phone',
+        'address',
+        'email',
+        'premises_owner_type_id'
     ];
+
+    public function premises_type(): BelongsTo
+    {
+        return $this->belongsTo(PremisesOwnerType::class, 'premises_owner_type_id');
+    }
+
+    public function publication_premises(): HasMany
+    {
+        return $this->hasMany(PublicationPremises::class, 'premises_owner_id');
+    }
 
     protected static function boot()
     {
@@ -41,15 +49,5 @@ class PrescribedActivity extends Model
         } while ($exists);
 
         return $uuid;
-    }
-
-    public function prescribedType(): BelongsTo
-    {
-        return $this->belongsTo(PrescribedActivityType::class, 'prescribed_activity_type_id');
-    }
-
-    public function presmisesActivity(): HasMany
-    {
-        return $this->hasMany(PublicationPremises::class, 'prescribed_activity_id');
     }
 }
