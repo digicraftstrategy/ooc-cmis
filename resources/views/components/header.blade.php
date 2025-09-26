@@ -1,19 +1,24 @@
 <header>
     <div class="px-8 relative">
         <div class="flex items-center justify-between h-16">
-            <!-- Left-aligned Logo -->
-            <div class="flex-shrink-0">
-                <x-application-logo class="text-white h-10 w-auto" />
+            <div class="flex items-center">
+                <!-- Left-aligned Logo -->
+                 <div class="flex-shrink-0 px-8">
+                    <x-application-logo-lg class="text-white h-10 w-auto" />
+                </div>
+
+                <!-- Centered MIS Name -->
+                <h1 class="text-2xl font-extrabold tracking-wide text-gray-200 stroke-1 stroke-white text-center flex-grow mx-4">
+                    Censorship Management Information System
+                </h1>
+
+                <!-- Right-aligned Logo -->
+                <div class="flex-shrink-0 px-8">
+                    <x-application-logo class="text-white h-10 w-auto" />
+                </div>
             </div>
-
-            <!-- Centered MIS Name -->
-            <h1 class="absolute left-1/2 transform -translate-x-1/2
-                       text-2xl font-extrabold tracking-wide text-gray-200 stroke-1 stroke-white">
-                Censorship Management Information System
-            </h1>
-
             <!-- Right-side: Current User & Role with Dropdown -->
-            <div class="relative flex items-center space-x-2" x-data="{ open: false }">
+            <div class="relative flex items-center space-x-2 ml-4" x-data="{ open: false }">
                 <button @click="open = !open" class="flex items-center space-x-2 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
                     <span>👤 {{ Auth::user()->name }}</span>
                     {{--<span class="text-gray-300">({{ ucfirst(Auth::user()->user_type->slug ?? 'User') }})</span>--}}

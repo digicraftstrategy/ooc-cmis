@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/application-logo-lg.svg') }}">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -43,14 +46,22 @@
             <div class="flex max-w-[1100px] w-full min-h-[550px] my-5 shadow-2xl shadow-dark-blue-500/25">
                 <!-- Info Column -->
                 <div class="flex-1 bg-dark-blue-600/85 backdrop-blur-md p-10 rounded-l-2xl text-white flex flex-col border-r border-white/10">
-                    <div class="text-center mb-10">
-                        <h1 class="text-2xl md:text-3xl font-semibold mb-3 flex items-center justify-center">
-                            {{--<span class="w-14 h-14 rounded-full bg-gradient-to-br from-dark-blue-400 to-dark-blue-500 flex items-center justify-center text-2xl md:text-3xl shadow-lg shadow-blue-500/50 mr-4">
-                                <i class="fas fa-shield-alt"></i>
-                            </span>--}}
+                    <!-- Logo and MIS Name Header -->
+                    <div class="flex items-center justify-center mb-10">
+                        <!-- Left Logo -->
+                        <div class="flex-shrink-0 ml-4">
+                            <x-application-logo-lg class="text-white h-10 w-auto" />
+                        </div>
+
+                        <!-- Centered MIS Name -->
+                        <h1 class="text-2xl md:text-3xl font-semibold text-center">
                             Censorship Management Information System
                         </h1>
-                        {{--<p class="text-base opacity-85 mt-2">Secure access to your dashboard</p>--}}
+
+                        <!-- Right Logo -->
+                        <div class="flex-shrink-0 mr-4">
+                            <x-application-logo class="text-white h-10 w-auto" />
+                        </div>
                     </div>
 
                     <div class="mb-8">
@@ -81,7 +92,7 @@
                         </div>--}}
                     </div>
                     <div class="mb-8">
-                        <h2 class="text-xl font-semibold mb-5 text-gray-200 border-b-2 border-blue-500/50 pb-3">How to Onboard New Users</h2>
+                        <h2 class="text-xl font-semibold mb-5 text-gray-200 border-b-2 border-blue-500/50 pb-3">Onboarding Process for New Clients</h2>
 
                         {{--<div class="flex items-start mb-5">
                             <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">1</div>
