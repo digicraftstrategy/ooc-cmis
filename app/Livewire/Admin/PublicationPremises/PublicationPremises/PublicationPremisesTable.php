@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\PublicationPremises\PublicationPremises;
 
 use App\Models\PremisesOwner;
 use App\Models\PublicationPremises;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -87,8 +88,7 @@ class PublicationPremisesTable extends Component
             session()->flash('message', 'Premises deleted successfully.');
         }
     }
-
-     public function saveStatus($premiseId)
+       public function saveStatus($premiseId)
     {
         $this->validate([
             'newStatus' => 'required|string|in:operational,suspended,ceased'
@@ -109,12 +109,14 @@ class PublicationPremisesTable extends Component
     public function render()
     {
         $query = PublicationPremises::with([
+            // Eager loading the related models
             'premises_province:id,name',
-            'prescribedActivity:id,activity_type'
+            'prescribedActivity:id,activity_type',
+            'prescribedActivities:id,activity_type'
         ])
         ->where('premises_owner_id', $this->premisesOwner->id);
 
-        // Add search functionality
+        // Search functionality
         if ($this->search) {
             $query->where(function ($q) {
                 $q->where('premises_name', 'like', '%' . $this->search . '%')
