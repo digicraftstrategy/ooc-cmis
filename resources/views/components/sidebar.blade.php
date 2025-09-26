@@ -35,7 +35,7 @@ new class extends Component {
     // Watch window resize for mobile detection
     init() {
         this.isMobile = window.innerWidth < 1024;
-        
+
         window.addEventListener('resize', () => {
             this.isMobile = window.innerWidth < 1024;
         });
@@ -74,9 +74,10 @@ new class extends Component {
     <!-- Header -->
     <div class="sticky top-0 z-10 flex items-center justify-between h-20 px-4 border-b border-slate-700 bg-slate-900">
         <span x-show="!sidebarCollapsed || isMobile"
-            class="px-4 text-lg font-bold text-blue-400 transition-opacity duration-300">{{ config('app.name') }}</span>
+            class="px-4 text-lg font-bold-medium text-blue-400 transition-opacity duration-300">{{ config('app.name') }} Admin Panel</span>
         <div class="flex-shrink-0 ml-0">
-            <x-application-logo class="text-white" />
+            {{--<x-application-logo class="text-white" />
+            <h1 class="px-4 text-lg font-bold text-blue-400 transition-opacity duration-300">Admin Panel</h1>--}}
         </div>
         <!-- Collapse/Expand Button (Desktop only) -->
         <button @click="sidebarCollapsed = !sidebarCollapsed"
