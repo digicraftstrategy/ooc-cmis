@@ -107,24 +107,20 @@
         <div class="sidebar-overlay" :class="{ 'active': sidebarOpen && isMobile }" @click="sidebarOpen = false">
         </div>
 
+        
         <!-- Sidebar Component -->
-        <aside class="bg-white shadow sidebar"
+        <aside class="shadow sidebar transition-all duration-300"
             :class="{
                 'w-64': !sidebarCollapsed && !isMobile,
                 'w-20': sidebarCollapsed && !isMobile,
                 'w-64 transform -translate-x-full': !sidebarOpen && isMobile,
                 'w-64 transform translate-x-0': sidebarOpen && isMobile
-            }">{{--
-            @if (auth()->user()->isAdmin() || auth()->user()->isSystemUser())
-                @include('components.sidebar')
-            @else
-                @include('components.layouts.client-sidebar')
-            @endif--}}
+            }">
             @include('components.sidebar')
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content"
+        <main class="main-content transition-all duration-300"
             :class="{
                 'ml-64': !sidebarCollapsed && !isMobile,
                 'ml-20': sidebarCollapsed && !isMobile,
@@ -148,16 +144,15 @@
                             d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
-                {{--
-                @if (auth()->user()->isSystemUser())
-                    <!-- Global Search Bar -->
-                    <livewire:global-routes-search />
-                    <hr />
-                @endif --}}
 
                 <!-- Page Heading -->
                 @if (isset($header))
-                    <header class="bg-white shadow">
+                    <header class="bg-white shadow transition-all duration-300"
+                        :class="{
+                            'ml-64': !sidebarCollapsed && !isMobile,
+                            'ml-20': sidebarCollapsed && !isMobile,
+                            'ml-0': isMobile
+                        }">
                         <div class="px-4 py-6 mx-auto sm:px-6 lg:px-8">
                             {{ $header }}
                         </div>
@@ -165,7 +160,12 @@
                 @endif
 
                 <!-- Page Content -->
-                <div class="py-6">
+                <div class="py-6 transition-all duration-300"
+                    :class="{
+                        'ml-64': !sidebarCollapsed && !isMobile,
+                        'ml-20': sidebarCollapsed && !isMobile,
+                        'ml-0': isMobile
+                    }">
                     <div class="px-4 mx-auto max-w-12xl sm:px-6 lg:px-8">
                         {{ $slot }}
                     </div>
