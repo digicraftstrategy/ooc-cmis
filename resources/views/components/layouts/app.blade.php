@@ -84,29 +84,25 @@
         }
     </style>
 </head>
-
 <body class="font-sans antialiased" :class="{ 'sidebar-open': sidebarOpen && isMobile }">
-    <div class="bg-gray-100 app-container" 
-        x-data="{
-            sidebarOpen: false, /* for mobile toggle */
-            sidebarCollapsed: localStorage.getItem('sidebarCollapsed') === 'true', /* persists state */
-            isMobile: window.innerWidth < 768,
+    <div class="bg-gray-100 app-container flex h-screen overflow-hidden" x-data="{
+        sidebarOpen: false,
+        sidebarCollapsed: localStorage.getItem('sidebarCollapsed') === 'true',
+        isMobile: window.innerWidth < 768,
 
-            init() {
-                /* persist collapse state */
-                this.$watch('sidebarCollapsed', (val) => {
-                    localStorage.setItem('sidebarCollapsed', val);
-                });
+        init() {
+            this.$watch('sidebarCollapsed', (val) => {
+                localStorage.setItem('sidebarCollapsed', val);
+            });
 
-                /* update on resize */
-                window.addEventListener('resize', () => {
-                    this.isMobile = window.innerWidth < 768;
-                    if (!this.isMobile && this.sidebarOpen) {
-                        this.sidebarOpen = false;
-                    }
-                });
-            }
-        }">
+            window.addEventListener('resize', () => {
+                this.isMobile = window.innerWidth < 768;
+                if (!this.isMobile && this.sidebarOpen) {
+                    this.sidebarOpen = false;
+                }
+            });
+        }
+    }">
 
         <!-- Dark overlay when sidebar is open on mobile -->
         <div class="sidebar-overlay" 
@@ -132,7 +128,6 @@
             --}}
             @include('components.sidebar')
         </aside>
-
         <!-- Main Content -->
         <main class="main-content transition-all duration-300"
             :class="{
@@ -140,8 +135,12 @@
                 'ml-20': sidebarCollapsed && !isMobile,   /* collapsed sidebar */
                 'ml-0': isMobile                          /* mobile view, no margin */
             }">
-
+            <div class="sticky top-0 z-50 border-b border-gray-200 shadow-sm pt-2 pb-2
+           bg-gradient-to-r from-blue-300 via-blue-500 to-blue-600">
+                <x-header/>
+            </div>
             <div class="relative">
+            <!-- Sticky Header for MIS Name -->
                 <!-- Mobile hamburger menu -->
                 <button x-show="isMobile" @click="sidebarOpen = !sidebarOpen" type="button"
                     class="fixed z-50 inline-flex items-center justify-center p-2 text-gray-400 rounded-md top-4 left-4 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -170,27 +169,14 @@
                 @endif
                 --}}
 
-                <!-- Page Heading -->
+                <!-- Optional Global Search / $header content -->
                 @if (isset($header))
-                    <header class="bg-white shadow transition-all duration-300"
-                        :class="{
-                            'ml-64': !sidebarCollapsed && !isMobile,
-                            'ml-20': sidebarCollapsed && !isMobile,
-                            'ml-0': isMobile
-                        }">
-                        <div class="px-4 py-6 mx-auto sm:px-6 lg:px-8">
-                            {{ $header }}
-                        </div>
-                    </header>
+                    <div class="px-4 py-6 mx-auto sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
                 @endif
-
                 <!-- Page Content -->
-                <div class="py-6 transition-all duration-300"
-                    :class="{
-                        'ml-0': !sidebarCollapsed && !isMobile,
-                        'ml-0': sidebarCollapsed && !isMobile,
-                        'ml-0': isMobile
-                    }">
+                <div class="py-6 transition-all duration-300">
                     <div class="px-4 mx-auto max-w-12xl sm:px-6 lg:px-8">
                         {{ $slot }}
                     </div>

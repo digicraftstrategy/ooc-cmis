@@ -29,8 +29,8 @@ new class extends Component {
     filmsPublicationOpen: localStorage.getItem('filmsPublicationOpen') === 'true',
 
     userMenuOpen: false,
-    sidebarCollapsed: false,
-    isMobile: window.innerWidth < 1024,
+    //sidebarCollapsed: false,
+    //isMobile: window.innerWidth < 1024,
 
     // Watch window resize for mobile detection
     init() {
@@ -69,18 +69,18 @@ new class extends Component {
             this[dropdownName] = !this[dropdownName];
         }
     }
-}" class="flex flex-col h-full bg-gradient-to-b from-slate-900 to-slate-800 text-white"
-:class="{ 'w-64': !sidebarCollapsed || isMobile, 'w-20': sidebarCollapsed && !isMobile }">
+}" class="flex flex-col h-full bg-gradient-to-b from-slate-900 to-slate-800 text-white">
+
     <!-- Header -->
-    <div class="sticky top-0 z-10 flex items-center justify-between h-16 px-4 border-b border-slate-700 bg-slate-900">
+    <div class="sticky top-0 z-10 flex items-center justify-between h-20 px-4 border-b border-slate-700 bg-slate-900">
         <span x-show="!sidebarCollapsed || isMobile"
             class="px-4 text-lg font-bold text-blue-400 transition-opacity duration-300">{{ config('app.name') }}</span>
-        <div class="flex-shrink-0">
+        <div class="flex-shrink-0 ml-0">
             <x-application-logo class="text-white" />
         </div>
         <!-- Collapse/Expand Button (Desktop only) -->
         <button @click="sidebarCollapsed = !sidebarCollapsed"
-            class="hidden p-2 rounded-md hover:bg-slate-700 focus:outline-none lg:block transition-colors duration-200">
+            class="hidden rounded-md hover:bg-slate-700 focus:outline-none lg:block transition-colors duration-200">
             <svg x-show="!sidebarCollapsed" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
