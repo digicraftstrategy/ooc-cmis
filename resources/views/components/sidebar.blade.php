@@ -69,7 +69,8 @@ new class extends Component {
             this[dropdownName] = !this[dropdownName];
         }
     }
-}" class="flex flex-col h-full bg-gradient-to-b from-slate-900 to-slate-800 text-white">
+}" class="flex flex-col h-full bg-gradient-to-b from-slate-900 to-slate-800 text-white"
+:class="{ 'w-64': !sidebarCollapsed || isMobile, 'w-20': sidebarCollapsed && !isMobile }">
     <!-- Header -->
     <div class="sticky top-0 z-10 flex items-center justify-between h-16 px-4 border-b border-slate-700 bg-slate-900">
         <span x-show="!sidebarCollapsed || isMobile"
@@ -93,13 +94,13 @@ new class extends Component {
     <nav class="flex-1 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800">
         <div class="py-1 space-y-1">
             <!-- Dashboard Link -->
-            <x-sidebar-link route="dashboard" wire:navigate
+            <a route="dashboard" wire:navigate
                 class="flex items-center w-full px-4 py-3 text-slate-200 rounded-lg hover:bg-blue-600/20 hover:text-white group transition-colors duration-200 mx-2">
                 <svg class="w-5 h-5 text-blue-400 group-hover:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                 </svg>
                 <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Dashboard</span>
-            </x-sidebar-link>
+            </a>
 
             <!-- Reports -->
             <div class="py-1">
