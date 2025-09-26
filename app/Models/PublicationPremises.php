@@ -51,6 +51,17 @@ class PublicationPremises extends Model
         return $this->belongsTo(PrescribedActivity::class, 'prescribed_activity_id');
     }
 
+    public function getActivityTypeAttribute()
+    {
+        // Return the first activity if using many-to-many
+        if ($this->prescribedActivities->count() > 0) {
+            return $this->prescribedActivities->first()->activity_type;
+        }
+
+        // Fallback to the one-to-many relationship
+        return $this->prescribedActivity->activity_type ?? 'N/A';
+    }
+
     protected static function boot()
     {
         parent::boot();
