@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('application_number')->unique();
             $table->foreignId('premises_owner_id')->constrained()->onDelete('cascade');
             $table->string('premises_name');
-            $table->string('application_status', ['pending', 'review', 'approved', 'rejected'])->default('pending');
+            $table->enum('application_status', ['pending', 'review', 'approved', 'rejected'])->default('pending');
             $table->string('province_id');
             $table->timestamps();
         });
