@@ -24,7 +24,7 @@ class PremisesOwnersTable extends Component
     public $premisesOwnerIdBeingViewed = null;
     public $premisesOwnerIdBeingEdited = null;
     public $showCreateModal = false;
-
+    //public $showEditModal = false; //Added by SONN
     protected $listeners = [
         'closeModal',
         'refreshPremisesOwner' => 'refresh'
@@ -60,9 +60,18 @@ class PremisesOwnersTable extends Component
         $this->showCreateModal = true;
     }
 
-    public function showEditModal($premisesOwnerId)
+    // Trigger the modal
+    public function openEditModal($uuid)
     {
-        $this->premisesOwnerIdBeingEdited = $premisesOwnerId;
+        $this->premisesOwnerIdBeingEdited = $uuid;
+        //$this->showEditModal = true;
+    }
+
+    // Close modal
+    public function closeEditModal()
+    {
+        //$this->showEditModal = false;
+        $this->premisesOwnerIdBeingEdited = null;
     }
 
     public function showViewModal($premisesOwnerId)
@@ -92,7 +101,7 @@ class PremisesOwnersTable extends Component
         session()->flash('message', 'Premises Owner deleted successfully.');
         $this->closeModal();
     }
-    public function render() 
+    public function render()
     {
         $premisesOwners = PremisesOwner::query()
             ->with('premises_type')
@@ -105,7 +114,8 @@ class PremisesOwnersTable extends Component
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
         return view('livewire.admin.publication-premises.premises-owner.premises-owners-table', [
-            'premisesOwners' => $premisesOwners
+            'premisesOwners' => $premisesOwners,
+            //'premisesOwners' => PremisesOwner::paginate(10),
         ]);
     }
 }

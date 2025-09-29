@@ -1,7 +1,7 @@
 <header>
     <div class="px-8 relative">
-        <div class="flex items-center justify-between h-16">
-            <div class="flex items-center">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center ml-80">
                 <!-- Left-aligned Logo -->
                  <div class="flex-shrink-0 px-8">
                     <x-application-logo-lg class="text-white h-10 w-auto" />
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <!-- Right-side: Current User & Role with Dropdown -->
-            <div class="relative flex items-center space-x-2 ml-4" x-data="{ open: false }">
+            <div class="relative flex items-center space-x-2" x-data="{ open: false }">
                 <button @click="open = !open" class="flex items-center space-x-2 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
                     <span>👤 {{ Auth::user()->name }}</span>
                     {{--<span class="text-gray-300">({{ ucfirst(Auth::user()->user_type->slug ?? 'User') }})</span>--}}

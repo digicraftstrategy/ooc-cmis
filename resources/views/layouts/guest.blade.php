@@ -6,6 +6,16 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+        
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicons/favicon.ico') }}">
+        <link rel="icon" type="image/svg+xml" href="{{ asset('favicons/favicon.svg') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicons/favicon-96x96.png') }}">
+        <link rel="manifest" href="{{ asset('favicons/site.webmanifest') }}">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicons/web-app-manifest-192x192.png') }}">
+        <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('favicons/web-app-manifest-512x512.png') }}">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -38,8 +48,8 @@
         </script>
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-br from-dark-blue-900 via-dark-blue-800 to-dark-blue-700">
-            <div class="flex max-w-[1100px] w-full min-h-[550px] my-5 shadow-2xl shadow-dark-blue-500/25">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center mt-0 sm:pt-0 bg-gradient-to-br from-dark-blue-900 via-dark-blue-800 to-dark-blue-700">
+            <div class="flex max-w-[1100px] w-full min-h-[550px] mt-20 pt-5 shadow-2xl shadow-dark-blue-500/25">
                 <!-- Info Column -->
                 <div class="flex-1 bg-dark-blue-600/85 backdrop-blur-md p-10 rounded-l-2xl text-white flex flex-col border-r border-white/10">
                     <!-- Logo and MIS Name Header -->
