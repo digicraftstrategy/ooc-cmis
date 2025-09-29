@@ -48,8 +48,8 @@
         </script>
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-br from-dark-blue-900 via-dark-blue-800 to-dark-blue-700">
-            <div class="flex max-w-[1100px] w-full min-h-[550px] my-5 shadow-2xl shadow-dark-blue-500/25">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center mt-0 sm:pt-0 bg-gradient-to-br from-dark-blue-900 via-dark-blue-800 to-dark-blue-700">
+            <div class="flex max-w-[1100px] w-full min-h-[550px] mt-20 pt-5 shadow-2xl shadow-dark-blue-500/25">
                 <!-- Info Column -->
                 <div class="flex-1 bg-dark-blue-600/85 backdrop-blur-md p-10 rounded-l-2xl text-white flex flex-col border-r border-white/10">
                     <!-- Logo and MIS Name Header -->
