@@ -5,9 +5,12 @@ namespace App\Livewire\Admin\PublicationPremises\PremisesOwner;
 use App\Models\PremisesOwnerType;
 use App\Models\PremisesOwner;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CreatePremisesOwners extends Component
 {
+    use WithFileUploads;
+    
     public $logo;
     public $website;
     public $owners_name;

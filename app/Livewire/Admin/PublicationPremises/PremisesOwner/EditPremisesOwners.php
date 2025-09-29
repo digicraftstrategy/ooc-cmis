@@ -5,9 +5,12 @@ namespace App\Livewire\Admin\PublicationPremises\PremisesOwner;
 use App\Models\PremisesOwnerType;
 use App\Models\PremisesOwner;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EditPremisesOwners extends Component
 {
+    use WithFileUploads;
+
     public $premisesOwner;
     public $owners_name;
     public $phone;
@@ -62,7 +65,9 @@ class EditPremisesOwners extends Component
         $this->logo = $this->premisesOwner->logo;
         $this->website = $this->premisesOwner->website;
 
-        $this->showModal = true;
+        $this->premisesOwnerTypes = PremisesOwnerType::orderBy('type')->get();
+
+        //$this->showModal = true;
     }
     public function update()
     {
@@ -75,9 +80,15 @@ class EditPremisesOwners extends Component
             'premises_owner_type_id' => 'required|exists:premises_owner_types,id',
 
             // ✅ Validation rules for new fields
-            'logo' => 'nullable|string|max:255',
+            'logo' => 'nullable|image|max:5120', // same as create
             'website' => 'nullable|url|max:255',
         ]);
+
+        // Handle logo upload (only if a new file was uploaded)
+        $logoPath = $this->premisesOwner->logo; // keep old if none uploaded
+        if ($this->logo && !is_string($this->logo)) {
+            $logoPath = $this->logo->store('premises-owners/logos', 'public');
+        }
 
         $this->premisesOwner->update([
             'owners_name' => $this->owners_name,
@@ -87,7 +98,7 @@ class EditPremisesOwners extends Component
             'premises_owner_type_id' => $this->premises_owner_type_id,
 
             // ✅ Save new fields
-            'logo' => $this->logo,
+            'logo' => $logoPath,
             'website' => $this->website,
         ]);
 

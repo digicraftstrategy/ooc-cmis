@@ -29,75 +29,97 @@
                     </div>
 
                     <!-- Form Content -->
-                    <div class="px-6 py-6 bg-white">
-                        <div class="space-y-5">
-                            <!-- Owner's Name -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Owner's Name <span class="text-red-500">*</span></label>
-                                <input type="text" wire:model="owners_name"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Enter owner's full name">
-                                @error('owners_name') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
-                            </div>
+                    <div class="px-6 py-8 bg-white">
+                        <!-- Owner's Name -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Owner's Name <span class="text-red-500">*</span></label>
+                            <input type="text" wire:model="owners_name"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Enter owner's full name">
+                            @error('owners_name') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+                        </div>
 
-                            <!-- Logo Image -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Logo</label>
-                                <input type="text" wire:model="logo"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Company Logo">
-                                @error('logo') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
-                            </div>
+                        <!-- Logo Image -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Logo</label>
 
-                            <!-- Contact Information -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
-                                    <input type="text" wire:model="phone"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Phone number">
-                                    @error('phone') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+                            {{-- Show existing logo if already saved --}}
+                            @if($logo && is_string($logo))
+                                <div class="mb-3">
+                                    <img src="{{ Storage::url($logo) }}" 
+                                        alt="Current Logo" 
+                                        class="h-16 rounded-md shadow">
                                 </div>
+                            @endif
 
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email <span class="text-red-500">*</span></label>
-                                    <input type="email" wire:model="email"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="email@example.com">
-                                    @error('email') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+                            {{-- Upload new logo --}}
+                            <input type="file" wire:model="logo"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+
+                            {{-- Preview for new upload --}}
+                            @if ($logo && !is_string($logo))
+                                <div class="mt-2">
+                                    <img src="{{ $logo->temporaryUrl() }}" 
+                                        alt="Preview" 
+                                        class="h-16 rounded-md shadow">
                                 </div>
-                            </div>
+                            @endif
 
-                             <!-- Website Link -->
+                            @error('logo') 
+                                <span class="text-xs text-red-500 mt-1">{{ $message }}</span> 
+                            @enderror
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Website Url</label>
-                                <input type="text" wire:model="website"
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                                <input type="text" wire:model="phone"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Company website">
-                                @error('website') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+                                    placeholder="Phone number">
+                                @error('phone') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
                             </div>
 
-                            <!-- Address -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">HQ Address</label>
-                                <textarea wire:model="address" rows="3"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
-                                    placeholder="Enter full business address"></textarea>
-                                @error('address') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email <span class="text-red-500">*</span></label>
+                                <input type="email" wire:model="email"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="email@example.com">
+                                @error('email') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
                             </div>
+                        </div>
 
-                            <!-- Owner Type -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Owner Type <span class="text-red-500">*</span></label>
-                                <select wire:model="premises_owner_type_id"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    <option value="">Select Owner Type</option>
-                                    @foreach($premisesOwnerTypes as $premisesOwnerType)
-                                        <option value="{{ $premisesOwnerType->id }}">{{ $premisesOwnerType->type }}</option>
-                                    @endforeach
-                                </select>
-                                @error('premises_owner_type_id') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
-                            </div>
+                        <!-- Website Link -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Website Url</label>
+                            <input type="text" wire:model="website"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Company website">
+                            @error('website') 
+                                <span class="text-xs text-red-500 mt-1">{{ $message }}</span> 
+                            @enderror
+                        </div>
+
+                        <!-- Address -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">HQ Address</label>
+                            <textarea wire:model="address" rows="3"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                                placeholder="Enter full business address"></textarea>
+                            @error('address') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+                        </div>
+
+                        <!-- Owner Type -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Owner Type <span class="text-red-500">*</span></label>
+                            <select wire:model="premises_owner_type_id"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select Owner Type</option>
+                                @foreach($premisesOwnerTypes as $premisesOwnerType)
+                                    <option value="{{ $premisesOwnerType->id }}">{{ $premisesOwnerType->type }}</option>
+                                @endforeach
+                            </select>
+                            @error('premises_owner_type_id') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
                         </div>
                     </div>
 
