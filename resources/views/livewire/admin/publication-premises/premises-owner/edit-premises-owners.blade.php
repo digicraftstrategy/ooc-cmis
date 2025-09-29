@@ -40,6 +40,15 @@
                                 @error('owners_name') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
                             </div>
 
+                            <!-- Logo Image -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Logo</label>
+                                <input type="text" wire:model="logo"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Company Logo">
+                                @error('logo') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+                            </div>
+
                             <!-- Contact Information -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -57,6 +66,15 @@
                                         placeholder="email@example.com">
                                     @error('email') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
                                 </div>
+                            </div>
+
+                             <!-- Website Link -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Website Url</label>
+                                <input type="text" wire:model="website"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Company website">
+                                @error('website') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
                             </div>
 
                             <!-- Address -->
