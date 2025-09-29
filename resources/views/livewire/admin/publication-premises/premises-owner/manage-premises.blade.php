@@ -151,7 +151,7 @@
                                     Quick Actions
                                 </h3>
                                 <div class="space-y-3">
-                                    <x-blue-button-link href="{{ route('admin.publication-premises.premises.edit', $premisesOwner->uuid) }}" wire:navigate
+                                    <x-blue-button-link href="{{ route('admin.publication-premises.premises-owner.edit', $premisesOwner->uuid) }}" wire:navigate
                                         class="w-full justify-center gap-2 text-gray-700 hover:bg-blue-50 border border-blue-300 shadow-sm">
                                         <x-icons.pencil-square class="w-5 h-5" />
                                         Edit Owner Details

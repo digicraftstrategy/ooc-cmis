@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Dashboard;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
+//use App\Livewire\Admin\PublicationPremises\PremisesOwner\EditPremisesOwners;
 
 /*
 |--------------------------------------------------------------------------
@@ -147,8 +148,12 @@ Route::group(
                     ->name('admin.publication-premises.premises-owner');*/
                  Route::get('/register', \App\Livewire\Admin\PublicationPremises\PremisesOwner\CreatePremisesOwners::class)
                     ->name('admin.publication-premises.premises-owner.create');
-                 Route::get('/edit/{id}', \App\Livewire\Admin\PublicationPremises\PremisesOwner\EditPremisesOwners::class)
-                    ->name('admin.publication-premises.premises-owner.edit');
+                 Route::get('/edit/{uuid}', \App\Livewire\Admin\PublicationPremises\PremisesOwner\EditPremisesOwners::class) //--> Note by SON: The route Route::get('/edit/{id}', EditPremisesOwners::class) is not required,
+                    ->name('admin.publication-premises.premises-owner.edit');                                                // unless you want a dedicated edit page (not just a modal).
+
+                //Route::get('/edit/{uuid}', EditPremisesOwners::class)
+                    //->name('premises-owners.edit');
+
                  Route::get('/view/{id}', \App\Livewire\Admin\PublicationPremises\PremisesOwner\ViewPremisesOwners::class)
                      ->name('admin.publication-premises.premises-owner.view');
                 Route::get('/{id}/manage', \App\Livewire\Admin\PublicationPremises\PremisesOwner\ManagePremises::class)

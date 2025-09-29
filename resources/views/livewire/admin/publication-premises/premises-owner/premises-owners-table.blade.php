@@ -188,15 +188,19 @@
                                                 </svg>
                                                 Manage Details
                                             </a>
-
-                                            <!-- Edit Action -->
-                                            <button wire:click="openEditModal({{ $premisesOwner->id }})"
-                                                class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 group"
-                                                role="menuitem">
-                                                <svg class="w-4 h-4 mr-3 text-green-500 group-hover:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                           <!-- Edit Action -->
+                                        <button href="{{ route('admin.publication-premises.premises-owner.edit', $premisesOwner->uuid) }}"
+                                            wire:navigate
+                                            class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 group">
+                                                <!-- Icon -->
+                                                <svg class="w-4 h-4 mr-3 text-green-500 group-hover:text-green-600"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                                 </svg>
-                                                Edit Owner
+
+                                                <!-- Label -->
+                                                <span class="font-medium">Edit Owner</span>
                                             </button>
 
                                             <!-- Delete Action -->
@@ -296,7 +300,7 @@
     @if($premisesOwnerIdBeingEdited)
         <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75" aria-hidden极true"></div>
+                <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75" aria-hidden="true"></div>
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
                 <div class="inline-block w-full max-w-2xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                     @livewire('admin.publication-premises.premises-owner.edit-premises-owners', ['premisesOwnerId' => $premisesOwnerIdBeingEdited], key('edit-premises-owner-'.$premisesOwnerIdBeingEdited))
