@@ -19,14 +19,16 @@ class EditPremisesOwners extends Component
     public $showModal = true;
     public $premisesOwnerTypes;
 
-    public function mount(PremisesOwner $premisesOwner)
+    public function mount($premisesOwnerId)
     {
-        $this->premisesOwner = $premisesOwner;
-        $this->owners_name = $premisesOwner->owners_name;
-        $this->phone = $premisesOwner->phone;
-        $this->address = $premisesOwner->address;
-        $this->email = $premisesOwner->email;
-        $this->premises_owner_type_id = $premisesOwner->premises_owner_type_id;
+        $this->premisesOwner = PremisesOwner::findOrFail($premisesOwnerId);
+
+        // Fixed: Correct property assignments
+        $this->owners_name = $this->premisesOwner->owners_name;
+        $this->phone = $this->premisesOwner->phone;
+        $this->address = $this->premisesOwner->address;
+        $this->email = $this->premisesOwner->email;
+        $this->premises_owner_type_id = $this->premisesOwner->premises_owner_type_id;
 
         $this->premisesOwnerTypes = PremisesOwnerType::orderBy('type')->get();
     }
@@ -36,21 +38,10 @@ class EditPremisesOwners extends Component
         $this->dispatch('closeModal');
     }
 
-      public function openEditModal($uuid)
-    {
-        $this->premisesOwnerIdBeingEdited = $uuid;
-        //$this->showEditModal = true;
-    }
-    public function closeEditModal()
-    {
-        //$this->showEditModal = false;
-        $this->premisesOwnerIdBeingEdited = null;
-    }
-
     public function update()
     {
         $this->validate([
-            'owners_name' => 'required|string|max:75|unique:premises_owners,owners_name,' . $this->premisesOwner->uuid,
+            'owners_name' => 'required|string|max:75|unique:premises_owners,owners_name,' . $this->premisesOwner->id,
             'phone' => 'nullable|string|max:10',
             'address' => 'nullable|string|max:255',
             'email' => 'required|string|email',
