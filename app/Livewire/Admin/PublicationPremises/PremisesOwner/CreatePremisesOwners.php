@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class CreatePremisesOwners extends Component
 {
+    public $logo;
+    public $website;
     public $owners_name;
     public $phone;
     public $address;
@@ -35,13 +37,23 @@ class CreatePremisesOwners extends Component
             'address' => 'nullable|string|max:255',
             'email' => 'required|string|email',
             'premises_owner_type_id' => 'required|exists:premises_owner_types,id',
+            'website' => 'nullable|url|max:255',
+            'logo' => 'nullable|image|max:5120', // 5MB max
         ]);
+
+        // Handle logo upload
+        $logoPath = null;
+        if ($this->logo) {
+            $logoPath = $this->logo->store('premises-owners/logos', 'public');
+        }
 
         PremisesOwner::create([
             'owners_name' => $this->owners_name,
             'phone' => $this->phone,
             'address' => $this->address,
             'email' => $this->email,
+            'logo' => $logoPath,
+            'website' => $this->website,
             'premises_owner_type_id' => $this->premises_owner_type_id,
         ]);
 
