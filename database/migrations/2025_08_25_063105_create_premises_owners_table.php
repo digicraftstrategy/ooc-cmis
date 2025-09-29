@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('email')->unique();
-            // More fields to be added
+            $table->string('website')->nullable();
+            $table->string('logo')->nullable();
 
             $table->unsignedBigInteger('premises_owner_type_id');
             $table->foreign('premises_owner_type_id')->references('id')->on('premises_owner_types')->onDelete('cascade');
