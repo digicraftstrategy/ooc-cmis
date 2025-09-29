@@ -101,7 +101,7 @@ class PremisesOwnersTable extends Component
         session()->flash('message', 'Premises Owner deleted successfully.');
         $this->closeModal();
     }
-    public function render() 
+    public function render()
     {
         $premisesOwners = PremisesOwner::query()
             ->with('premises_type')
