@@ -148,7 +148,7 @@ Route::group(
                     ->name('admin.publication-premises.premises-owner');*/
                  Route::get('/register', \App\Livewire\Admin\PublicationPremises\PremisesOwner\CreatePremisesOwners::class)
                     ->name('admin.publication-premises.premises-owner.create');
-                 Route::get('/edit/{uuid}', \App\Livewire\Admin\PublicationPremises\PremisesOwner\EditPremisesOwners::class) //--> Note by SON: The route Route::get('/edit/{id}', EditPremisesOwners::class) is not required,
+                 Route::get('/edit/{id}', \App\Livewire\Admin\PublicationPremises\PremisesOwner\EditPremisesOwners::class) //--> Note by SON: The route Route::get('/edit/{id}', EditPremisesOwners::class) is not required,
                     ->name('admin.publication-premises.premises-owner.edit');                                                // unless you want a dedicated edit page (not just a modal).
 
                 //Route::get('/edit/{uuid}', EditPremisesOwners::class)
