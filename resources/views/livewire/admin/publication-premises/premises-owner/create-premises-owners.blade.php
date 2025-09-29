@@ -10,7 +10,7 @@
                 <!-- Modal Panel -->
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-                <div class="inline-block w-full max-w-md p-0 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-2xl sm:my-16">
+                <div class="inline-block w-full max-w-2xl p-0 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-2xl sm:my-16">
                     <!-- Header -->
                     <div class="px-6 py-5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
                         <div class="flex items-center justify-between">
@@ -50,6 +50,66 @@
                                 @error('owners_name') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                             </div>
 
+                            <!-- Logo Upload -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                    <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    Company Logo
+                                </label>
+
+                                <!-- Logo Preview -->
+                                <div x-data="{ logoPreview: null }" class="space-y-3">
+                                    <!-- Preview -->
+                                    <div x-show="logoPreview" class="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg">
+                                        <img :src="logoPreview" alt="Logo preview" class="max-h-32 max-w-full object-contain">
+                                    </div>
+
+                                    <!-- Upload Area -->
+                                    <div class="flex items-center space-x-4">
+                                        <label class="flex-1 cursor-pointer">
+                                            <input type="file" wire:model="logo"
+                                                class="hidden"
+                                                accept="image/*"
+                                                x-on:change="logoPreview = URL.createObjectURL($event.target.files[0])">
+                                            <div class="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-400 transition-colors duration-200 text-center">
+                                                <div class="flex flex-col items-center justify-center space-y-2">
+                                                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                    </svg>
+                                                    <span class="text-sm text-gray-600">
+                                                        <span class="text-blue-600 font-medium">Click to upload</span> or drag and drop
+                                                    </span>
+                                                    <span class="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</span>
+                                                </div>
+                                            </div>
+                                        </label>
+
+                                        <!-- Remove Button -->
+                                        <button x-show="logoPreview" type="button"
+                                            x-on:click="logoPreview = null; $wire.set('logo', null)"
+                                            class="px-4 py-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 transition-colors duration-200 flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                            Remove
+                                        </button>
+                                    </div>
+
+                                    <!-- Upload Progress -->
+                                    @if ($logo && $logo->isPreviewable())
+                                        <div class="text-xs text-blue-600 flex items-center">
+                                            <svg class="w-4 h-4 mr-1 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                            </svg>
+                                            Uploading...
+                                        </div>
+                                    @endif
+                                </div>
+                                @error('logo') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+
                             <!-- Contact Information -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -77,6 +137,27 @@
                                         placeholder="email@example.com">
                                     @error('email') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                                 </div>
+                            </div>
+
+                            <!-- Website URL -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                    <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9m0 9c-5 0-9-4-9-9s4-9 9-9"></path>
+                                    </svg>
+                                    Website URL
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                        </svg>
+                                    </div>
+                                    <input type="url" wire:model="website"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 shadow-sm"
+                                        placeholder="https://example.com">
+                                </div>
+                                @error('website') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                             </div>
 
                             <!-- Address -->
@@ -151,6 +232,12 @@
         input:focus, select:focus, textarea:focus {
             outline: 2px solid transparent;
             outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Custom file upload styling */
+        input[type="file"]:focus + div {
+            border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
     </style>

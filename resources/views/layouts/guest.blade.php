@@ -53,7 +53,7 @@
                 <!-- Info Column -->
                 <div class="flex-1 bg-dark-blue-600/85 backdrop-blur-md p-10 rounded-l-2xl text-white flex flex-col border-r border-white/10">
                     <!-- Logo and MIS Name Header -->
-                    <div class="flex items-center justify-center mb-10">
+                    <div class="flex items-center justify-center mb-10 bg-blue-100/10 p-2 rounded shadow-emerald-300/25">
                         <!-- Left Logo -->
                         <div class="flex-shrink-0 ml-4">
                             <x-application-logo-lg class="text-white h-10 w-auto" />
