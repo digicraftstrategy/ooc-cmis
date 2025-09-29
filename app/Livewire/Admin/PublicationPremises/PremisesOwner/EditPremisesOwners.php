@@ -16,6 +16,10 @@ class EditPremisesOwners extends Component
     public $premises_owner_type_id;
     public $premisesOwnerIdBeingEdited = null;
 
+    // ✅ Add new fields
+    public $logo;
+    public $website;
+
     public $showModal = true;
     public $premisesOwnerTypes;
 
@@ -30,6 +34,10 @@ class EditPremisesOwners extends Component
         $this->premises_owner_type_id = $this->premisesOwner->premises_owner_type_id;
 
         $this->premisesOwnerTypes = PremisesOwnerType::orderBy('type')->get();
+
+         // ✅ Map new fields
+        $this->logo = $this->premisesOwner->logo;
+        $this->website = $this->premisesOwner->website;
     }
 
     public function closeModal()
@@ -37,14 +45,38 @@ class EditPremisesOwners extends Component
         $this->dispatch('closeModal');
     }
 
+    protected $listeners = ['editPremisesOwner' => 'edit'];
+
+    //Open edit form through event listener/route
+    public function edit($id)
+    {
+        $this->premisesOwner = PremisesOwner::findOrFail($id);
+
+        $this->owners_name = $this->premisesOwner->owners_name;
+        $this->phone = $this->premisesOwner->phone;
+        $this->address = $this->premisesOwner->address;
+        $this->email = $this->premisesOwner->email;
+        $this->premises_owner_type_id = $this->premisesOwner->premises_owner_type_id;
+
+        // ✅ Load new fields
+        $this->logo = $this->premisesOwner->logo;
+        $this->website = $this->premisesOwner->website;
+
+        $this->showModal = true;
+    }
     public function update()
     {
         $this->validate([
             'owners_name' => 'required|string|max:75|unique:premises_owners,owners_name,' . $this->premisesOwner->id,
+
             'phone' => 'nullable|string|max:10',
             'address' => 'nullable|string|max:255',
             'email' => 'required|string|email',
             'premises_owner_type_id' => 'required|exists:premises_owner_types,id',
+
+            // ✅ Validation rules for new fields
+            'logo' => 'nullable|string|max:255',
+            'website' => 'nullable|url|max:255',
         ]);
 
         $this->premisesOwner->update([
@@ -53,6 +85,10 @@ class EditPremisesOwners extends Component
             'address' => $this->address,
             'email' => $this->email,
             'premises_owner_type_id' => $this->premises_owner_type_id,
+
+            // ✅ Save new fields
+            'logo' => $this->logo,
+            'website' => $this->website,
         ]);
 
         $this->closeModal();
