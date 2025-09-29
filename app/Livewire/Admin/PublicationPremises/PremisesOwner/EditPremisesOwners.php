@@ -23,7 +23,6 @@ class EditPremisesOwners extends Component
     {
         $this->premisesOwner = PremisesOwner::findOrFail($premisesOwnerId);
 
-        // Fixed: Correct property assignments
         $this->owners_name = $this->premisesOwner->owners_name;
         $this->phone = $this->premisesOwner->phone;
         $this->address = $this->premisesOwner->address;
