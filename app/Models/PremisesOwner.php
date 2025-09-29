@@ -14,8 +14,10 @@ class PremisesOwner extends Model
     protected $fillable = [
         'uuid',
         'owners_name',
+        'logo',
         'phone',
         'address',
+        'website',
         'email',
         'premises_owner_type_id'
     ];
