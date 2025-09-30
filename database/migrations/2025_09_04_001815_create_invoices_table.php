@@ -13,7 +13,19 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_number')->unique();
+            $table->date('invoice_date');
+            $table->date('due_date');
+            $table->enum('status', ['pending', 'paid', 'cancelled','overdue'])->default('pending');
+
+            $table->unsignedBigInteger('premises_id');
+            $table->foreign('premises_id')->references('id')->on('premsies')->onDelete('cascade');
+
+            $table->unsignedBigInteger('activity_id');
+            $table->foreign('activity_id')->references('id')->on('premises_activities')->onDelete('cascade');
             $table->timestamps();
+
+            $table->index(['premises_id', 'activity_id']);
         });
     }
 
