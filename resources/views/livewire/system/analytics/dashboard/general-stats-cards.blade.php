@@ -31,7 +31,7 @@
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold text-gray-700">Premises</h3>
                 <div class="p-3 bg-indigo-100 rounded-full">
-                     {{--<x-icons.building />--}}
+                     <x-icons.building />
                 </div>
             </div>
             <div class="mt-2">
@@ -81,7 +81,7 @@
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold text-gray-700">Prescribed Activities</h3>
                 <div class="p-3 bg-emerald-100 rounded-full">
-                    {{--<x-icons.activity />--}}
+                    <x-icons.activity />
                 </div>
             </div>
             <div class="mt-2">
