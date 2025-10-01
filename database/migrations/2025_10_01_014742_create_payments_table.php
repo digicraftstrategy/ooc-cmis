@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('payment_reference')->unique();
+            $table->decimal('amount', 10, 2)->default(0.00);
+            $table->date('payment_date');
+            $table->string('payment_method'); //e.g., credit card, bank transfer, cash
+            $table->string('notes')->nullable();
+
+            $table->unsignedBigInteger('invoice_id');
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();
         });
     }
