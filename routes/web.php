@@ -40,6 +40,13 @@ Route::get('/', function () {
         return redirect()->route('login');
     }
 });
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('livewire.dashboard'); // or wherever your main dashboard.blade.php is
+    })->name('dashboard');
+});                    //      //    //   //  //    \\//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Route::get('dashboard', Dashboard::class)
     ->middleware([

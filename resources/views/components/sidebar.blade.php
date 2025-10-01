@@ -29,10 +29,9 @@ new class extends Component {
     filmsPublicationOpen: localStorage.getItem('filmsPublicationOpen') === 'true',
 
     userMenuOpen: false,
-    //sidebarCollapsed: false,
-    //isMobile: window.innerWidth < 1024,
+    sidebarCollapsed: false,   // ✅ Needed!
+    isMobile: window.innerWidth < 1024, // ✅ Needed!
 
-    // Watch window resize for mobile detection
     init() {
         this.isMobile = window.innerWidth < 1024;
 
@@ -62,14 +61,13 @@ new class extends Component {
     // Toggle dropdown with proper collapsed state handling
     toggleDropdown(dropdownName) {
         if (this.sidebarCollapsed && !this.isMobile) {
-            // When sidebar is collapsed (desktop), open the dropdown
             this[dropdownName] = true;
         } else {
-            // Normal toggle behavior
             this[dropdownName] = !this[dropdownName];
         }
     }
-}" class="flex flex-col h-full bg-gradient-to-b from-slate-900 to-slate-800 text-white">
+}"
+ class="flex flex-col h-full bg-gradient-to-b from-slate-900 to-slate-800 text-white">
 
     <!-- Header -->
     <div class="sticky top-0 z-10 flex items-center justify-between h-20 px-4 border-b border-slate-700 bg-slate-900">
@@ -94,16 +92,17 @@ new class extends Component {
     <!-- Navigation (Scrollable) -->
     <nav class="flex-1 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800">
         <div class="py-1 space-y-1">
+
             <!-- Dashboard Link -->
-            <a route="dashboard" wire:navigate
-                class="flex items-center w-full px-4 py-3 text-slate-200 rounded-lg hover:bg-blue-600/20 hover:text-white group transition-colors duration-200 mx-2">
+            <x-sidebar-dashboard-link route="dashboard" wire:navigate
+                class="flex items-center w-full py-3 text-slate-200 rounded-lg hover:bg-blue-600/20 hover:text-white group transition-colors duration-200">
                 <svg class="w-5 h-5 text-blue-400 group-hover:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                 </svg>
                 <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Dashboard</span>
-            </a>
+            </x-sidebar-dashboard-link>
 
-            <!-- Reports -->
+            <!-- Reports -->    
             <div class="py-1">
                 <button @click="toggleDropdown('reportsOpen')"
                     class="flex items-center w-full px-4 py-3 text-slate-200 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white group mx-2">

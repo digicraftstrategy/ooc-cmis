@@ -44,11 +44,11 @@
                 <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                     <div class="p-6 md:p-8 border-b border-gray-100">
                         <div class="flex items-center gap-6">
-                            <div class="p-4 bg-blue-100 rounded-2xl">
+                            <div class="p-6 bg-blue-100 rounded-2xl">
                                 @if($premisesOwner->logo)
                                     <img src="{{ asset('storage/' . $premisesOwner->logo) }}" 
                                         alt="{{ $premisesOwner->owners_name }} Logo" 
-                                        class="w-10 h-10 rounded-full object-cover">
+                                        class="w-16 h-16 object-cover p-0">
                                 @else
                                     {{-- fallback if no logo exists --}}
                                     <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
