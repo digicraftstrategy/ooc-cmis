@@ -24,15 +24,6 @@ return new class extends Migration
             $table->string('telephone')->nullable();
             $table->string('mobile')->nullable();
             $table->enum('status', ['operational', 'suspended', 'ceased'])->default('operational');
-            /*$table->enum('license_status',
-                [
-                    'Apply for License',
-                    'Pending Review',
-                    'Reviewed',
-                    'Approved',
-                    'Rejected',
-                    'Expired',
-                ])->default('Apply for License');*/
             $table->unsignedBigInteger('premises_owner_id');
             $table->foreign('premises_owner_id')->references('id')->on('premises_owners')->onDelete('cascade');
             $table->unsignedBigInteger('province_id');
