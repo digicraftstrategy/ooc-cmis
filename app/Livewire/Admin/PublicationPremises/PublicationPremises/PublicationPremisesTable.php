@@ -4,7 +4,6 @@ namespace App\Livewire\Admin\PublicationPremises\PublicationPremises;
 
 use App\Models\PremisesOwner;
 use App\Models\PublicationPremises;
-use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -18,12 +17,22 @@ class PublicationPremisesTable extends Component
 
     public $showCreateModal = false;
     public $showDeleteModal = false;
+    public $showModal = false; // ✅ for editing
+
     public $premiseToDelete = null;
     public $premisesToEdit = null;
     public $premisesToView = null;
+
     public $numericPremisesOwnerId;
 
-    // Properties for inline editing of status
+    // Edit form fields
+    public $premises_name;
+    public $business_registration_no;
+    public $contact_person;
+    public $telephone;
+    public $status;
+
+    // Inline status edit
     public $editingStatusId = null;
     public $newStatus = '';
 
@@ -40,6 +49,7 @@ class PublicationPremisesTable extends Component
             ->where('id', $id)
             ->orWhere('uuid', $id)
             ->firstOrFail();
+
         $this->numericPremisesOwnerId = $this->premisesOwner->id;
     }
 
@@ -50,27 +60,49 @@ class PublicationPremisesTable extends Component
 
     public function closeModal()
     {
-        $this->showCreateModal = false;
-        $this->showDeleteModal = false;
-        $this->premiseToDelete = null;
-        $this->premisesToEdit = null;
-        $this->premisesToView = null;
-    }
-
-    public function editStatus($premiseId, $currentStatus)
-    {
-        $this->editingStatusId = $premiseId;
-        $this->newStatus = $currentStatus;
+        $this->reset([
+            'showCreateModal', 'showDeleteModal', 'showModal',
+            'premiseToDelete', 'premisesToEdit', 'premisesToView',
+            'premises_name', 'business_registration_no',
+            'contact_person', 'telephone', 'status'
+        ]);
     }
 
     public function showEditModal($premisesId)
     {
-        $this->premisesToEdit = $premisesId;
+        $premise = PublicationPremises::findOrFail($premisesId);
+
+        $this->premisesToEdit = $premise->id;
+        $this->premises_name = $premise->premises_name;
+        $this->business_registration_no = $premise->business_registration_no;
+        $this->contact_person = $premise->contact_person;
+        $this->telephone = $premise->telephone;
+        $this->status = $premise->status;
+
+        $this->showModal = true; // ✅ set true to open edit modal
     }
 
-    public function showViewModal($premisesId)
+    public function updatePremises()
     {
-        $this->premisesToView = $premisesId;
+        $this->validate([
+            'premises_name' => 'required|string|max:255',
+            'business_registration_no' => 'nullable|string|max:255',
+            'contact_person' => 'nullable|string|max:255',
+            'telephone' => 'nullable|string|max:50',
+            'status' => 'required|in:operational,suspended,ceased',
+        ]);
+
+        $premise = PublicationPremises::findOrFail($this->premisesToEdit);
+        $premise->update([
+            'premises_name' => $this->premises_name,
+            'business_registration_no' => $this->business_registration_no,
+            'contact_person' => $this->contact_person,
+            'telephone' => $this->telephone,
+            'status' => $this->status,
+        ]);
+
+        session()->flash('message', 'Premises updated successfully.');
+        $this->closeModal();
     }
 
     public function openDeleteModal($premisesId)
@@ -88,41 +120,21 @@ class PublicationPremisesTable extends Component
             session()->flash('message', 'Premises deleted successfully.');
         }
     }
-       public function saveStatus($premiseId)
-    {
-        $this->validate([
-            'newStatus' => 'required|string|in:operational,suspended,ceased'
-        ]);
-
-        $premise = PublicationPremises::findOrFail($premiseId);
-        $premise->update(['status' => $this->newStatus]);
-        $this->cancelEdit();
-        session()->flash('message', 'Status updated successfully.');
-    }
-
-    public function cancelEdit()
-    {
-        $this->editingStatusId = null;
-        $this->newStatus = '';
-    }
 
     public function render()
     {
         $query = PublicationPremises::with([
-            // Eager loading the related models
             'premises_province:id,name',
             'prescribedActivity:id,activity_type',
             'prescribedActivities:id,activity_type'
-        ])
-        ->where('premises_owner_id', $this->premisesOwner->id);
+        ])->where('premises_owner_id', $this->premisesOwner->id);
 
-        // Search functionality
         if ($this->search) {
             $query->where(function ($q) {
                 $q->where('premises_name', 'like', '%' . $this->search . '%')
-                  ->orWhere('business_registration_no', 'like', '%' . $this->search . '%')
-                  ->orWhere('contact_person', 'like', '%' . $this->search . '%')
-                  ->orWhere('telephone', 'like', '%' . $this->search . '%');
+                    ->orWhere('business_registration_no', 'like', '%' . $this->search . '%')
+                    ->orWhere('contact_person', 'like', '%' . $this->search . '%')
+                    ->orWhere('telephone', 'like', '%' . $this->search . '%');
             });
         }
 

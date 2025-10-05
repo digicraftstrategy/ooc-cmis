@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\System\Analytics\Dashboard;
+namespace App\Livewire\System\Analytics\Dashboard;
 
 use Livewire\Component;
 use App\Models\User;
@@ -13,7 +13,7 @@ class UsersStats extends Component
     public function mount()
     {
         $this->totalUsers  = User::count();
-        $this->activeUsers = User::whereHas('accountStatus', function ($q) {
+        $this->activeUsers = User::whereHas('account_status', function ($q) {
             $q->where('status', 'active');
         })->count();
     }
