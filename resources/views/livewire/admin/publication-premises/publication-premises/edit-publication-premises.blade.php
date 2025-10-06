@@ -73,7 +73,7 @@
                                    placeholder="Enter registration number">
                         </div>
 
-                        <!-- Business Registration -->
+                        <!-- Business Location -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Business location</label>
                             <input type="text" wire:model="location"
@@ -97,23 +97,50 @@
                                    placeholder="Enter phone number">
                         </div>
 
-                        <!-- Activities -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Owner Type <span class="text-red-500">*</span></label>
-                            <select wire:model="premises_owner_type_id"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <option value="">Select Owner Type</option>
-                                @if($premise->prescribedActivities->count() > 0)
-                                @foreach($premise->prescribedActivities as $activity)
-                                    <option value="{{ $activity->id }}">{{ $activity->activity_type }}</option>
-                                @endforeach
-                                @else
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                    N/A
-                                </span>
-                                @endif
-                            </select>
-                            @error('premises_owner_type_id') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+                       <!-- Prescribed Activities Section -->
+                        <div class="border-t border-gray-200 pt-6">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                    </svg>
+                                    Prescribed Activities
+                                </div>
+
+                                <!-- Add Activity Button -->
+                                <button type="button"
+                                        wire:click="openAddActivityModal"
+                                        class="flex items-center bg-indigo-500 text-white px-3 py-1.5 rounded-md shadow hover:bg-indigo-600 transition-all duration-200">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Add Activity
+                                </button>
+                            </h4>
+
+                            @if(!empty($selectedActivities) && count($selectedActivities) > 0)
+                                <div class="mb-6 bg-gray-50 rounded-lg p-4">
+                                    @foreach($selectedActivityDetails as $activity)
+                                        <div class="flex items-center justify-between py-3 px-4 bg-white rounded-md shadow-sm mb-2">
+                                            <span class="text-gray-700">{{ $activity->activity_type }}</span>
+                                            <button type="button"
+                                                    wire:click="removeActivity({{ $activity->id }})"
+                                                    class="text-red-500 hover:text-red-700 transition-colors duration-200">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="text-gray-500 italic bg-gray-50 rounded-lg p-4">
+                                    No prescribed activities selected yet.
+                                </div>
+                            @endif
                         </div>
 
                         <!-- Status -->
@@ -148,6 +175,43 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                         Update Premises
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <!-- Add Activity Modal -->
+    @if($showAddActivityModal)
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4v16m8-8H4" />
+                    </svg>
+                    Add Prescribed Activity
+                </h3>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Select Activity</label>
+                    <select wire:model="newActivityId"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="">-- Choose an activity --</option>
+                        @foreach($availableActivities as $activity)
+                            <option value="{{ $activity->id }}">{{ $activity->activity_type }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="flex justify-end space-x-2">
+                    <button wire:click="closeAddActivityModal"
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition">
+                        Cancel
+                    </button>
+                    <button wire:click="addActivity({{ $newActivityId ?? 'null' }})"
+                            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
+                        Add
                     </button>
                 </div>
             </div>
