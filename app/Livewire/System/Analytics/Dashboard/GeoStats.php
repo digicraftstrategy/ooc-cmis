@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\System\Analytics\Dashboard;
+namespace App\Livewire\System\Analytics\Dashboard;
 
 use Livewire\Component;
 use App\Models\Province;
 use App\Models\Region;
+use Carbon\Carbon;
 
 class GeoStats extends Component
 {
