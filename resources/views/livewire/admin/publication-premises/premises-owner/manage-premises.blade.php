@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-3">
-                        <x-blue-button-link href="#" wire:navigate
+                        <x-blue-button-link href="{{ route('admin.classifications.manage-classifications', $premisesOwner->uuid) }}" wire:navigate
                             class="bg-white/10 gap-2 hover:bg-white/20 text-white border-white/20 backdrop-blur-sm">
                             <x-icons.pencil-square class="w-5 h-5" />
                             Manage Films & Publications
@@ -46,8 +46,8 @@
                         <div class="flex items-center gap-6">
                             <div class="p-6 bg-blue-100 rounded-2xl">
                                 @if($premisesOwner->logo)
-                                    <img src="{{ asset('storage/' . $premisesOwner->logo) }}" 
-                                        alt="{{ $premisesOwner->owners_name }} Logo" 
+                                    <img src="{{ asset('storage/' . $premisesOwner->logo) }}"
+                                        alt="{{ $premisesOwner->owners_name }} Logo"
                                         class="w-16 h-16 object-cover p-0">
                                 @else
                                     {{-- fallback if no logo exists --}}

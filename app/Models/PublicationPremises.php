@@ -49,7 +49,7 @@ class PublicationPremises extends Model
         )->withTimestamps();
     }
 
-    // Keep the old belongsTo relationship for backward compatibility if needed
+    // Fallback to one-to-many relationship for backward compatibility if needed
     public function prescribedActivity(): BelongsTo
     {
         return $this->belongsTo(PrescribedActivity::class, 'prescribed_activity_id');
@@ -103,7 +103,7 @@ class PublicationPremises extends Model
     {
         return $this->status === 'suspended';
     }
-    
+
     protected static function boot()
     {
         parent::boot();
