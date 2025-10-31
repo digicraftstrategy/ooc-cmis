@@ -29,7 +29,7 @@ new class extends Component {
     filmsPublicationOpen: localStorage.getItem('filmsPublicationOpen') === 'true',
 
     userMenuOpen: false,
-    sidebarCollapsed: false,   // ✅ Needed!
+    //sidebarCollapsed: false,   // ✅ Needed!
     isMobile: window.innerWidth < 1024, // ✅ Needed!
 
     init() {
