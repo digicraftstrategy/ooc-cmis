@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             PrescribedActivitySeeder::class,
             PremisesOwnersTypeSeeder::class,
             PremisesOwnerSeeder::class,
+            ClassificationCategorySeeder::class,
+            ClassificationRatingSeeder::class,
         ]);
     }
 }

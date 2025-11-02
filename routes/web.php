@@ -41,6 +41,12 @@ Route::get('/', function () {
     }
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('livewire.dashboard'); // or wherever your main dashboard.blade.php is
+    })->name('dashboard');
+});
+
 Route::get('dashboard', Dashboard::class)
     ->middleware([
         'auth',
@@ -184,6 +190,9 @@ Route::group(
             Route::get('/', \App\Livewire\Admin\PublicationPremises\PublicationPremises\PublicationPremisesTable::class)
                     ->name('admin.publication-premises.premises');
         });*/
+
+        Route::get('/{id}/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
+            ->name('admin.classifications.manage-classifications');
     }
 );
 require __DIR__.'/auth.php';

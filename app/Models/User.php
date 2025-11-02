@@ -13,6 +13,38 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    // app/Models/User.php
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class); // SON Add this line
+    }
+
+    public function isRole(string $slug): bool
+    {
+        return $this->role && $this->role->slug === $slug; // SON Add this line
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->isRole('admin'); // SON Add this line
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->isRole('super-admin');
+    }
+    /*public function hasRole(string $slug): bool
+        {
+        return $this->role && $this->role->slug === $slug;
+    }*/
+
+    // If later you want to allow multiple roles at once
+    public function hasAnyRole(array $slugs): bool
+    {
+        return $this->role && in_array($this->role->slug, $slugs); // SON Add this line
+    }
+
     /**
      * The attributes that are mass assignable.
      *
