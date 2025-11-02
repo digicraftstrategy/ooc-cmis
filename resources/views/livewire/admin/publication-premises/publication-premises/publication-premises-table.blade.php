@@ -148,7 +148,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     {{ $premise->location }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                {{--<td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900">
                                         @if($premise->prescribedActivities->count() > 0)
                                             @foreach($premise->prescribedActivities as $activity)
@@ -162,7 +162,7 @@
                                             </span>
                                         @endif
                                     </div>
-                                </td>
+                                </td>--}}
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($editingStatusId === $premise->id)
                                         <div class="flex items-center space-x-2">

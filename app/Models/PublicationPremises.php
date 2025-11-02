@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PublicationPremises extends Model
 {
@@ -25,7 +26,7 @@ class PublicationPremises extends Model
         'status',
         'premises_owner_id',
         'province_id',
-        'prescribed_activity_id' // Keep this for backward compatibility if needed
+        //'prescribed_activity_id' // Keep this for backward compatibility if needed
     ];
 
     public function premises_owner(): BelongsTo
@@ -38,14 +39,17 @@ class PublicationPremises extends Model
         return $this->belongsTo(Province::class, 'province_id');
     }
 
-    // Many-to-many relationship with prescribed activities
+    // Many-to-many relationship with prescribed activities using Pivot table
     public function prescribedActivities(): BelongsToMany
     {
-        return $this->belongsToMany(PrescribedActivity::class, 'premises_activities', 'premises_id', 'activity_id')
-                    ->withTimestamps();
+        return $this->belongsToMany(PrescribedActivity::class,
+        'premises_activities',
+        'premises_id',
+        'activity_activity_id'
+        )->withTimestamps();
     }
 
-    // Keep the old belongsTo relationship for backward compatibility if needed
+    // Fallback to one-to-many relationship for backward compatibility if needed
     public function prescribedActivity(): BelongsTo
     {
         return $this->belongsTo(PrescribedActivity::class, 'prescribed_activity_id');
@@ -60,6 +64,44 @@ class PublicationPremises extends Model
 
         // Fallback to the one-to-many relationship
         return $this->prescribedActivity->activity_type ?? 'N/A';
+    }
+
+    // Accessor for contact information
+    public function getContactInformationAttribute(): string
+    {
+        $contactInfo = [];
+
+        if ($this->telephone) $contactInfo[] = "Tel: {$this->telephone}";
+        if ($this->mobile) $contactInfo[] = "Mobile: {$this->mobile}";
+
+        return implode(', ', $contactInfo) ?: 'No contact information available';
+    }
+
+    // Accessor for full address
+    public function getFullAddressAttribute(): string
+    {
+        $addressParts = array_filter([
+            $this->address,
+            $this->location,
+            $this->premises_province ? $this->premises_province->name : null,
+        ]);
+
+        return implode(', ', $addressParts) ?: 'No address available';
+    }
+
+    public function getIsOperationalAttribute(): bool
+    {
+        return $this->status === 'operational';
+    }
+
+    public function getIsCeasedAttribute(): bool
+    {
+        return $this->status === 'ceased';
+    }
+
+    public function getIsSuspendedAttribute(): bool
+    {
+        return $this->status === 'suspended';
     }
 
     protected static function boot()

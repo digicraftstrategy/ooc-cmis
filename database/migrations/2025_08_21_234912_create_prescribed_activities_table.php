@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('uuid')->unique();
             $table->string('activity_type')->unique();
-            $table->decimal('prescribed_fee', 8, 2)->default(0.00);
+            $table->decimal('prescribed_fee', 10, 2)->default(0.00);
             //$table->string('description')->nullable();
             $table->boolean('is_active')->default(true);
 
