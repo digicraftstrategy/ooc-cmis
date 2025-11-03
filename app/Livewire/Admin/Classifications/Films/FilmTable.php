@@ -52,7 +52,7 @@ class FilmTable extends Component
                 $query->where('film_title', 'like', '%' . $this->search . '%');
             })
             ->when($this->filmTitleFilter, function ($query) {
-                $query->where('film_title', 'like', '%' . $this->filmTitleFilter . '%');
+                $query->where('film_type_id', 'like', '%' . $this->filmTitleFilter . '%');
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
