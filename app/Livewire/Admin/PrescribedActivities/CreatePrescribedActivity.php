@@ -42,9 +42,11 @@ class CreatePrescribedActivity extends Component
             'is_active' => $this->is_active,
         ]);
 
+        //$this->resetForm();
         $this->closeModal();
-        $this->dispatch('refreshPrescribedActivities');
-        session()->flash('message', 'Prescribed Activity created successfully.');
+
+        $this->dispatch('activityCreated', message: 'Prescribed Activity created successfully.');
+        //session()->flash('message', 'Prescribed Activity created successfully.');
     }
 
     public function render()

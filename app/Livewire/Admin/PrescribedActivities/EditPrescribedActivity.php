@@ -49,8 +49,8 @@ class EditPrescribedActivity extends Component
         ]);
 
         $this->closeModal();
-        $this->dispatch('refreshPrescribedActivities');
-        session()->flash('message', 'Prescribed Activity updated successfully.');
+        $this->dispatch('activityUpdated', message: "Prescribed activity updated successfully.");
+        //session()->flash('message', 'Prescribed Activity updated successfully.');
     }
 
     public function render()
