@@ -173,6 +173,10 @@ new class extends Component {
                     </svg>
                 </button>
                 <div x-show="(!sidebarCollapsed || isMobile) && filmsPublicationOpen" x-collapse class="mt-1 space-y-1 ml-4">
+                    <x-sidebar-link route="admin.classifications.manage-classifications" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        Manage Classifications
+                    </x-sidebar-link>
                     <x-sidebar-link route="admin.classifications.films" wire:navigate
                         class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Films
