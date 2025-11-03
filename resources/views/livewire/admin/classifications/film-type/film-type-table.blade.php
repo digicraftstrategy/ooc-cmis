@@ -2,7 +2,7 @@
     <x-slot name='header'>
         <div class="px-4 py-2 bg-blue-100">
             <h2 class="text-xl font-semibold">
-                Manage Prescribed Activities
+                Manage Film Types
             </h2>
         </div>
     </x-slot>
@@ -13,16 +13,7 @@
             <div class="flex-1 min-w-[200px]">
                 <input wire:model.live.debounce.300ms="search" type="text"
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    placeholder="Search activities...">
-            </div>
-            <div class="flex-1 min-w-[200px]">
-                <select wire:model.live="prescribedTypeFilter"
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    <option value="">All Types</option>
-                    @foreach($prescribedTypes as $prescribedType)
-                        <option value="{{ $prescribedType->id }}">{{ $prescribedType->type }}</option>
-                    @endforeach
-                </select>
+                    placeholder="Search film types...">
             </div>
             <div class="flex">
                 <x-blue-button wire:click="openCreateModal"
@@ -33,14 +24,14 @@
                             d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                             clip-rule="evenodd" />
                     </svg>
-                    Add Activity
+                    Add Film Type
                 </x-blue-button>
             </div>
         </div>
     </div>
 
-    <!-- Event-based Message Display -->
-    @if ($message)
+    <!-- Flash Messages -->
+    @if (session()->has('message'))
         <div class="p-3 mb-3 bg-green-50 border border-green-200 rounded-lg"
             x-data="{ show: true }"
             x-init="setTimeout(() => { show = false }, 5000)"
@@ -56,9 +47,9 @@
                     </div>
                 </div>
                 <div class="ml-2 flex-1">
-                    <p class="text-sm font-medium text-green-800">{{ $message }}</p>
+                    <p class="text-sm font-medium text-green-800">{{ session('message') }}</p>
                 </div>
-                <button @click="show = false; $wire.clearMessage()" class="flex-shrink-0 text-green-500 hover:text-green-700">
+                <button @click="show = false" class="flex-shrink-0 text-green-500 hover:text-green-700">
                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
@@ -94,22 +85,28 @@
                             #
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-medium text-blue-700 uppercase tracking-wider cursor-pointer"
-                            wire:click="sortBy('activity_type')">
+                            wire:click="sortBy('type')">
                             <div class="flex items-center space-x-1">
-                                <span>Activity Type</span>
-                                @if ($sortField === 'activity_type')
+                                <span>Film Type</span>
+                                @if ($sortField === 'type')
+                                    <span class="text-xs">{!! $sortDirection === 'asc' ? '↑' : '↓' !!}</span>
+                                @endif
+                            </div>
+                        </th>
+                        <th scope="col" class="px-3 py-3 text-xs font-medium text-blue-700 uppercase tracking-wider cursor-pointer"
+                            wire:click="sortBy('slug')">
+                            <div class="flex items-center space-x-1">
+                                <span>Slug</span>
+                                @if ($sortField === 'slug')
                                     <span class="text-xs">{!! $sortDirection === 'asc' ? '↑' : '↓' !!}</span>
                                 @endif
                             </div>
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-medium text-blue-700 uppercase tracking-wider">
-                            Fees/Charges
+                            Description
                         </th>
-                        <th scope="col" class="w-20 px-3 py-3 text-xs font-medium text-blue-700 uppercase tracking-wider">
-                            Status
-                        </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-medium text-blue-700 uppercase tracking-wider">
-                            Category
+                        <th scope="col" class="w-32 px-3 py-3 text-xs font-medium text-blue-700 uppercase tracking-wider">
+                            Created
                         </th>
                         <th scope="col" class="w-20 px-3 py-3 text-xs font-medium text-blue-700 uppercase tracking-wider">
                             Actions
@@ -117,7 +114,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @forelse ($prescribedActivities as $prescribedActivity)
+                    @forelse ($paginateFilmTypes as $film_type)
                         <tr class="hover:bg-gray-50">
                             <td class="px-3 py-2 whitespace-nowrap">
                                 <div class="text-sm font-medium text-gray-900 text-center">
@@ -126,27 +123,27 @@
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap">
                                 <div class="text-sm font-medium text-gray-900">
-                                    {{ $prescribedActivity->activity_type }}
+                                    {{ $film_type->type }}
                                 </div>
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">
-                                    PGK{{ number_format($prescribedActivity->prescribed_fee, 2) }}
+                                <div class="text-sm text-gray-600 font-mono">
+                                    {{ $film_type->slug ?? 'N/A' }}
+                                </div>
+                            </td>
+                            <td class="px-3 py-2">
+                                <div class="text-sm text-gray-600 max-w-xs truncate" title="{{ $film_type->description }}">
+                                    {{ $film_type->description }}
                                 </div>
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap">
-                                <span class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full {{ $prescribedActivity->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                    {{ $prescribedActivity->is_active ? 'Active' : 'Inactive' }}
-                                </span>
-                            </td>
-                            <td class="px-3 py-2 whitespace-nowrap">
-                                <div class="text-sm text-gray-600">
-                                    {{ $prescribedActivity->prescribedType->type ?? 'N/A' }}
+                                <div class="text-xs text-gray-500">
+                                    {{ $film_type->created_at ? $film_type->created_at->format('M d, Y') : '—' }}
                                 </div>
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-1">
-                                    <button wire:click="openViewModal({{ $prescribedActivity->id }})" 
+                                    <button wire:click="openViewModal({{ $film_type->id }})" 
                                         class="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50"
                                         title="View">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -155,7 +152,7 @@
                                         </svg>
                                     </button>
 
-                                    <button wire:click="openEditModal({{ $prescribedActivity->id }})"
+                                    <button wire:click="openEditModal({{ $film_type->id }})"
                                         class="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50"
                                         title="Edit">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -163,7 +160,7 @@
                                         </svg>
                                     </button>
 
-                                    <button wire:click="openDeleteModal({{ $prescribedActivity->id }})"
+                                    <button wire:click="openDeleteModal({{ $film_type->id }})"
                                         class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50"
                                         title="Delete">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -176,7 +173,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="px-3 py-4 text-sm text-center text-gray-500 whitespace-nowrap">
-                                No prescribed activities found.
+                                No film types found.
                             </td>
                         </tr>
                     @endforelse
@@ -187,79 +184,20 @@
 
     <!-- Pagination -->
     <div class="mt-3">
-        {{ $prescribedActivities->links('vendor.pagination.tailwind') }}
+        {{ $paginateFilmTypes->links('vendor.pagination.tailwind') }}
     </div>
 
-    <!-- Delete Confirmation Modal -->
-    @if ($showDeleteModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
-            @keydown.window.escape="$wire.closeModal()">
-            <div class="w-full max-w-md bg-white rounded-lg shadow-xl">
-                <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-                    <h3 class="text-lg font-medium text-gray-900">Delete Prescribed Activity</h3>
-                    <button wire:click="closeModal" class="text-gray-400 hover:text-gray-500">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-6 py-4">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0 p-2 bg-red-100 rounded-full">
-                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm text-gray-700">
-                                Are you sure you want to delete this Prescribed Activity? This action cannot be undone.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" wire:click="deletePrescribedActivity"
-                        class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Delete
-                    </button>
-                    <button type="button" wire:click="closeModal"
-                        class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    <!-- Conditionally include components -->
-    @if($showCreateModal)
-        @livewire('admin.prescribed-activities.create-prescribed-activity', key('create-prescribed-activity'))
-    @endif
-
-    @if($prescribedActivityIdBeingEdited)
-        @livewire('admin.prescribed-activities.edit-prescribed-activity', ['prescribedActivityId' => $prescribedActivityIdBeingEdited], key('edit-prescribed-activity-'.$prescribedActivityIdBeingEdited))
-    @endif
-
-    @if($prescribedActivityIdBeingViewed)
-        @livewire('admin.prescribed-activities.view-prescribed-activity', ['prescribedActivityId' => $prescribedActivityIdBeingViewed], key('view-prescribed-activity-'.$prescribedActivityIdBeingViewed))
-    @endif
-
-    <!-- JavaScript for Event Listeners -->
+    <!-- Modal Control Script -->
     <script>
         document.addEventListener('livewire:initialized', () => {
-            // Handle escape key to close modals
+            // Handle escape key for all modals
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     Livewire.dispatch('closeModal');
                 }
             });
 
-            // Handle click outside for delete modal
+            // Handle click outside for all modals
             document.addEventListener('click', (e) => {
                 if (e.target.classList.contains('modal-overlay')) {
                     Livewire.dispatch('closeModal');

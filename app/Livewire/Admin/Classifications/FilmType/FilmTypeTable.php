@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Livewire\Admin\Classifications\ClassificationCategory;
+namespace App\Livewire\Admin\Classifications\FilmType;
 
-use App\Models\ClassificationCategory;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ClassificationCategoryTable extends Component
+class FilmTypeTable extends Component
 {
     use WithPagination;
 
     public $search = '';
-    public $sortField = 'name';
+    public $sortField = 'type';
     public $sortDirection = 'asc';
     public $perPage = 10;
-    public $classification_categories;
+    public $film_types;
 
     public function sortBy($field)
     {
@@ -33,13 +32,13 @@ class ClassificationCategoryTable extends Component
 
     public function render()
     {
-        $paginateClassificationCategories = ClassificationCategory::where('name', 'like', '%' . $this->search . '%')
+        $paginateFilmTypes = \App\Models\FilmType::where('type', 'like', '%' . $this->search . '%')
             ->orWhere('slug', 'like', '%' . $this->search . '%')
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
-        return view('livewire.admin.classifications.classification-category.classification-category-table',[
-            'classification_categories' => $$paginateClassificationCategories,
+        return view('livewire.admin.classifications.film-type.film-type-table', [
+            'paginateFilmTypes' => $paginateFilmTypes,
         ]);
     }
 }

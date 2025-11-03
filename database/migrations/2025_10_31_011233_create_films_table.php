@@ -13,6 +13,20 @@ return new class extends Migration
     {
         Schema::create('films', function (Blueprint $table) {
             $table->id();
+            $table->string('film_title');
+            $table->string('slug')->unique();
+            $table->string('main_actor_actress')->nullable();
+            $table->string('director')->nullable();
+            $table->string('producer')->nullable();
+            $table->string('production_company')->nullable();
+            $table->year('release_year')->nullable();
+            $table->string('genre')->nullable();
+            $table->string('language')->nullable();
+            $table->integer('duration');
+            $table->enum('subtitle', ['Yes', 'No'])->nullable();
+            $table->text('theme')->nullable();
+
+            $table->foreignId('film_type_id')->constrained('film_types')->onDelete('cascade');
             $table->timestamps();
         });
     }
