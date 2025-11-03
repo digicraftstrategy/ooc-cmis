@@ -24,15 +24,21 @@ class PrescribedActivityTable extends Component
     public $prescribedActivityIdBeingViewed = null;
     public $prescribedActivityIdBeingDeleted = null;
 
+    public $message = '';
+
     protected $listeners = [
         'closeModal',
-        'refreshPrescribedActivities' => 'refresh'
+        'refreshPrescribedActivities' => 'refreshActivities',
+        'activityCreated' => 'handleActivityCreated',
+        'activityDeleted' => 'handleActivityDeleted',
+        'activityUpdated' => 'handleActivityUpdated',
     ];
 
     public function mount()
     {
         $this->prescribedTypes = PrescribedActivityType::orderBy('type')->get();
     }
+
     public function sortBy($field)
     {
         if ($this->sortField === $field) {
@@ -42,31 +48,72 @@ class PrescribedActivityTable extends Component
             $this->sortDirection = 'asc';
         }
     }
+    // Handling create messages
+    public function handleActivityCreated($message)
+    {
+        $this->message = $message;
+        $this->refreshActivities();
+
+        // Auto-clear message after 5 seconds
+        $this->dispatch('clear-message');
+    }
+
+    // Handling delete messages
+    public function handleActivityDeleted($message)
+    {
+        $this->message = $message;
+        $this->refreshActivities();
+
+        // Auto-clear message after 5 seconds
+        $this->dispatch('clear-message');
+    }
+
+    public function handleActivityUpdated($message)
+    {
+        $this->message = $message;
+        $this->refreshActivities();
+
+        // Auto-clear message after 5 seconds
+        $this->dispatch('clear-message');
+    }
+
+
+    public function refreshActivities()
+    {
+        $this->resetPage();
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();
     }
+
     public function UpdatingprescribedTypeFilter()
     {
         $this->resetPage();
     }
+
     public function openCreateModal()
     {
         $this->showCreateModal = true;
     }
+
     public function openEditModal($prescribedActivityId)
     {
         $this->prescribedActivityIdBeingEdited = $prescribedActivityId;
     }
+
     public function openViewModal($prescribedActivityId)
     {
         $this->prescribedActivityIdBeingViewed = $prescribedActivityId;
     }
+
     public function openDeleteModal($prescribedActivityId)
     {
         $this->prescribedActivityIdBeingDeleted = $prescribedActivityId;
         $this->showDeleteModal = true;
     }
+
     public function closeModal()
     {
         $this->showDeleteModal = false;
@@ -74,14 +121,24 @@ class PrescribedActivityTable extends Component
         $this->prescribedActivityIdBeingDeleted = null;
         $this->prescribedActivityIdBeingViewed = null;
     }
+
     public function deletePrescribedActivity()
     {
         $prescribedActivity = PrescribedActivity::findOrFail($this->prescribedActivityIdBeingDeleted);
+        $activityType = $prescribedActivity->activity_type; // store for message
         $prescribedActivity->delete();
 
-        session()->flash('message', 'Prescribed activity deleted successfully.');
         $this->closeModal();
+
+        // Use event to notify deletion
+        $this->dispatch('activityDeleted', message: "Prescribed activity '{$activityType}' deleted successfully.");
     }
+
+    public function clearMessage()
+    {
+        $this->message = '';
+    }
+
     public function render()
     {
         $prescribedActivities = PrescribedActivity::query()
