@@ -196,6 +196,9 @@ Route::group(
 
         Route::get('/film-types', \App\Livewire\Admin\Classifications\FilmType\FilmTypeTable::class)
             ->name('admin.classifications.film-types');
+
+        Route::get('/films', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
+            ->name('admin.classifications.films');
     }
 );
 require __DIR__.'/auth.php';

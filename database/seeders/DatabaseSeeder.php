@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             ClassificationCategorySeeder::class,
             ClassificationRatingSeeder::class,
             FilmTypeSeeder::class,
+            FilmSeeder::class,
         ]);
     }
 }
