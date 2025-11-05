@@ -18,10 +18,9 @@ return new class extends Migration
             $table->string('author')->nullable();
             $table->string('publisher')->nullable();
             $table->year('publication_year')->nullable();
+            $table->integer('pages')->nullable();
             $table->string('genre')->nullable();
-            $table->string('language')->nullable();
-            $table->enum('subtitle', ['Yes', 'No'])->nullable();
-            $table->text('theme')->nullable();
+            $table->text('summary')->nullable();
             $table->timestamps();
         });
     }

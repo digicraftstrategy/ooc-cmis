@@ -17,7 +17,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'Inception',
                 'slug' => 'inception',
-                'main_actor_actress' => 'Leonardo DiCaprio',
+                'casts' => 'Leonardo DiCaprio',
                 'director' => 'Christopher Nolan',
                 'producer' => 'Emma Thomas',
                 'production_company' => 'Warner Bros.',
@@ -31,7 +31,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'The Godfather',
                 'slug' => 'the-godfather',
-                'main_actor_actress' => 'Marlon Brando',
+                'casts' => 'Marlon Brando',
                 'director' => 'Francis Ford Coppola',
                 'producer' => 'Albert S. Ruddy',
                 'production_company' => 'Paramount Pictures',
@@ -45,7 +45,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'Spirited Away',
                 'slug' => 'spirited-away',
-                'main_actor_actress' => 'Rumi Hiiragi',
+                'casts' => 'Rumi Hiiragi',
                 'director' => 'Hayao Miyazaki',
                 'producer' => 'Toshio Suzuki',
                 'production_company' => 'Studio Ghibli',
@@ -59,7 +59,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'Parasite',
                 'slug' => 'parasite',
-                'main_actor_actress' => 'Song Kang-ho',
+                'casts' => 'Song Kang-ho',
                 'director' => 'Bong Joon-ho',
                 'producer' => 'Kwak Sin-ae',
                 'production_company' => 'CJ Entertainment',
@@ -73,7 +73,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'The Dark Knight',
                 'slug' => 'the-dark-knight',
-                'main_actor_actress' => 'Christian Bale',
+                'casts' => 'Christian Bale',
                 'director' => 'Christopher Nolan',
                 'producer' => 'Emma Thomas',
                 'production_company' => 'Warner Bros.',
@@ -87,7 +87,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'Amélie',
                 'slug' => 'amelie',
-                'main_actor_actress' => 'Audrey Tautou',
+                'casts' => 'Audrey Tautou',
                 'director' => 'Jean-Pierre Jeunet',
                 'producer' => 'Claudie Ossard',
                 'production_company' => 'UGC Fox Distribution',
@@ -101,7 +101,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'Interstellar',
                 'slug' => 'interstellar',
-                'main_actor_actress' => 'Matthew McConaughey',
+                'casts' => 'Matthew McConaughey',
                 'director' => 'Christopher Nolan',
                 'producer' => 'Emma Thomas',
                 'production_company' => 'Paramount Pictures',
@@ -115,7 +115,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'La La Land',
                 'slug' => 'la-la-land',
-                'main_actor_actress' => 'Emma Stone',
+                'casts' => 'Emma Stone',
                 'director' => 'Damien Chazelle',
                 'producer' => 'Fred Berger',
                 'production_company' => 'Summit Entertainment',
@@ -129,7 +129,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'Crouching Tiger, Hidden Dragon',
                 'slug' => 'crouching-tiger-hidden-dragon',
-                'main_actor_actress' => 'Chow Yun-fat',
+                'casts' => 'Chow Yun-fat',
                 'director' => 'Ang Lee',
                 'producer' => 'Ang Lee',
                 'production_company' => 'Columbia Pictures',
@@ -143,7 +143,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'The Shawshank Redemption',
                 'slug' => 'the-shawshank-redemption',
-                'main_actor_actress' => 'Tim Robbins',
+                'casts' => 'Tim Robbins',
                 'director' => 'Frank Darabont',
                 'producer' => 'Niki Marvin',
                 'production_company' => 'Columbia Pictures',
@@ -157,7 +157,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'City of God',
                 'slug' => 'city-of-god',
-                'main_actor_actress' => 'Alexandre Rodrigues',
+                'casts' => 'Alexandre Rodrigues',
                 'director' => 'Fernando Meirelles',
                 'producer' => 'Andrea Barata Ribeiro',
                 'production_company' => 'O2 Filmes',
@@ -171,7 +171,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'The Lion King',
                 'slug' => 'the-lion-king',
-                'main_actor_actress' => 'Matthew Broderick',
+                'casts' => 'Matthew Broderick',
                 'director' => 'Roger Allers',
                 'producer' => 'Don Hahn',
                 'production_company' => 'Walt Disney Pictures',
@@ -185,7 +185,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'Titanic',
                 'slug' => 'titanic',
-                'main_actor_actress' => 'Kate Winslet',
+                'casts' => 'Kate Winslet',
                 'director' => 'James Cameron',
                 'producer' => 'James Cameron',
                 'production_company' => '20th Century Fox',
@@ -199,7 +199,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'Oldboy',
                 'slug' => 'oldboy',
-                'main_actor_actress' => 'Choi Min-sik',
+                'casts' => 'Choi Min-sik',
                 'director' => 'Park Chan-wook',
                 'producer' => 'Lim Seung-yong',
                 'production_company' => 'Show East',
@@ -213,7 +213,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'Pan\'s Labyrinth',
                 'slug' => 'pans-labyrinth',
-                'main_actor_actress' => 'Ivana Baquero',
+                'casts' => 'Ivana Baquero',
                 'director' => 'Guillermo del Toro',
                 'producer' => 'Alfonso Cuarón',
                 'production_company' => 'Picturehouse',
@@ -227,7 +227,7 @@ class FilmSeeder extends Seeder
             [
                 'film_title' => 'Gladiator',
                 'slug' => 'gladiator',
-                'main_actor_actress' => 'Russell Crowe',
+                'casts' => 'Russell Crowe',
                 'director' => 'Ridley Scott',
                 'producer' => 'Douglas Wick',
                 'production_company' => 'DreamWorks Pictures',
