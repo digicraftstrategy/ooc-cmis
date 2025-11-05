@@ -21,7 +21,7 @@ return new class extends Migration
             //$table->string('episode_title');
             $table->integer('duration'); // duration in minutes of the episode
             $table->year('release_year')->nullable();
-            $table->string('main_actor_actress')->nullable();
+            $table->string('casts')->nullable();
             $table->string('director')->nullable();
             $table->string('producer')->nullable();
             $table->string('production_company')->nullable();
