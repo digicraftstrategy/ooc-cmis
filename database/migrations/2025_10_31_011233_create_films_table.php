@@ -23,11 +23,22 @@ return new class extends Migration
             $table->string('genre')->nullable();
             $table->string('language')->nullable();
             $table->integer('duration');
-            $table->enum('subtitle', ['Yes', 'No'])->nullable();
+            $table->boolean('has_subtitle')->default(false);
             $table->text('theme')->nullable();
+            $table->text('synopsis')->nullable();
+            $table->string('poster_url')->nullable();
+            $table->string('trailer_url')->nullable();
 
             $table->foreignId('film_type_id')->constrained('film_types')->onDelete('cascade');
+
             $table->timestamps();
+            $table->softDeletes();
+
+            // Indexes for better query performance
+            $table->index('film_title');
+            $table->index('release_year');
+            $table->index('director');
+            $table->index('genre');
         });
     }
 

@@ -19,6 +19,8 @@ new class extends Component {
 <div x-data="{
     // State management with localStorage
     reportsOpen: localStorage.getItem('reportsOpen') === 'true',
+    paymentsOpen: localStorage.getItem('paymentsOpen') === 'true',
+    invoicesOpen: localStorage.getItem('invoicesOpen') === 'true',
     settingsOpen: localStorage.getItem('settingsOpen') === 'true',
     cdrOpen: localStorage.getItem('cdrOpen') === 'true',
     systemOpen: localStorage.getItem('systemOpen') === 'true',
@@ -29,8 +31,8 @@ new class extends Component {
     filmsPublicationOpen: localStorage.getItem('filmsPublicationOpen') === 'true',
 
     userMenuOpen: false,
-    //sidebarCollapsed: false,   // ✅ Needed!
-    isMobile: window.innerWidth < 1024, // ✅ Needed!
+    //sidebarCollapsed: false,   
+    isMobile: window.innerWidth < 1024,
 
     init() {
         this.isMobile = window.innerWidth < 1024;
@@ -41,6 +43,8 @@ new class extends Component {
 
         // Initialize all dropdown watchers
         this.watchDropdownState('reportsOpen');
+        this.watchDropdownState('paymentsOpen');
+        this.watchDropdownState('invoicesOpen');
         this.watchDropdownState('settingsOpen');
         this.watchDropdownState('cdrOpen');
         this.watchDropdownState('systemOpen');
@@ -102,7 +106,7 @@ new class extends Component {
                 <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Dashboard</span>
             </x-sidebar-dashboard-link>
 
-            <!-- Reports -->    
+            <!-- Reports -->
             <div class="py-1">
                 <button @click="toggleDropdown('reportsOpen')"
                     class="flex items-center w-full px-4 py-3 text-slate-200 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white group mx-2">
@@ -117,6 +121,68 @@ new class extends Component {
                 </button>
                 <div x-show="(!sidebarCollapsed || isMobile) && reportsOpen" x-collapse class="mt-1 space-y-1 ml-4">
                     <!-- Report items would go here -->
+                </div>
+            </div>
+
+            <!-- Payments -->
+            <div class="py-1">
+                <button @click="toggleDropdown('paymentsOpen')"
+                    class="flex items-center w-full px-4 py-3 text-slate-200 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white group mx-2">
+                    <svg class="w-5 h-5 text-green-400 group-hover:text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Payments</span>
+                    <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': paymentsOpen }"
+                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div x-show="(!sidebarCollapsed || isMobile) && paymentsOpen" x-collapse class="mt-1 space-y-1 ml-4">
+                    {{--<x-sidebar-link route="payments.overview" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        Payment Overview
+                    </x-sidebar-link>
+                    <x-sidebar-link route="payments.transactions" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        Payment Transactions
+                    </x-sidebar-link>
+                    <x-sidebar-link route="payments.reconciliation" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        Reconciliation
+                    </x-sidebar-link>--}}
+                </div>
+            </div>
+
+            <!-- Invoices -->
+            <div class="py-1">
+                <button @click="toggleDropdown('invoicesOpen')"
+                    class="flex items-center w-full px-4 py-3 text-slate-200 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white group mx-2">
+                    <svg class="w-5 h-5 text-orange-400 group-hover:text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                    <span x-show="!sidebarCollapsed || isMobile" class="ml-3 transition-opacity duration-300">Invoices</span>
+                    <svg x-show="!sidebarCollapsed || isMobile" :class="{ 'rotate-90': invoicesOpen }"
+                        class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div x-show="(!sidebarCollapsed || isMobile) && invoicesOpen" x-collapse class="mt-1 space-y-1 ml-4">
+                    {{--<x-sidebar-link route="invoices.list" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        All Invoices
+                    </x-sidebar-link>
+                    <x-sidebar-link route="invoices.create" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        Create Invoice
+                    </x-sidebar-link>
+                    <x-sidebar-link route="invoices.templates" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        Invoice Templates
+                    </x-sidebar-link>
+                    <x-sidebar-link route="invoices.settings" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        Invoice Settings
+                    </x-sidebar-link>--}}
                 </div>
             </div>
 
@@ -251,66 +317,6 @@ new class extends Component {
             </div>
         </div>
     </nav>
-
-    <!-- User Profile Section (Fixed to bottom) -->
-    <div class="sticky bottom-0 mt-auto bg-slate-900 border-t border-slate-700">
-        <div class="p-4">
-            <div class="flex items-center">
-                <div class="flex-shrink-0">
-                    <img src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }}"
-                        class="object-cover w-10 h-10 border-2 border-slate-600 rounded-full">
-                </div>
-                <div x-show="!sidebarCollapsed || isMobile" class="ml-3 overflow-hidden">
-                    <p class="text-sm font-medium text-white truncate">{{ auth()->user()->name }}</p>
-                    <p class="text-xs text-slate-400 truncate">{{ auth()->user()->email }}</p>
-                </div>
-                <div x-show="!sidebarCollapsed || isMobile" class="ml-auto">
-                    <div class="relative" x-data="{ userMenuOpen: false }">
-                        <button @click="userMenuOpen = !userMenuOpen"
-                            class="p-1 rounded-full hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200">
-                            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
-                                </path>
-                            </svg>
-                        </button>
-                        <!-- User dropdown menu -->
-                        <div x-show="userMenuOpen" @click.away="userMenuOpen = false"
-                            x-transition:enter="transition ease-out duration-200"
-                            x-transition:enter-start="opacity-0 transform scale-95"
-                            x-transition:enter-end="opacity-100 transform scale-100"
-                            x-transition:leave="transition ease-in duration-150"
-                            x-transition:leave-start="opacity-100 transform scale-100"
-                            x-transition:leave-end="opacity-0 transform scale-95"
-                            class="absolute right-0 z-50 w-48 py-1 mb-2 bg-slate-800 rounded-md shadow-lg bottom-full">
-                            <a href="#" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
-                                wire:navigate>
-                                Your Profile
-                            </a>
-                            <a href="#" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700" wire:navigate>
-                                Account Settings
-                            </a>
-                            <div class="my-1 border-t border-slate-700"></div>
-                            <form method="POST" action="{{ route('logout') }}" class="block w-full">
-                                @csrf
-                                <button type="submit"
-                                    class="w-full px-4 py-2 text-sm text-left text-red-400 hover:bg-slate-700">
-                                    <div class="flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                        </svg>
-                                        Logout
-                                    </div>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer (only visible when sidebar is expanded) -->
     <div x-show="!sidebarCollapsed && !isMobile" class="px-4 py-2 text-center border-t border-slate-700">

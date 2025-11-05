@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('classification_statuses', function (Blueprint $table) {
             $table->id();
+            $table->string('classification_status_name');
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

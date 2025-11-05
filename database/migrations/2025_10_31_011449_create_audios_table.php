@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('audios', function (Blueprint $table) {
             $table->id();
+            $table->string('audio_title');
+            $table->string('slug')->unique();
+            $table->string('artist')->nullable();
+            $table->string('album')->nullable();
+            $table->year('release_year')->nullable();
+            $table->string('genre')->nullable();
+            $table->string('language')->nullable();
+            $table->enum('subtitle', ['Yes', 'No'])->nullable();
+            $table->text('theme')->nullable();
             $table->timestamps();
         });
     }
