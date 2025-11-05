@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('film_title');
             $table->string('slug')->unique();
-            $table->string('main_actor_actress')->nullable();
+            $table->string('casts')->nullable();
             $table->string('director')->nullable();
             $table->string('producer')->nullable();
             $table->string('production_company')->nullable();
