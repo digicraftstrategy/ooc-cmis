@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
             PremisesOwnerSeeder::class,
             ClassificationCategorySeeder::class,
             ClassificationRatingSeeder::class,
+            FilmTypeSeeder::class,
+            FilmSeeder::class,
+            TvSeriesSeeder::class,
         ]);
     }
 }

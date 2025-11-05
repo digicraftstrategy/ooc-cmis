@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('classification_reasons', function (Blueprint $table) {
+        Schema::create('film_types', function (Blueprint $table) {
             $table->id();
-            $table->string('classification_reason_name');
+            $table->string('type')->unique();
             $table->string('slug')->unique();
-            $table->text('description')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('classification_reasons');
+        Schema::dropIfExists('film_types');
     }
 };

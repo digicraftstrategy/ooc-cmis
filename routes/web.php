@@ -193,6 +193,15 @@ Route::group(
 
         Route::get('/{id}/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
             ->name('admin.classifications.manage-classifications');
+        
+        Route::get('/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
+            ->name('admin.classifications.manage-classifications');
+
+        Route::get('/film-types', \App\Livewire\Admin\Classifications\FilmType\FilmTypeTable::class)
+            ->name('admin.classifications.film-types');
+
+        Route::get('/films', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
+            ->name('admin.classifications.films');
     }
 );
 require __DIR__.'/auth.php';
