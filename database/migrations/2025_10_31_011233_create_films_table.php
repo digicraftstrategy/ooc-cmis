@@ -27,7 +27,6 @@ return new class extends Migration
             $table->text('theme')->nullable();
             $table->text('synopsis')->nullable();
             $table->string('poster_url')->nullable();
-            $table->string('trailer_url')->nullable();
 
             $table->foreignId('film_type_id')->constrained('film_types')->onDelete('cascade');
 
