@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('pages')->nullable();
             $table->string('genre')->nullable();
             $table->text('summary')->nullable();
+            $table->string('cover_art_path')->nullable(); // URL to the cover art image
             $table->timestamps();
         });
     }
