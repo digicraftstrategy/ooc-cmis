@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('language')->nullable();
             $table->enum('subtitle', ['Yes', 'No'])->nullable();
             $table->text('theme')->nullable();
+            $table->string('album_path')->nullable(); // URL to the cover art image
             $table->timestamps();
         });
     }

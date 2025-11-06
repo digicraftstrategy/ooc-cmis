@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->enum('title', ['Mr', 'Mrs', 'Ms']);
             $table->string('name');
-            $table->string('signature_placeholder');
+            $table->string('signature_path'); // Path to the signature image
             $table->string('designation');
             $table->boolean('is_active')->default(true);
             $table->timestamps();

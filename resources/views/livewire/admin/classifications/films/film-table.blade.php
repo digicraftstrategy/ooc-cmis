@@ -78,7 +78,7 @@
                             Film Type
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
-                            Main Actor/Actress
+                            Casts
                         </th>
                         <th scope="col" class="w-20 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
                             Duration
@@ -112,8 +112,8 @@
                                 </span>
                             </td>
                             <td class="px-3 py-2">
-                                <div class="text-sm text-gray-700 max-w-xs truncate" title="{{ $film->main_actor_actress }}">
-                                    {{ $film->main_actor_actress }}
+                                <div class="text-sm text-gray-700 max-w-xs truncate" title="{{ $film->casts }}">
+                                    {{ $film->casts }}
                                 </div>
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap">
@@ -138,7 +138,7 @@
                                 <div class="flex justify-end">
                                     <!-- Dropdown menu -->
                                     <div class="relative" x-data="{ open: false }">
-                                        <button 
+                                        <button
                                             @click="open = !open"
                                             @click.outside="open = false"
                                             class="inline-flex items-center p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-150"
@@ -147,9 +147,9 @@
                                                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                                             </svg>
                                         </button>
-                                        
+
                                         <!-- Dropdown panel -->
-                                        <div 
+                                        <div
                                             x-show="open"
                                             x-transition:enter="transition ease-out duration-100"
                                             x-transition:enter-start="transform opacity-0 scale-95"
@@ -161,8 +161,8 @@
                                             style="display: none;"
                                         >
                                             <!-- View option -->
-                                            <button 
-                                                wire:click="openViewModal({{ $film->id }})" 
+                                            <button
+                                                wire:click="openViewModal({{ $film->id }})"
                                                 @click="open = false"
                                                 class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-150"
                                             >
@@ -172,9 +172,9 @@
                                                 </svg>
                                                 View Details
                                             </button>
-                                            
+
                                             <!-- Edit option -->
-                                            <button 
+                                            <button
                                                 wire:click="openEditModal({{ $film->id }})"
                                                 @click="open = false"
                                                 class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-150"
@@ -184,9 +184,9 @@
                                                 </svg>
                                                 Edit Film
                                             </button>
-                                            
+
                                             <!-- Delete option -->
-                                            <button 
+                                            <button
                                                 wire:click="openDeleteModal({{ $film->id }})"
                                                 @click="open = false"
                                                 class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 transition-colors duration-150"
