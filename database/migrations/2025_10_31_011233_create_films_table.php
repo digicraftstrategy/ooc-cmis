@@ -25,9 +25,9 @@ return new class extends Migration
             $table->integer('duration');
             $table->boolean('has_subtitle')->default(false);
             $table->text('theme')->nullable();
-            $table->text('synopsis')->nullable();
-            $table->string('poster_url')->nullable();
-            $table->string('trailer_url')->nullable();
+            //$table->text('synopsis')->nullable();
+            $table->string('poster_path')->nullable(); // path to the film poster image
+            $table->string('trailer_url')->nullable(); // URL to the film trailer
 
             $table->foreignId('film_type_id')->constrained('film_types')->onDelete('cascade');
 

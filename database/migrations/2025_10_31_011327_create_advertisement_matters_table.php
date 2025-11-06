@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('advertising_matter');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('main_actor_actress')->nullable();
+            $table->string('casts')->nullable();
             $table->string('director')->nullable();
             $table->string('producer')->nullable();
             $table->string('production_company')->nullable();
@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('brand_promoted')->nullable(); // Brand being promoted in the advertisement
             $table->string('product_promoted')->nullable(); // Product being promoted in the advertisement
             $table->text('theme')->nullable();
+            $table->string('poster_path')->nullable(); // path to the advertisement poster image
             $table->timestamps();
 
             // Indexes for better query performance

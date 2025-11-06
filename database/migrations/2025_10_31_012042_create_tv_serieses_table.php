@@ -29,7 +29,14 @@ return new class extends Migration
             $table->string('language')->nullable();
             $table->boolean('has_subtitle')->default(false);
             $table->text('theme')->nullable();
+            $table->string('poster_path')->nullable(); // path to the tv series poster image
             $table->timestamps();
+
+            // Indexes for better query performance
+            $table->index('tv_series_title');
+            $table->index('release_year');
+            $table->index('director');
+            $table->index('genre');
         });
     }
 

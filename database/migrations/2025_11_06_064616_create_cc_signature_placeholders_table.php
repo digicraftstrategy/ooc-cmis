@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('classification_ratings', function (Blueprint $table) {
+        Schema::create('cc_signature_placeholders', function (Blueprint $table) {
             $table->id();
-            $table->string('rating')->unique();
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->string('icon_path')->nullable(); // Path to the icon image
+            $table->enum('title', ['Mr', 'Mrs', 'Ms']);
+            $table->string('name');
+            $table->string('signature_path'); // Path to the signature image
+            $table->string('designation');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('classification_ratings');
+        Schema::dropIfExists('cc_signature_placeholders');
     }
 };

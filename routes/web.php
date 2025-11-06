@@ -202,6 +202,9 @@ Route::group(
 
         Route::get('/films', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
             ->name('admin.classifications.films');
+
+        Route::get('/{id}/classified-items', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
+            ->name('admin.classifications.classified-items');
     }
 );
 require __DIR__.'/auth.php';
