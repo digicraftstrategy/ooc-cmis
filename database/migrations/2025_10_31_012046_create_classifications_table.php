@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('classifications', function (Blueprint $table) {
             $table->id();
+            $table->date('classification_date')->nullable();
+            $table->string('viewed_by')->nullable();
+            $table->string('second_opinion_by')->nullable();
+            $table->text('notes')->nullable();
+
             $table->string('classifiable_type');
             
             $table->unsignedBigInteger('classifiable_id');
@@ -28,7 +33,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Index for polymorphic relation
-           // $table->index('classifiable_id', 'classification_type_id');
+            $table->index('classifiable_id', 'classification_type_id');
         });
     }
 
