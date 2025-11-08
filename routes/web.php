@@ -193,18 +193,38 @@ Route::group(
 
         Route::get('/{id}/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
             ->name('admin.classifications.manage-classifications');
-        
+
         Route::get('/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
             ->name('admin.classifications.manage-classifications');
 
         Route::get('/film-types', \App\Livewire\Admin\Classifications\FilmType\FilmTypeTable::class)
             ->name('admin.classifications.film-types');
 
-        Route::get('/films', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
+        Route::prefix('film')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
+                ->name('admin.classifications.films');
+                Route::get('/{film}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
+                    ->name('admin.classifications.films.show');
+                /*
+                Route::get('/register', \App\Livewire\Admin\Classifications\Films\CreateFilm::class)
+                    ->name('admin.classifications.films.create');
+                Route::get('/edit/{film}', \App\Livewire\Admin\Classifications\Films\EditFilm::class)
+                    ->name('admin.classifications.films.edit');
+                */
+            });
+        /*Route::get('/films', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
             ->name('admin.classifications.films');
-
+        Route::get('/films/{film}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
+            ->name('admin.classifications.films.show');
+        */
         Route::get('/{id}/classified-items', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
             ->name('admin.classifications.classified-items');
+
+        Route::get('/classification-ratings', \App\Livewire\Admin\Classifications\ClassificationRating\ClassificationRatingTable::class)
+            ->name('admin.classifications.classification-ratings');
+        Route::get('/register', \App\Livewire\Admin\Classifications\ClassificationRating\CreateClassificationRating::class)
+            ->name('admin.classifications.classification-ratings.create');
     }
 );
 require __DIR__.'/auth.php';

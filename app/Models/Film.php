@@ -4,15 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\FilmType;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Str;
 
 class Film extends Model
 {
-    use HasFactory;
+    use HasFactory, softDeletes;
 
     protected $fillable = [
         'film_title',
         'slug',
-        'main_actor_actress',
+        'casts',
         'director',
         'producer',
         'production_company',
@@ -20,13 +25,52 @@ class Film extends Model
         'genre',
         'language',
         'duration',
-        'subtitle',
+        'has_subtitle',
         'theme',
+        'poster_path',
+        'trailer_url',
         'film_type_id',
     ];
 
-    public function filmType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    // Attribute casting
+    protected $casts = [
+        'has_subtitle' => 'boolean',
+        'release_year' => 'integer',
+        'duration' => 'integer',
+    ];
+
+    // Relationships to the film type that the film falls under
+    public function filmType(): BelongsTo
     {
-        return $this->belongsTo(FilmType::class);
+        return $this->belongsTo(FilmType::class, 'film_type_id');
     }
+
+    // Automatically generate slug from film title when creating a new film
+    protected static function booted()
+    {
+        static::creating(function ($film) {
+            $film->slug = Str::slug($film->film_title);
+        });
+    }
+
+    // Get the route key name for model binding, using slug instead of id
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    // Accessor for the poster path attribute
+    protected function posterPath(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => asset('storage/' . $value),
+        );
+    }
+
+    // Scope for filtering films by relaease year
+    public function scopeReleaseYear($query, $year)
+    {
+        return $query->where('release_year', $year);
+    }
+
 }

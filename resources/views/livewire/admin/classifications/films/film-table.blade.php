@@ -74,6 +74,15 @@
                                 @endif
                             </div>
                         </th>
+                        {{--<th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider cursor-pointer"
+                            wire:click="sortBy('film_title')">
+                            <div class="flex items-center space-x-1">
+                                <span>Film Title</span>
+                                @if ($sortField === 'film_title')
+                                    <span class="text-xs">{!! $sortDirection === 'asc' ? '↑' : '↓' !!}</span>
+                                @endif
+                            </div>
+                        </th>--}}
                         <th scope="col" class="w-24 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
                             Film Type
                         </th>
@@ -103,8 +112,16 @@
                             <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900 text-center">
                                 {{ $loop->iteration + ($films->currentPage() - 1) * $films->perPage() }}
                             </td>
-                            <td class="px-3 py-2 whitespace-nowrap">
+                            {{--<td class="px-3 py-2 whitespace-nowrap">
                                 <div class="text-sm font-semibold text-gray-900">{{ $film->film_title }}</div>
+                            </td>--}}
+                            <td class="px-3 py-2 whitespace-nowrap">
+                                <a
+                                    href="{{ route('admin.classifications.films.show', $film->slug) }}"
+                                    class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-150"
+                                >                                  
+                                    <div class="text-sm font-semibold text-gray-900">{{ $film->film_title }}</div>
+                                </a>                               
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
@@ -160,8 +177,8 @@
                                             class="absolute right-0 z-10 mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-1"
                                             style="display: none;"
                                         >
-                                            <!-- View option -->
-                                            <button
+                                            <!-- View option rendered as a model file -->
+                                            {{--<button
                                                 wire:click="openViewModal({{ $film->id }})"
                                                 @click="open = false"
                                                 class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-150"
@@ -171,7 +188,18 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                 </svg>
                                                 View Details
-                                            </button>
+                                            </button>--}}
+                                            <!-- View option rendered as page -->
+                                            <a
+                                                href="{{ route('admin.classifications.films.show', $film->slug) }}"
+                                                class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-150"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                                View Details
+                                            </a>
 
                                             <!-- Edit option -->
                                             <button
