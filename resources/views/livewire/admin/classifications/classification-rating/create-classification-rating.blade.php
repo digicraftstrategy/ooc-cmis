@@ -16,14 +16,14 @@
             <!-- Rating & Slug -->
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div>
-                    <label for="rating" class="block text-sm font-medium text-gray-700">Rating Name *</label>
+                    <label for="rating" class="block text-sm font-medium text-gray-700">Rating Name <span class="text-red-500">*</span></label>
                     <input type="text" wire:model="rating" id="rating"
                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500">
                     @error('rating') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
 
                 <div>
-                    <label for="slug" class="block text-sm font-medium text-gray-700">Slug *</label>
+                    <label for="slug" class="block text-sm font-medium text-gray-700">Slug <span class="text-red-500">*</span></label>
                     <div class="mt-1 flex rounded-md shadow-sm">
                         <input type="text" wire:model="slug" id="slug"
                                class="flex-1 min-w-0 block w-full border border-gray-300 rounded-l-md py-2 px-3 focus:ring-blue-500 focus:border-blue-500">
