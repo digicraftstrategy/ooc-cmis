@@ -31,7 +31,7 @@ new class extends Component {
     filmsPublicationOpen: localStorage.getItem('filmsPublicationOpen') === 'true',
 
     userMenuOpen: false,
-    //sidebarCollapsed: false,   
+    //sidebarCollapsed: false,
     isMobile: window.innerWidth < 1024,
 
     init() {
@@ -279,6 +279,10 @@ new class extends Component {
                     <x-sidebar-link route="system.prescribed-activity-types" wire:navigate
                         class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Prescribed Activity Types
+                    </x-sidebar-link>
+                    <x-sidebar-link route="admin.classifications.classification-ratings" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        Classification Ratings
                     </x-sidebar-link>
                     <x-sidebar-link route="system.provinces" wire:navigate
                         class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">

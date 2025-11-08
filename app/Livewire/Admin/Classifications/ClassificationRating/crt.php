@@ -16,26 +16,10 @@ class ClassificationRatingTable extends Component
     public $sortDirection = 'asc';
     public $activeFilter = 'all';
 
-    // Modal properties
-    public $showViewModal = false;
-    public $showCreateModal = false;
-    public $showEditModal = false;
-
-    public $viewRatingId = null;
-    public $editRatingId = null;
-
     // Delete modal properties
+    public $showDeleteModal = false;
     public $ratingToDelete = null;
     public $ratingToDeleteName = '';
-
-    protected $listeners = [
-        'closeViewModal' => 'closeViewModal',
-        'closeCreateModal' => 'closeCreateModal',
-        'closeEditModal' => 'closeEditModal',
-        'editRating' => 'editRating',
-        'ratingCreated' => 'handleRatingCreated',
-        'ratingUpdated' => 'handleRatingUpdated',
-    ];
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -65,76 +49,34 @@ class ClassificationRatingTable extends Component
         $this->sortField = $field;
     }
 
-    // View Modal Methods
-    public function openViewModal($id)
-    {
-        $this->viewRatingId = $id;
-        $this->showViewModal = true;
-    }
-
-    public function closeViewModal()
-    {
-        $this->showViewModal = false;
-        $this->viewRatingId = null;
-    }
-
-    // Create Modal Methods
     public function openCreateModal()
     {
-        $this->showCreateModal = true;
+        $this->dispatch('openCreateModal');
     }
 
-    public function closeCreateModal()
+    public function openViewModal($id)
     {
-        $this->showCreateModal = false;
+        $this->dispatch('openViewModal', id: $id);
     }
 
-    // Edit Modal Methods
     public function openEditModal($id)
     {
-        $this->editRatingId = $id;
-        $this->showEditModal = true;
+        $this->dispatch('openEditModal', id: $id);
     }
 
-    public function closeEditModal()
-    {
-        $this->showEditModal = false;
-        $this->editRatingId = null;
-    }
-
-    public function editRating($id)
-    {
-        $this->closeViewModal();
-        $this->openEditModal($id);
-    }
-
-    // Handle successful operations
-    public function handleRatingCreated()
-    {
-        $this->closeCreateModal();
-        session()->flash('message', 'Classification rating created successfully!');
-    }
-
-    public function handleRatingUpdated()
-    {
-        $this->closeEditModal();
-        session()->flash('message', 'Classification rating updated successfully!');
-    }
-
-    // Delete Modal Methods
     public function openDeleteModal($id)
     {
         $rating = ClassificationRating::findOrFail($id);
         $this->ratingToDelete = $rating->id;
         $this->ratingToDeleteName = $rating->rating;
-        $this->dispatch('open-delete-modal');
+        $this->showDeleteModal = true;
     }
 
     public function closeDeleteModal()
     {
+        $this->showDeleteModal = false;
         $this->ratingToDelete = null;
         $this->ratingToDeleteName = '';
-        $this->dispatch('close-delete-modal');
     }
 
     public function deleteRating()
@@ -143,13 +85,24 @@ class ClassificationRatingTable extends Component
             $rating = ClassificationRating::findOrFail($this->ratingToDelete);
             $ratingName = $rating->rating;
 
+            // Check if rating can be deleted (no associated films)
+            if (!$rating->canBeDeleted()) {
+                session()->flash('error', "Cannot delete {$ratingName} because it is being used by films.");
+                $this->closeDeleteModal();
+                return;
+            }
+
             $rating->delete();
 
             session()->flash('message', "Rating {$ratingName} has been deleted successfully!");
             $this->closeDeleteModal();
 
+            // Reset page if we're on the last page and it becomes empty
+            if ($this->classificationRatings->isEmpty() && $this->page > 1) {
+                $this->page = max(1, $this->page - 1);
+            }
+
         } catch (\Exception $e) {
-            \Log::error('Failed to delete rating: ' . $e->getMessage());
             session()->flash('error', 'Failed to delete rating. Please try again.');
             $this->closeDeleteModal();
         }
@@ -157,14 +110,13 @@ class ClassificationRatingTable extends Component
 
     public function toggleActive($id)
     {
-        try {
-            $rating = ClassificationRating::findOrFail($id);
-            $rating->update(['is_active' => !$rating->is_active]);
+        $rating = ClassificationRating::findOrFail($id);
+        $rating->update(['is_active' => !$rating->is_active]);
 
-            session()->flash('message', "Rating {$rating->rating} " . ($rating->is_active ? 'activated' : 'deactivated') . ' successfully!');
-        } catch (\Exception $e) {
-            session()->flash('error', 'Failed to update rating status. Please try again.');
-        }
+        $this->dispatch('notify', [
+            'type' => 'success',
+            'message' => "Rating {$rating->rating} " . ($rating->is_active ? 'activated' : 'deactivated') . ' successfully!'
+        ]);
     }
 
     public function render()
