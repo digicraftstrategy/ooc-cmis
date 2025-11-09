@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ClassificationCategory extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+    ];
 }
