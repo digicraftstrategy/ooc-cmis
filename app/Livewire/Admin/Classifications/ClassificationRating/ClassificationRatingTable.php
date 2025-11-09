@@ -172,8 +172,8 @@ class ClassificationRatingTable extends Component
         $query = ClassificationRating::when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('rating', 'like', '%' . $this->search . '%')
-                      ->orWhere('slug', 'like', '%' . $this->search . '%')
-                      ->orWhere('description', 'like', '%' . $this->search . '%');
+                      ->orWhere('slug', 'like', '%' . $this->search . '%');
+                      //->orWhere('description', 'like', '%' . $this->search . '%');
                 });
             })
             ->when($this->activeFilter !== 'all', function ($query) {
@@ -188,7 +188,7 @@ class ClassificationRatingTable extends Component
             'total' => ClassificationRating::count(),
             'active' => ClassificationRating::active()->count(),
             'inactive' => ClassificationRating::where('is_active', false)->count(),
-            'recent' => ClassificationRating::latest()->first(),
+            //'recent' => ClassificationRating::latest()->first(),
         ];
 
         return view('livewire.admin.classifications.classification-rating.classification-rating-table', [
