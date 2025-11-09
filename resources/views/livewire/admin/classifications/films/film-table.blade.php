@@ -20,6 +20,71 @@
         </div>
     </div>
 
+    <!-- Stats Cards Section -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <!-- Total Films -->
+        <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex items-center">
+                <div class="p-2 bg-blue-100 rounded-lg">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Total Films</p>
+                    <p class="text-xl font-semibold text-gray-900">{{ $stats['total'] }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Single Titles -->
+        <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex items-center">
+                <div class="p-2 bg-green-100 rounded-lg">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Single Titles</p>
+                    <p class="text-xl font-semibold text-gray-900">{{ $stats['totalSingleTitles'] }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sequel Titles -->
+        <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex items-center">
+                <div class="p-2 bg-yellow-100 rounded-lg">
+                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Sequel Titles</p>
+                    <p class="text-xl font-semibold text-gray-900">{{ $stats['totalSequelTitles'] }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Film -->
+        <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex items-center">
+                <div class="p-2 bg-purple-100 rounded-lg">
+                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Recent Film</p>
+                    <p class="text-lg font-semibold text-gray-900 truncate" title="{{ $stats['recent']->film_title ?? 'N/A' }}">
+                        {{ $stats['recent']->film_title ?? 'N/A' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Search and Filter Section -->
     <div class="mb-4 bg-white rounded-lg shadow-sm p-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -74,15 +139,6 @@
                                 @endif
                             </div>
                         </th>
-                        {{--<th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider cursor-pointer"
-                            wire:click="sortBy('film_title')">
-                            <div class="flex items-center space-x-1">
-                                <span>Film Title</span>
-                                @if ($sortField === 'film_title')
-                                    <span class="text-xs">{!! $sortDirection === 'asc' ? '↑' : '↓' !!}</span>
-                                @endif
-                            </div>
-                        </th>--}}
                         <th scope="col" class="w-24 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
                             Film Type
                         </th>
@@ -112,16 +168,13 @@
                             <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900 text-center">
                                 {{ $loop->iteration + ($films->currentPage() - 1) * $films->perPage() }}
                             </td>
-                            {{--<td class="px-3 py-2 whitespace-nowrap">
-                                <div class="text-sm font-semibold text-gray-900">{{ $film->film_title }}</div>
-                            </td>--}}
                             <td class="px-3 py-2 whitespace-nowrap">
                                 <a
                                     href="{{ route('admin.classifications.films.show', $film->slug) }}"
                                     class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-150"
-                                >                                  
+                                >
                                     <div class="text-sm font-semibold text-gray-900">{{ $film->film_title }}</div>
-                                </a>                               
+                                </a>
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
@@ -177,18 +230,6 @@
                                             class="absolute right-0 z-10 mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-1"
                                             style="display: none;"
                                         >
-                                            <!-- View option rendered as a model file -->
-                                            {{--<button
-                                                wire:click="openViewModal({{ $film->id }})"
-                                                @click="open = false"
-                                                class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-150"
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                </svg>
-                                                View Details
-                                            </button>--}}
                                             <!-- View option rendered as page -->
                                             <a
                                                 href="{{ route('admin.classifications.films.show', $film->slug) }}"
@@ -250,6 +291,102 @@
         @if($films->hasPages())
             <div class="px-4 py-3 bg-gray-50 border-t border-gray-200">
                 {{ $films->links('vendor.pagination.tailwind') }}
+            </div>
+        @endif
+    </div>
+
+    <!-- Modals Section -->
+    <div>
+        <!-- Create Film Modal -->
+        @if($showCreateModal)
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                <div class="relative top-20 mx-auto p-4 border w-full max-w-4xl shadow-lg rounded-md bg-white">
+                    <div class="mt-3">
+                        <div class="flex items-center justify-between p-4 border-b">
+                            <h3 class="text-xl font-semibold text-gray-900">Add New Film</h3>
+                            <button wire:click="closeCreateModal" class="text-gray-400 hover:text-gray-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <livewire:admin.classifications.films.create-film />
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <!-- Edit Film Modal -->
+        @if($showEditModal && $selectedFilm)
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                <div class="relative top-20 mx-auto p-4 border w-full max-w-4xl shadow-lg rounded-md bg-white">
+                    <div class="mt-3">
+                        <div class="flex items-center justify-between p-4 border-b">
+                            <h3 class="text-xl font-semibold text-gray-900">Edit Film - {{ $selectedFilm->film_title }}</h3>
+                            <button wire:click="closeEditModal" class="text-gray-400 hover:text-gray-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <livewire:admin.classifications.films.edit-film :film="$selectedFilm" />
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <!-- View Film Modal -->
+        @if($showViewModal && $selectedFilm)
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                <div class="relative top-20 mx-auto p-4 border w-full max-w-4xl shadow-lg rounded-md bg-white">
+                    <div class="mt-3">
+                        <div class="flex items-center justify-between p-4 border-b">
+                            <h3 class="text-xl font-semibold text-gray-900">Film Details - {{ $selectedFilm->film_title }}</h3>
+                            <button wire:click="closeViewModal" class="text-gray-400 hover:text-gray-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <livewire:admin.classifications.films.view-film :film="$selectedFilm" />
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <!-- Delete Confirmation Modal -->
+        @if($showDeleteModal && $selectedFilm)
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                <div class="relative top-20 mx-auto p-4 border w-full max-w-md shadow-lg rounded-md bg-white">
+                    <div class="mt-3">
+                        <div class="flex items-center justify-center mx-auto w-12 h-12 rounded-full bg-red-100">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                        </div>
+
+                        <div class="mt-2 text-center">
+                            <h3 class="text-lg font-medium text-gray-900">Delete Film</h3>
+                            <p class="mt-2 text-sm text-gray-500">
+                                Are you sure you want to delete "{{ $selectedFilm->film_title }}"? This action cannot be undone.
+                            </p>
+                        </div>
+
+                        <div class="mt-4 flex justify-center space-x-3">
+                            <button wire:click="closeDeleteModal"
+                                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-colors duration-200">
+                                Cancel
+                            </button>
+                            <button wire:click="deleteFilm"
+                                    class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-200">
+                                Delete Film
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endif
     </div>
