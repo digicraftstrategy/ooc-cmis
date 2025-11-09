@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\FilmType;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Classification;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Str;
 
 class Film extends Model
 {
-<<<<<<< HEAD
+
     use HasFactory, softDeletes;
 
     protected $fillable = [
@@ -39,27 +41,20 @@ class Film extends Model
         'duration' => 'integer',
     ];
 
-    // Relationships to the film type that the film falls under
-    public function filmType(): BelongsTo
-=======
-    protected $fillable = [
-        'film_title','slug','casts','director','producer','production_company',
-        'release_year','genre','language','duration','has_subtitle','theme','synopsis',
-        'poster_url','trailer_url','film_type_id'
-    ];
+    
+   
 
     public function classification()
     {
         return $this->morphOne(Classification::class, 'classifiable');
     }
 
-    public function filmType()
->>>>>>> 3338ecc (Management Classifications.)
+    // Relationships to the film type that the film falls under
+    public function filmType(): BelongsTo
     {
         return $this->belongsTo(FilmType::class, 'film_type_id');
     }
 
-<<<<<<< HEAD
     // Automatically generate slug from film title when creating a new film
     protected static function booted()
     {
@@ -88,7 +83,6 @@ class Film extends Model
         return $query->where('release_year', $year);
     }
 
-=======
     /** Optional helpers */
     public function scopeSearch($q, $term)
     {
@@ -99,5 +93,4 @@ class Film extends Model
     {
         return $this->film_title ?? '';
     }
->>>>>>> 3338ecc (Management Classifications.)
 }

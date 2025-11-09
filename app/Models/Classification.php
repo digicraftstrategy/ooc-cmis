@@ -2,17 +2,14 @@
 
 namespace App\Models;
 
-<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-=======
->>>>>>> 3338ecc (Management Classifications.)
 use Illuminate\Database\Eloquent\Model;
 
 class Classification extends Model
 {
-<<<<<<< HEAD
+
     use HasFactory;
-=======
+
     protected $fillable = [
         'classifiable_type','classifiable_id',
         'classification_rating_id','classification_status_id',
@@ -33,5 +30,4 @@ class Classification extends Model
     {
         return $this->belongsTo(ClassificationStatus::class, 'classification_status_id');
     }
->>>>>>> 3338ecc (Management Classifications.)
 }
