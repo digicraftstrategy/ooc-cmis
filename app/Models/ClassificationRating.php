@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
 
 class ClassificationRating extends Model
 {
-<<<<<<< HEAD
     use HasFactory;
 
     protected $table = 'classification_ratings';
@@ -127,7 +127,4 @@ class ClassificationRating extends Model
         // Return storage URL for locally stored icons
         return asset('storage/' . ltrim($this->icon_path, '/'));
     }
-=======
-    protected $fillable = ['code','label','description'];
->>>>>>> 3338ecc (Management Classifications.)
 }
