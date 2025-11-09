@@ -18,32 +18,50 @@ class ClassificationRatingSeeder extends Seeder
             [
                 'rating' => 'General (G)',
                 'slug' => 'general',
-                'description' => 'Suitable for all audiences.'
+                'description' => 'Suitable for all audiences.',
+                'icon_path' => 'ratingicons/g_rating.png',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'rating' => 'Parental Guidance Required (PGR)',
                 'slug' => 'parental-guidance-required',
-                'description' => 'Some material may not be suitable for children.'
+                'description' => 'Some material may not be suitable for children. Parental guidance is required.',
+                'icon_path' => 'ratingicons/pgr_rating.png',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'rating' => 'Mature (M)',
                 'slug' => 'mature',
-                'description' => 'Suitable for mature audiences aged 17 and above.'
+                'description' => 'Suitable for mature audiences aged 17 and above.',
+                'icon_path' => 'ratingicons/m_rating.png',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'rating' => 'Restricted (R 18+)',
                 'slug' => 'restricted',
-                'description' => 'Restricted to adults aged 18 and above.'
+                'description' => 'Restricted to adults aged 18 and above.',
+                'icon_path' => 'ratingicons/r_rating.png',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'rating' => 'Refused Classification (RC)',
                 'slug' => 'refused-classification',
-                'description' => 'Not approved for public exhibition.'
+                'description' => 'Not approved for public exhibition.',
+                'icon_path' => 'ratingicons/rc_rating.png',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'rating' => 'Prohibited (X)',
                 'slug' => 'prohibited',
-                'description' => 'Not suitable for public exhibition.'
+                'is_active' => false,
+                'description' => 'Not suitable for public exhibition.',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
         ];
 
