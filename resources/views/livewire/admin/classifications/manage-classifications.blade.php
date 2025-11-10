@@ -151,10 +151,10 @@
                                     <div class="flex items-center justify-end gap-2">
 
                                         {{-- Show current rating --}}
-                                        <span class="px-2 py-0.5 rounded-full text-xs
+                                        {{--<span class="px-2 py-0.5 rounded-full text-xs
                                             {{ $rating !== '—' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-500' }}">
                                             {{ $rating }}
-                                        </span>
+                                        </span>--}}
 
                                         {{-- CLASSIFY ACTION --}}
                                         <button
