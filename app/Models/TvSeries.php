@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Database\Eloquent\SoftDeletes; // ← uncomment ONLY if you add softDeletes() in the migration
+// use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class TvSeries extends Model
@@ -67,13 +67,6 @@ class TvSeries extends Model
         return 'slug';
     }
 
-class TvSeries extends Model
-{
-    protected $table = 'tv_serieses';
-    protected $fillable = [
-        'title','slug','genre','language','production_company','release_year', /* add your columns */];
-
-    /** Poster accessor (like Film::posterPath) */
     protected function posterPath(): Attribute
     {
         return Attribute::make(
@@ -93,3 +86,4 @@ class TvSeries extends Model
         return $this->tv_series_title ?? '';
     }
 }
+
