@@ -1,32 +1,13 @@
 <?php
 
-/*namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Audio extends Model
-{
-    use HasFactory;
-
-    protected $fillable = [
-        'title','artist','album','release_year','genre','language',
-        'duration','has_subtitle','cover_art_url','description',
-    ];
-
-    public function classification()
-    {
-        return $this->morphOne(Classification::class, 'classifiable')->latestOfMany();
-    }
-}*/
-//<?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Audio extends Model
 {
+    protected $table = 'audios';
+    
     protected $fillable = ['title','artist','album','release_year','genre','language',
         'duration','has_subtitle','cover_art_url','description',];
 
