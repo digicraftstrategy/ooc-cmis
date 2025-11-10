@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('literatures', function (Blueprint $table) {
             $table->id();
+            $table->string('literature_title');
+            $table->string('slug')->unique();
+            $table->string('author')->nullable();
+            $table->string('publisher')->nullable();
+            $table->year('publication_year')->nullable();
+            $table->integer('pages')->nullable();
+            $table->string('genre')->nullable();
+            $table->text('summary')->nullable();
+            $table->string('cover_art_path')->nullable(); // URL to the cover art image
             $table->timestamps();
         });
     }

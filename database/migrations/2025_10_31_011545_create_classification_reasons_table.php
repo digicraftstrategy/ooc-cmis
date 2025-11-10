@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('classification_reasons', function (Blueprint $table) {
             $table->id();
+            $table->string('classification_reason_name');
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

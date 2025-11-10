@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('rating')->unique();
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->string('icon_path')->nullable(); // Path to the icon image
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
