@@ -150,7 +150,7 @@
                             Film Type
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
-                            Casts
+                            Main Actor/Actress
                         </th>
                         <th scope="col" class="w-20 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
                             Duration

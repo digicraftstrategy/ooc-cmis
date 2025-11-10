@@ -94,7 +94,7 @@ new class extends Component {
     </div>
 
     <!-- Navigation (Scrollable) -->
-    <nav class="flex-1 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800">
+    <nav class="flex-1 py-4 overflow-y-scroll scrollbar-none">
         <div class="py-1 space-y-1">
 
             <!-- Dashboard Link -->
@@ -266,6 +266,10 @@ new class extends Component {
                     <x-sidebar-link route="admin.classifications.film-types" wire:navigate
                         class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Film Types
+                    </x-sidebar-link>
+                    <x-sidebar-link route="admin.classifications.tv-series" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        TV Series
                     </x-sidebar-link>
                 </div>
             </div>
