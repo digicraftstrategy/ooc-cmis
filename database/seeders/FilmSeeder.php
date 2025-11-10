@@ -27,6 +27,8 @@ class FilmSeeder extends Seeder
                 'duration' => 148,
                 'theme' => 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.',
                 'film_type_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'The Godfather',
@@ -41,6 +43,8 @@ class FilmSeeder extends Seeder
                 'duration' => 175,
                 'theme' => 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.',
                 'film_type_id' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'Spirited Away',
@@ -55,6 +59,8 @@ class FilmSeeder extends Seeder
                 'duration' => 125,
                 'theme' => 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.',
                 'film_type_id' => 3,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'Parasite',
@@ -69,6 +75,8 @@ class FilmSeeder extends Seeder
                 'duration' => 132,
                 'theme' => 'Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.',
                 'film_type_id' => 4,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'The Dark Knight',
@@ -83,6 +91,8 @@ class FilmSeeder extends Seeder
                 'duration' => 152,
                 'theme' => 'When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.',
                 'film_type_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'Amélie',
@@ -97,6 +107,8 @@ class FilmSeeder extends Seeder
                 'duration' => 122,
                 'theme' => 'Amélie is an innocent and naive girl in Paris with her own sense of justice. She decides to help those around her and, along the way, discovers love.',
                 'film_type_id' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'Interstellar',
@@ -111,6 +123,8 @@ class FilmSeeder extends Seeder
                 'duration' => 169,
                 'theme' => 'A team of explorers travel through a wormhole in space in an attempt to ensure humanity\'s survival.',
                 'film_type_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'La La Land',
@@ -125,6 +139,8 @@ class FilmSeeder extends Seeder
                 'duration' => 128,
                 'theme' => 'While navigating their careers in Los Angeles, a pianist and an actress fall in love while attempting to reconcile their aspirations for the future.',
                 'film_type_id' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'Crouching Tiger, Hidden Dragon',
@@ -139,6 +155,8 @@ class FilmSeeder extends Seeder
                 'duration' => 120,
                 'theme' => 'A young Chinese warrior steals a sword from a famed swordsman and then escapes into a world of romantic adventure with a mysterious man.',
                 'film_type_id' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'The Shawshank Redemption',
@@ -153,6 +171,8 @@ class FilmSeeder extends Seeder
                 'duration' => 142,
                 'theme' => 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
                 'film_type_id' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'City of God',
@@ -167,6 +187,8 @@ class FilmSeeder extends Seeder
                 'duration' => 130,
                 'theme' => 'In the slums of Rio, two kids\' paths diverge as one struggles to become a photographer and the other a kingpin.',
                 'film_type_id' => 4,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'The Lion King',
@@ -181,6 +203,8 @@ class FilmSeeder extends Seeder
                 'duration' => 88,
                 'theme' => 'Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.',
                 'film_type_id' => 3,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'Titanic',
@@ -195,6 +219,8 @@ class FilmSeeder extends Seeder
                 'duration' => 195,
                 'theme' => 'A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.',
                 'film_type_id' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'Oldboy',
@@ -209,6 +235,8 @@ class FilmSeeder extends Seeder
                 'duration' => 120,
                 'theme' => 'After being kidnapped and imprisoned for fifteen years, Oh Dae-su is released, only to find that he must find his captor in five days.',
                 'film_type_id' => 4,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'Pan\'s Labyrinth',
@@ -223,6 +251,8 @@ class FilmSeeder extends Seeder
                 'duration' => 118,
                 'theme' => 'In the aftermath of the Spanish Civil War, young Ofelia meets a mysterious faun who sets her on a path to reclaim her royal heritage.',
                 'film_type_id' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'film_title' => 'Gladiator',
@@ -237,6 +267,8 @@ class FilmSeeder extends Seeder
                 'duration' => 155,
                 'theme' => 'A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.',
                 'film_type_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ]);
     }

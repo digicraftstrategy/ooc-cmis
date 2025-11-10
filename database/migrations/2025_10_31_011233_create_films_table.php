@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('language')->nullable();
             $table->integer('duration');
             $table->boolean('has_subtitle')->default(false);
+            $table->string('color')->nullable();
+            $table->string('country')->nullable();
             $table->text('theme')->nullable();
             //$table->text('synopsis')->nullable();
             $table->string('poster_path')->nullable(); // path to the film poster image

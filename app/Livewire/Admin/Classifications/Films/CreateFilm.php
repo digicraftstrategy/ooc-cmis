@@ -1,6 +1,6 @@
 <?php
 
-/*namespace App\Livewire\Admin\Classifications\Films;
+namespace App\Livewire\Admin\Classifications\Films;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -15,30 +15,70 @@ class CreateFilm extends Component
     public $film_title;
     public $film_type_id;
     public $casts;
-    public $duration;
     public $director;
     public $producer;
     public $production_company;
-    public $synopsis;
-    public $distributor;
-    public $origin_country;
-    public $film_color;
-    public $submission_file;
+    public $release_year;
+    public $genre;
+    public $language;
+    public $duration;
+    public $has_subtitle = false;
+    public $color;
+    public $country;
+    public $theme;
+    public $poster;
+    public $trailer_url;
 
-    protected $rules = [
-        'film_title' => 'required|string|max:255',
-        'film_type_id' => 'required|exists:film_types,id',
-        'casts' => 'required|string',
-        'duration' => 'required|integer|min:1',
-        'director' => 'required|string|max:255',
-        'producer' => 'required|string|max:255',
-        'production_company' => 'required|string|max:255',
-        'synopsis' => 'required|string',
-        'distributor' => 'nullable|string|max:255',
-        'origin_country' => 'required|string|max:255',
-        'film_color' => 'required|string|max:50',
-        'submission_file' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
-    ];
+    public function getReleaseYearConstraints()
+    {
+        $currentYear = date('Y');
+        return [
+            'maxYear' => $currentYear + 5,
+            'minYear' => 1900
+        ];
+    }
+
+    protected function rules()
+    {
+        //$currentYear = date('Y');
+        //$maxYear = $currentYear + 5;
+        $releaseYearConstraints = $this->getReleaseYearConstraints();
+
+        return [
+            'film_title' => 'required|string|max:255',
+            'film_type_id' => 'required|exists:film_types,id',
+            'casts' => 'nullable|string',
+            'director' => 'nullable|string|max:255',
+            'producer' => 'nullable|string|max:255',
+            'production_company' => 'nullable|string|max:255',
+            'release_year' => 'nullable|integer|min:'. $releaseYearConstraints['minYear'] . '|max:'. $releaseYearConstraints['maxYear'],
+            'genre' => 'nullable|string|max:255',
+            'language' => 'nullable|string|max:255',
+            'duration' => 'required|integer|min:1',
+            'has_subtitle' => 'boolean',
+            'color' => 'nullable|string|max:50',
+            'country' => 'nullable|string|max:255',
+            'theme' => 'nullable|string',
+            'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'trailer_url' => 'nullable|url|max:500',
+        ];
+    }
+
+    protected function messages()
+    {
+        //$currentYear = date('Y');
+        //$maxYear = $currentYear + 5;
+        $releaseYearConstraints = $this->getReleaseYearConstraints();
+
+        return [
+            'release_year.min' => 'Release year must be after 1900.',
+            'release_year.max' => "Release year cannot be later than {$releaseYearConstraints['maxYear']}.",
+            'poster.image' => 'The poster must be an image file.',
+            'poster.mimes' => 'The poster must be a JPEG, PNG, JPG, or GIF file.',
+            'poster.max' => 'The poster must not be larger than 2MB.',
+            'trailer_url.url' => 'Please enter a valid URL for the trailer.',
+        ];
+    }
 
     public function save()
     {
@@ -49,21 +89,24 @@ class CreateFilm extends Component
             $film->film_title = $this->film_title;
             $film->film_type_id = $this->film_type_id;
             $film->casts = $this->casts;
-            $film->duration = $this->duration;
             $film->director = $this->director;
             $film->producer = $this->producer;
             $film->production_company = $this->production_company;
-            $film->synopsis = $this->synopsis;
-            $film->distributor = $this->distributor;
-            $film->origin_country = $this->origin_country;
-            $film->film_color = $this->film_color;
+            $film->release_year = $this->release_year;
+            $film->genre = $this->genre;
+            $film->language = $this->language;
+            $film->duration = $this->duration;
+            $film->has_subtitle = $this->has_subtitle;
+            $film->color = $this->color;
+            $film->country = $this->country;
+            $film->theme = $this->theme;
+            $film->trailer_url = $this->trailer_url;
             $film->slug = Str::slug($this->film_title);
 
-            // Handle file upload
-            if ($this->submission_file) {
-                $filePath = $this->submission_file->store('submission_files', 'public');
-                $film->submission_file_path = $filePath;
-                $film->original_file_name = $this->submission_file->getClientOriginalName();
+            // Handle poster upload
+            if ($this->poster) {
+                $posterPath = $this->poster->store('posters', 'public');
+                $film->poster_path = $posterPath;
             }
 
             $film->save();
@@ -77,109 +120,37 @@ class CreateFilm extends Component
         }
     }
 
+    public function resetForm()
+    {
+        $this->reset();
+        $this->resetErrorBag();
+    }
+
     public function render()
     {
+        $currentYear = date('Y');
+        $years = range($currentYear, 1900);
+
+        $colors = [
+            'Color' => 'Color',
+            'Black & White' => 'Black & White',
+            'Both' => 'Both',
+        ];
+
+        $languages = [
+            'English' => 'English',
+            'Filipino' => 'Filipino',
+            'Tagalog' => 'Tagalog',
+            'Bisaya' => 'Bisaya',
+            'Ilocano' => 'Ilocano',
+            'Other' => 'Other',
+        ];
+
         return view('livewire.admin.classifications.films.create-film', [
             'filmTypes' => FilmType::all(),
+            'years' => $years,
+            'colors' => $colors,
+            'languages' => $languages,
         ]);
     }
-}*/
-
-namespace App\Livewire\Admin\Classifications\Films;
-
-use Livewire\Component;
-use App\Models\Film;
-use App\Models\FilmType;
-use Illuminate\Support\Str;
-
-class CreateFilm extends Component
-{
-    public bool $open = false;
-
-    public $film_title = '';
-    public $film_type_id = '';
-    public $main_actor_actress = '';
-    public $duration = '';
-    public $director = '';
-    public $producer = '';
-    public $production_company = '';
-    public $genre = '';
-    public $language = '';
-    public $release_year = '';
-    public $has_subtitle = false;
-    public $poster_url = '';
-    public $trailer_url = '';
-    public $theme = '';
-    public $synopsis = '';
-
-    public $filmTypes;
-
-    protected $listeners = ['openCreateFilm' => 'open'];
-
-    public function mount()
-    {
-        $this->filmTypes = FilmType::orderBy('type')->get();
-    }
-
-    public function open()
-    {
-        $this->resetValidation();
-        $this->resetExcept('filmTypes');
-        $this->open = true;
-    }
-
-    public function close()
-    {
-        $this->open = false;
-    }
-
-    protected function rules(): array
-    {
-        return [
-            'film_title'        => ['required','string','max:255'],
-            'film_type_id'      => ['nullable','exists:film_types,id'],
-            'main_actor_actress'=> ['nullable','string','max:255'],
-            'duration'          => ['nullable','integer','min:1','max:14400'],
-            'director'          => ['nullable','string','max:255'],
-            'producer'          => ['nullable','string','max:255'],
-            'production_company'=> ['nullable','string','max:255'],
-            'genre'             => ['nullable','string','max:255'],
-            'language'          => ['nullable','string','max:100'],
-            'release_year'      => ['nullable','integer','min:1878','max:'.(now()->year+1)],
-            'has_subtitle'      => ['boolean'],
-            'poster_url'        => ['nullable','url','max:2048'],
-            'trailer_url'       => ['nullable','url','max:2048'],
-            'theme'             => ['nullable','string','max:255'],
-            'synopsis'          => ['nullable','string','max:2000'],
-        ];
-    }
-
-    public function save()
-    {
-        $data = $this->validate();
-
-        // Make a slug from title; ensure uniqueness by appending a counter if needed.
-        $base = Str::slug($this->film_title);
-        $slug = $base;
-        $i = 2;
-        while (Film::where('slug', $slug)->exists()) {
-            $slug = $base.'-'.$i++;
-        }
-
-        $film = Film::create(array_merge($data, [
-            'slug' => $slug,
-        ]));
-
-        // Optional: create an empty classification record here, or leave for later workflow.
-
-        $this->dispatch('film-created'); // tell parent tables to refresh
-        $this->close();
-        $this->dispatch('notify', title: 'Film created', body: '“'.$film->film_title.'” added successfully.');
-    }
-
-    public function render()
-    {
-        return view('livewire.admin.classifications.films.create-film');
-    }
 }
-
