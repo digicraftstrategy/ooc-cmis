@@ -267,10 +267,6 @@ new class extends Component {
                         class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Film Types
                     </x-sidebar-link>
-                    <x-sidebar-link route="admin.classifications.tv-series" wire:navigate
-                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
-                        TV Series
-                    </x-sidebar-link>
                 </div>
             </div>
 
