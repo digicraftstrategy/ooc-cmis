@@ -29,6 +29,8 @@ class Film extends Model
         'duration',
         'has_subtitle',
         'theme',
+        'color',
+        'country',
         'poster_path',
         'trailer_url',
         'film_type_id',
@@ -41,8 +43,8 @@ class Film extends Model
         'duration' => 'integer',
     ];
 
-    
-   
+
+
 
     public function classification()
     {
