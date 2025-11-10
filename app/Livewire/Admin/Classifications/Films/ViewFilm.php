@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Classifications\Films;
 
 use Livewire\Component;
+use App\Models\Film;
 
 class ViewFilm extends Component
 {
@@ -10,7 +11,8 @@ class ViewFilm extends Component
 
     public function mount($film)
     {
-        $this->film = $film;
+       // $this->film = $film;
+       $this->film = Film::where('slug', $film)->firstOrFail();
     }
 
     public function downloadFile()

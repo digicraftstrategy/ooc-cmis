@@ -391,5 +391,4 @@
             </div>
         @endif
     </div>
-</div>
 

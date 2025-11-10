@@ -67,6 +67,12 @@ class TvSeries extends Model
         return 'slug';
     }
 
+class TvSeries extends Model
+{
+    protected $table = 'tv_serieses';
+    protected $fillable = [
+        'title','slug','genre','language','production_company','release_year', /* add your columns */];
+
     /** Poster accessor (like Film::posterPath) */
     protected function posterPath(): Attribute
     {

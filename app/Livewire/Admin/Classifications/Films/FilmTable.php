@@ -45,6 +45,12 @@ class FilmTable extends Component
         $this->sortField = $field;
     }
 
+    /*
+    public function getCreatePage()
+    {
+        return redirect()->route('admin.classifications.films.create');
+    }
+    */
     public function openCreateModal()
     {
         $this->showCreateModal = true;
@@ -115,9 +121,9 @@ class FilmTable extends Component
             ->when($this->search, function ($query) {
                 $query->where('film_title', 'like', '%' . $this->search . '%')
                       ->orWhere('director', 'like', '%' . $this->search . '%')
-                      ->orWhere('producer', 'like', '%' . $this->search . '%')
-                      ->orWhere('production_compnay', '%' . $this->search . '%')
-                      ->orWhere('casts', 'like', '%' . $this->search . '%');
+                      ->orWhere('producer', 'like', '%' . $this->search . '%');
+                      //->orWhere('production_compnay', '%' . $this->search . '%')
+                      //->orWhere('casts', 'like', '%' . $this->search . '%');
             })
             ->when($this->filmTitleFilter, function ($query) {
                 $query->where('film_type_id', $this->filmTitleFilter);

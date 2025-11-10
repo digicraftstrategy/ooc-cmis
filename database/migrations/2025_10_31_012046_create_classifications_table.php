@@ -23,6 +23,9 @@ return new class extends Migration
 
             $table->unsignedBigInteger('classifiable_id');
 
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')->references('id')->on('premises_owners')->onDelete('cascade');
+
             $table->unsignedBigInteger('classification_rating_id');
             $table->foreign('classification_rating_id')->references('id')->on('classification_ratings')->onDelete('cascade');
 

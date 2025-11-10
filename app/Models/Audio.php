@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Audio extends Model
 {
     protected $table = 'audios';
-    
+
     protected $fillable = ['title','artist','album','release_year','genre','language',
         'duration','has_subtitle','cover_art_url','description',];
 

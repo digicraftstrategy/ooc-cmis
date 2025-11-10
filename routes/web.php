@@ -186,13 +186,71 @@ Route::group(
                     ->name('admin.publication-premises.premises.view');
             });
 
-        /*Route::group(['prefix' => '/{id}/publication-premises', 'middleware' => []], function () {
+        /*
+        Route::group(['prefix' => '/{id}/publication-premises', 'middleware' => []], function () {
             Route::get('/', \App\Livewire\Admin\PublicationPremises\PublicationPremises\PublicationPremisesTable::class)
                     ->name('admin.publication-premises.premises');
-        });*/
+        });
 
-        Route::get('/{id}/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
-            ->name('admin.classifications.manage-classifications');
+        Route::prefix('manage-classifications')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\ManageClassifications::class)
+                    ->name('admin.classifications.manage-classifications');
+            });
+        */
+
+        // Routing for Managing Classifications per Client
+        Route::prefix('/{id}/manage-classifications')
+            ->group(function () {
+                 Route::get('/', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
+                    ->name('admin.classifications.classified-items');
+
+                // Films
+                Route::prefix('films')
+                    ->group(function () {
+                        Route::get('/', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
+                            ->name('admin.classifications.films');
+                    });
+
+                // TV Series
+                Route::prefix('tv-series')
+                    ->group(function () {
+                        Route::get('/', \App\Livewire\Admin\Classifications\TvSeries\TvSeriestable::class)
+                            ->name('admin.classifications.tv-series');
+                    });
+
+                // Video Games
+                Route::prefix('video-games')
+                    ->group(function () {
+                        Route::get('/', \App\Livewire\Admin\Classifications\VideoGame\VideoGameTable::class)
+                            ->name('admin.classifications.video-games');
+                    });
+
+                // Audio
+                Route::prefix('audios')
+                    ->group(function () {
+                        // Routing for audio here
+                    });
+
+
+                // TV Ads
+                Route::prefix('tv-ads')
+                    ->group(function () {
+                        Route::get('/', \App\Livewire\Admin\Classifications\Advertisement\AdvertisementTable::class)
+                            ->name('admin.classifications.tv-ads');
+                });
+
+                // Literature Books
+                Route::prefix('literatures')
+                    ->group(function () {
+                        Route::get('/', \App\Livewire\Admin\Classifications\Literature\LiteratureTable::class)
+                            ->name('admin.classifications.literatures');
+                });
+
+            });
+
+        //Route::get('/{id}/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
+        //    ->name('admin.classifications.manage-classifications');
 
         Route::get('/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
             ->name('admin.classifications.manage-classifications');
@@ -215,15 +273,15 @@ Route::group(
         Route::get('/film-types', \App\Livewire\Admin\Classifications\FilmType\FilmTypeTable::class)
             ->name('admin.classifications.film-types');
 
-        Route::prefix('film')
+        Route::prefix('films')
             ->group(function () {
                 Route::get('/', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
-                ->name('admin.classifications.films');
-                Route::get('/{film}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
+                    ->name('admin.classifications.films');
+                Route::get('/{film:slug}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
                     ->name('admin.classifications.films.show');
-                /*
                 Route::get('/register', \App\Livewire\Admin\Classifications\Films\CreateFilm::class)
                     ->name('admin.classifications.films.create');
+                /*
                 Route::get('/edit/{film}', \App\Livewire\Admin\Classifications\Films\EditFilm::class)
                     ->name('admin.classifications.films.edit');
                 */
@@ -233,8 +291,44 @@ Route::group(
         Route::get('/films/{film}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
             ->name('admin.classifications.films.show');
         */
-        Route::get('/{id}/classified-items', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
-            ->name('admin.classifications.classified-items');
+
+        // TV Series
+        Route::prefix('tv-series')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\TvSeries\TvSeriestable::class)
+                    ->name('admin.classifications.tv-series');
+            });
+
+        // Video Games
+        Route::prefix('video-games')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\VideoGame\VideoGameTable::class)
+                    ->name('admin.classifications.video-games');
+            });
+
+        // Audio
+        Route::prefix('audios')
+            ->group(function () {
+                // Routing for audio here
+            });
+
+
+        // TV Ads
+        Route::prefix('tv-ads')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\Advertisement\AdvertisementTable::class)
+                    ->name('admin.classifications.tv-ads');
+        });
+
+        // Literature Books
+        Route::prefix('literatures')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\Literature\LiteratureTable::class)
+                    ->name('admin.classifications.literatures');
+        });
+
+        //Route::get('/{id}/classified-items', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
+         //   ->name('admin.classifications.classified-items');
 
         Route::get('/classification-ratings', \App\Livewire\Admin\Classifications\ClassificationRating\ClassificationRatingTable::class)
             ->name('admin.classifications.classification-ratings');
