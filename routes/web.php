@@ -197,6 +197,21 @@ Route::group(
         Route::get('/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
             ->name('admin.classifications.manage-classifications');
 
+        //Added by SON
+        Route::prefix('tv-series')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\TvSeries\TvSeriestable::class)
+                    ->name('admin.classifications.tv-series');
+                Route::get('/{tvSeries}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
+                ->name('admin.classifications.tv-series.show');
+                Route::get('/register', \App\Livewire\Admin\Classifications\TvSeries\CreateTvSeries::class)
+                    ->name('admin.classifications.tv-series.create');
+                Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\TvSeries\EditTvSeries::class)
+                    ->name('admin.classifications.tv-series.edit');
+                Route::get('/view/{id}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
+                    ->name('admin.classifications.tv-series.view');
+            });
+
         Route::get('/film-types', \App\Livewire\Admin\Classifications\FilmType\FilmTypeTable::class)
             ->name('admin.classifications.film-types');
 
