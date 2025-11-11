@@ -8,6 +8,7 @@
                         <h1 class="text-xl md:text-2xl font-bold text-white mb-1">Manage TV Serieses</h1>
                         <p class="text-blue-100 opacity-90 text-sm">Manage all registered tv series in the system</p>
                     </div>
+                    {{--
                     <button wire:click="openCreateModal"
                         class="px-4 py-2 bg-white text-blue-600 hover:bg-blue-50 border-transparent shadow font-medium rounded-lg transition-all duration-200 flex items-center text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -15,6 +16,16 @@
                         </svg>
                         Add New TV Series
                     </button>
+                    --}}
+
+                     {{-- Use link to create page instead --}}
+                    <a href="{{ route('admin.classifications.tv-series.create') }}"
+                       class="px-4 py-2 bg-white text-blue-600 hover:bg-blue-50 border-transparent shadow font-medium rounded-lg transition-all duration-200 flex items-center text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                        Add New TV Series
+                    </a>
                 </div>
             </div>
         </div>
@@ -299,6 +310,7 @@
     <!-- Modals Section -->
     <div>
         <!-- Create TV Series Modal -->
+        {{--
         @if($showCreateModal)
             <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
                 <div class="relative top-20 mx-auto p-4 border w-full max-w-4xl shadow-lg rounded-md bg-white">
@@ -312,12 +324,12 @@
                             </button>
                         </div>
 
-                        <livewire:admin.classifications.tv-seriess.create-tv-series />
+                        <livewire:admin.classifications.tv-series.create-tv-series />
                     </div>
                 </div>
             </div>
         @endif
-
+        --}}
         <!-- Edit TV Series Modal -->
         @if($showEditModal && $selectedTVSeries)
             <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">

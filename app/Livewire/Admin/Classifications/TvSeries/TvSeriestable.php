@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Classifications\TvSeries;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\TvSeries; // <- ensure this matches your actual class/file name (TvSeries.php)
+use Illuminate\Support\Facades\Storage;
 
 class TvSeriestable extends Component
 {
@@ -17,10 +18,16 @@ class TvSeriestable extends Component
     public int $perPage = 10;
 
     // Modal states (same UX as FilmTable)
-    public bool $showCreateModal = false;
+    //public bool $showCreateModal = false;
     public bool $showEditModal   = false;
     public bool $showViewModal   = false;
     public bool $showDeleteModal = false;
+
+    // Inside TvSeriestable (optional)
+    /*protected $listeners = [
+        'tvSeriesCreated' => '$refresh',
+        'closeCreateModal' => 'closeCreateModal',
+    ];*/
 
     // Selected row
     public ?TvSeries $selectedTVSeries = null;
@@ -51,8 +58,8 @@ class TvSeriestable extends Component
 
     // --- Modal open/close helpers (same pattern as FilmTable) ---
 
-    public function openCreateModal(): void   { $this->showCreateModal = true;  }
-    public function closeCreateModal(): void  { $this->showCreateModal = false; }
+    /*public function openCreateModal(): void   { $this->showCreateModal = true;  }
+    public function closeCreateModal(): void  { $this->showCreateModal = false; }*/
 
     public function openEditModal(int $id): void
     {
