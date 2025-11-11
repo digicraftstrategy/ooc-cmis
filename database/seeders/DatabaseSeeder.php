@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             FilmTypeSeeder::class,
             FilmSeeder::class,
             TvSeriesSeeder::class,
+            ClassificationSeeder::class
         ]);
     }
 }

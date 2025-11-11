@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use App\Models\Film;
 use App\Models\FilmType;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redirect;
 
 class CreateFilm extends Component
 {
@@ -40,8 +41,6 @@ class CreateFilm extends Component
 
     protected function rules()
     {
-        //$currentYear = date('Y');
-        //$maxYear = $currentYear + 5;
         $releaseYearConstraints = $this->getReleaseYearConstraints();
 
         return [
@@ -66,8 +65,6 @@ class CreateFilm extends Component
 
     protected function messages()
     {
-        //$currentYear = date('Y');
-        //$maxYear = $currentYear + 5;
         $releaseYearConstraints = $this->getReleaseYearConstraints();
 
         return [
@@ -111,10 +108,10 @@ class CreateFilm extends Component
 
             $film->save();
 
-            $this->dispatch('film-created');
-            $this->reset();
-
+            // Redirect to films index with success message
             session()->flash('success', 'Film created successfully.');
+            return redirect()->route('admin.classifications.films.index');
+
         } catch (\Exception $e) {
             session()->flash('error', 'Error creating film: ' . $e->getMessage());
         }

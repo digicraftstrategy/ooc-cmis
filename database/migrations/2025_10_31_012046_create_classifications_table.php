@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('second_opinion_by')->nullable();
             $table->text('notes')->nullable();
 
-            $table->string('classifiable_type');
+            $table->string('classifiable_type')->nullable();
 
             $table->unsignedBigInteger('classifiable_id');
 
@@ -32,8 +32,8 @@ return new class extends Migration
             $table->unsignedBigInteger('classification_category_id');
             $table->foreign('classification_category_id')->references('id')->on('classification_categories')->onDelete('cascade');
 
-            $table->unsignedBigInteger('classification_status_id');
-            $table->foreign('classification_status_id')->references('id')->on('classification_statuses')->onDelete('cascade');
+            //$table->unsignedBigInteger('classification_status_id');
+            //$table->foreign('classification_status_id')->references('id')->on('classification_statuses')->onDelete('cascade');
             $table->timestamps();
 
             // Index for polymorphic relation
