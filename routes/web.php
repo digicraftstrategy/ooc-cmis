@@ -171,6 +171,11 @@ Route::group(
                     Route::get('/register', \App\Livewire\Admin\PublicationPremises\PublicationPremises\CreatePublicationPremises::class)
                         ->name('admin.publication-premises.premises.create');
                 });
+
+                Route::group(['prefix' => '/{id}/manage-classifications', 'middleware' => []], function () {
+                    Route::get('/', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
+                        ->name('admin.classifications.classified-items');
+                });
             });
 
             // Publication Premises
@@ -191,13 +196,23 @@ Route::group(
             Route::get('/', \App\Livewire\Admin\PublicationPremises\PublicationPremises\PublicationPremisesTable::class)
                     ->name('admin.publication-premises.premises');
         });
-
+        */
         Route::prefix('manage-classifications')
             ->group(function () {
                 Route::get('/', \App\Livewire\Admin\Classifications\ManageClassifications::class)
                     ->name('admin.classifications.manage-classifications');
+                //Route::get('/create', \App\Livewire\Admin\Classifications\Classification\CreateClassification::class)
+                 //   ->name('admin.classifications.create-classification');
+
+                // Films
+                Route::prefix('films')
+                    ->group(function () {
+                        Route::get('/classify/{film:slug}', \App\Livewire\Admin\Classifications\Classification\CreateClassification::class)
+                        ->name('admin.classifications.create-classification');
+                    });
+
             });
-        */
+
 
         // Routing for Managing Classifications per Client
         Route::prefix('/{id}/manage-classifications')
@@ -210,6 +225,8 @@ Route::group(
                     ->group(function () {
                         Route::get('/', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
                             ->name('admin.classifications.films');
+                        Route::get('/{film:slug}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
+                            ->name('admin.classifications.films.show');
                     });
 
                 // TV Series
@@ -252,24 +269,10 @@ Route::group(
         //Route::get('/{id}/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
         //    ->name('admin.classifications.manage-classifications');
 
-        Route::get('/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
-            ->name('admin.classifications.manage-classifications');
+        //Route::get('/manage-classifications', \App\Livewire\Admin\Classifications\ManageClassifications::class)
+        //    ->name('admin.classifications.manage-classifications');
 
-        //Added by SON
-        Route::prefix('tv-series')
-            ->group(function () {
-                Route::get('/', \App\Livewire\Admin\Classifications\TvSeries\TvSeriestable::class)
-                    ->name('admin.classifications.tv-series');
-                Route::get('/{tvSeries}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
-                ->name('admin.classifications.tv-series.show');
-                Route::get('/register', \App\Livewire\Admin\Classifications\TvSeries\CreateTvSeries::class)
-                    ->name('admin.classifications.tv-series.create');
-                Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\TvSeries\EditTvSeries::class)
-                    ->name('admin.classifications.tv-series.edit');
-                Route::get('/view/{id}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
-                    ->name('admin.classifications.tv-series.view');
-            });
-
+        // Sidebar routing for Classifications
         Route::get('/film-types', \App\Livewire\Admin\Classifications\FilmType\FilmTypeTable::class)
             ->name('admin.classifications.film-types');
 
@@ -277,10 +280,12 @@ Route::group(
             ->group(function () {
                 Route::get('/', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
                     ->name('admin.classifications.films');
+                Route::get('/create', [\App\Http\Controllers\Admin\Classifications\FilmController::class, 'create'])
+                    ->name('admin.classifications.films.create');
                 Route::get('/{film:slug}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
                     ->name('admin.classifications.films.show');
-                Route::get('/register', \App\Livewire\Admin\Classifications\Films\CreateFilm::class)
-                    ->name('admin.classifications.films.create');
+                //Route::get('/register', \App\Livewire\Admin\Classifications\Films\CreateFilm::class)
+                    //->name('admin.classifications.films.create');
                 /*
                 Route::get('/edit/{film}', \App\Livewire\Admin\Classifications\Films\EditFilm::class)
                     ->name('admin.classifications.films.edit');
@@ -297,6 +302,14 @@ Route::group(
             ->group(function () {
                 Route::get('/', \App\Livewire\Admin\Classifications\TvSeries\TvSeriestable::class)
                     ->name('admin.classifications.tv-series');
+                Route::get('/{tvSeries}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
+                ->name('admin.classifications.tv-series.show');
+                Route::get('/register', \App\Livewire\Admin\Classifications\TvSeries\CreateTvSeries::class)
+                    ->name('admin.classifications.tv-series.create');
+                Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\TvSeries\EditTvSeries::class)
+                    ->name('admin.classifications.tv-series.edit');
+                Route::get('/view/{id}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
+                    ->name('admin.classifications.tv-series.view');
             });
 
         // Video Games

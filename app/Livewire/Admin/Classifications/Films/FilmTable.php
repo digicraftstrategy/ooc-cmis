@@ -18,8 +18,8 @@ class FilmTable extends Component
     public $sortDirection = 'asc';
     public $perPage = 10;
 
-    // Modal states
-    public $showCreateModal = false;
+    // Modal states (commented out create modal)
+    // public $showCreateModal = false;
     public $showEditModal = false;
     public $showViewModal = false;
     public $showDeleteModal = false;
@@ -51,6 +51,8 @@ class FilmTable extends Component
         return redirect()->route('admin.classifications.films.create');
     }
     */
+
+    /*
     public function openCreateModal()
     {
         $this->showCreateModal = true;
@@ -60,6 +62,7 @@ class FilmTable extends Component
     {
         $this->showCreateModal = false;
     }
+    */
 
     public function openEditModal($filmId)
     {
