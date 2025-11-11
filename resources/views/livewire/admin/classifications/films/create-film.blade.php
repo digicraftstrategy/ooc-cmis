@@ -11,6 +11,23 @@
         </div>
     @endif
 
+    <!-- Back to films list -->
+    <div class="mb-6">
+        <a href="{{ route('admin.classifications.films') }}"
+           class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Films List
+        </a>
+    </div>
+
+    <!-- Page Header -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">Create New Film</h1>
+        <p class="text-gray-600 mt-1">Add a new film to the classification system</p>
+    </div>
+
     <form wire:submit="save" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Film Title -->
@@ -217,10 +234,10 @@
                 class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                 Reset
             </button>
-            <button type="button" wire:click="$dispatch('close-modal')"
+            <a href="{{ route('admin.classifications.films') }}"
                 class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                 Cancel
-            </button>
+            </a>
             <button type="submit"
                 class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 flex items-center">
                 <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
