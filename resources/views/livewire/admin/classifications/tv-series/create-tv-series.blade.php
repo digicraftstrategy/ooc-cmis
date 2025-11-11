@@ -2,13 +2,42 @@
     <!-- Form -->
     <div class="space-y-6">
 
+            @if (session()->has('success'))
+        <div class="mb-6 p-4 bg-green-50 text-green-700 rounded-lg border border-green-200">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session()->has('error'))
+        <div class="mb-6 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <!-- Back to films list -->
+    <div class="mb-6">
+        <a href="{{ route('admin.classifications.tv-series') }}"
+           class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Films List
+        </a>
+    </div>
+
+    <!-- Page Header -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">Create New TV Series</h1>
+        <p class="text-gray-600 mt-1">Add a new tv series to the classification system</p>
+    </div>
+
         <!-- Title & Slug -->
         <div class="bg-white rounded-xl border shadow-sm">
             <div class="px-4 py-3 border-b">
                 <h3 class="text-sm font-semibold text-slate-800">Basic Details</h3>
                 <p class="text-xs text-slate-500">Core identifiers used across the system.</p>
             </div>
-            <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div class="md:col-span-2">
                     <label class="block text-xs font-medium text-slate-600 mb-1">Series Title <span class="text-rose-600">*</span></label>
                     <input
@@ -50,23 +79,21 @@
             </div>
             <div class="p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                    <label class="block text-xs font-medium text-slate-600 mb-1">Season No.</label>
-                    <input type="number" min="1" wire:model.live="season_number"
-                           class="w-full text-sm border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
-                           placeholder="1">
-                    @error('season_number') <p class="text-xs text-rose-600 mt-1">{{ $message }}</p> @enderror
-                </div>
-
-                <div class="md:col-span-2">
                     <label class="block text-xs font-medium text-slate-600 mb-1">Season Title</label>
                     <input type="text" wire:model.live="season_title"
                            class="w-full text-sm border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
                            placeholder="e.g. Rising Tides">
                     @error('season_title') <p class="text-xs text-rose-600 mt-1">{{ $message }}</p> @enderror
                 </div>
-
                 <div>
-                    <label class="block text-xs font-medium text-slate-600 mb-1">Episodes #</label>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Season No.</label>
+                    <input type="number" min="1" wire:model.live="season_number"
+                           class="w-full text-sm border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                           placeholder="1">
+                    @error('season_number') <p class="text-xs text-rose-600 mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Episodes No.</label>
                     <input type="number" min="1" wire:model.live="number_of_episodes"
                            class="w-full text-sm border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
                            placeholder="10">
