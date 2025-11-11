@@ -312,7 +312,7 @@
                             </button>
                         </div>
 
-                        <livewire:admin.classifications.tv-seriess.create-tv-series />
+                        <livewire:admin.classifications.tv-series.create-tv-series />
                     </div>
                 </div>
             </div>

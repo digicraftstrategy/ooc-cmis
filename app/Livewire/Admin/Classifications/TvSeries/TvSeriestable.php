@@ -22,6 +22,12 @@ class TvSeriestable extends Component
     public bool $showViewModal   = false;
     public bool $showDeleteModal = false;
 
+    // Inside TvSeriestable (optional)
+    protected $listeners = [
+        'tvSeriesCreated' => '$refresh',
+        'closeCreateModal' => 'closeCreateModal',
+    ];
+
     // Selected row
     public ?TvSeries $selectedTVSeries = null;
 
