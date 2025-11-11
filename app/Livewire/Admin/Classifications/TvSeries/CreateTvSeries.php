@@ -152,7 +152,7 @@ class CreateTvSeries extends Component
 
     public function render()
     {
-        return view('livewire.admin.classifications.tv-series.create-tv-series')
-        ->layout('layouts.app');   // or whatever your app layout is
+        return view('livewire.admin.classifications.tv-series.create-tv-series');
+        //->layout('layouts.app');   // or whatever your app layout is
     }
 }
