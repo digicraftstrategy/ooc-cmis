@@ -34,7 +34,7 @@ class CreateFilm extends Component
     {
         $currentYear = date('Y');
         return [
-            'maxYear' => $currentYear + 5,
+            'maxYear' => $currentYear + 1,
             'minYear' => 1900
         ];
     }

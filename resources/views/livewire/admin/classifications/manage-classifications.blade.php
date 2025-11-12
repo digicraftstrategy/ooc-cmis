@@ -21,7 +21,7 @@
         </div>
     </div>
     {{-- Tabs --}}
-    <div class="flex items-center justify-between flex-wrap gap-3 m-5">
+    <div class="flex items-center justify-between flex-wrap gap-3 m-0">
         <div class="inline-flex rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
             @php
                 $tabs = [
@@ -36,7 +36,7 @@
             @foreach($tabs as $key => $label)
                 <button
                     wire:click="setTab('{{ $key }}')"
-                    class="px-4 py-2 text-sm font-medium focus:outline-none transition
+                    class="px-4 py-3 text-sm font-medium focus:outline-none transition
                            {{ $activeTab === $key
                                 ? 'bg-blue-600 text-white'
                                 : 'bg-white text-gray-700 hover:bg-gray-50' }}">
@@ -44,9 +44,10 @@
                 </button>
             @endforeach
         </div>
+    </div>
 
         {{-- Search + Per-page --}}
-        <div class="flex items-center gap-2">
+        {{-- <div class="flex items-center gap-2">
             <input
                 type="text"
                 placeholder="Search title…"
@@ -60,7 +61,7 @@
                 <option value="50">50 / page</option>
             </select>
         </div>
-    </div>
+        </div>--}}
 
     {{-- Stats Cards (react to $activeTab) --}}
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -79,6 +80,64 @@
             </div>
         </div>
         @endforeach
+    </div>
+    <!-- Search & Filters (ManageClassifications-aware) -->
+    <div class="mb-4 bg-white rounded-lg shadow-sm p-4">
+        @php
+            $tabLabels = [
+                'films' => ['singular' => 'film', 'plural' => 'films', 'placeholder' => 'Search films...'],
+                'tv'    => ['singular' => 'series', 'plural' => 'tv series', 'placeholder' => 'Search TV series...'],
+                'games' => ['singular' => 'game', 'plural' => 'games', 'placeholder' => 'Search video games...'],
+                'ads'   => ['singular' => 'ad', 'plural' => 'ads', 'placeholder' => 'Search advertisement matter...'],
+                'audio' => ['singular' => 'audio', 'plural' => 'audio works', 'placeholder' => 'Search audio...'],
+            ];
+            $label = $tabLabels[$activeTab] ?? $tabLabels['films'];
+        @endphp
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <!-- Search -->
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <input
+                    wire:model.live.debounce.300ms="search"
+                    type="text"
+                    class="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-sm"
+                    placeholder="{{ $label['placeholder'] }}"
+                >
+                @if($search !== '')
+                    <button
+                        type="button"
+                        wire:click="$set('search','')"
+                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                        title="Clear search"
+                    >
+                        ✕
+                    </button>
+                @endif
+            </div>
+
+            <!-- Right-side meta: perPage + total -->
+            <div class="flex items-center justify-end gap-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-gray-500">Rows per page:</span>
+                    <select
+                        wire:model.live="perPage"
+                        class="text-sm border border-gray-300 rounded-lg px-2 py-1 focus:ring-2 focus:ring-blue-500">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+
+                <span class="text-sm text-gray-500">
+                    {{ $rows->total() }} {{ $label['plural'] }} found
+                </span>
+            </div>
+        </div>
     </div>
 
     {{-- Data Table --}}

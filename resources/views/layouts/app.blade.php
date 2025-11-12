@@ -124,7 +124,6 @@
             @include('components.sidebar')
 
         </aside>
-
         <!-- Main Content -->
         <main class="main-content"
             :class="{
