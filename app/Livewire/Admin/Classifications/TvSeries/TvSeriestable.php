@@ -111,7 +111,7 @@ class TvSeriestable extends Component
         $term = '%'.$this->search.'%';
 
         $tvSerieses = TvSeries::query()
-            ->with('classification.rating') // eager-load polymorphic classification
+            ->with('seasons') // eager load seasons
             ->when($this->search, function ($q) use ($term) {
                 $q->where(function ($qq) use ($term) {
                     $qq->where('tv_series_title', 'like', $term)

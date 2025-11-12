@@ -42,13 +42,18 @@ class TvSeries extends Model
         'release_year'   => 'integer',
         'season_number'  => 'integer',
         'duration'       => 'integer',
-        // consider changing number_of_episodes to integer in DB; for now it’s a string in your migration
     ];
 
     /** Polymorphic classification */
     public function classification()
     {
         return $this->morphOne(Classification::class, 'classifiable');
+    }
+
+    /** Relationship to seasons */
+    public function seasons(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(TvSeriesSeason::class);
     }
 
     /** Slug auto-generation (like Film) */
