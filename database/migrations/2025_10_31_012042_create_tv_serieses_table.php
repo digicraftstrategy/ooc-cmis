@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('tv_series_title');
             $table->string('slug')->unique();
-            $table->integer('season_number');
-            $table->string('season_title')->nullable();
-            $table->string('number_of_episodes')->nullable();  // total number of episodes in the season
-            //$table->string('episode_title');
-            $table->integer('duration'); // duration in minutes of the episode
+            //$table->integer('season_number'); ---> moved to seasons table
+            //$table->string('season_title')->nullable(); ---> moved to seasons table
+           // $table->string('number_of_episodes')->nullable();  // total number of episodes in the season
+            //$table->string('episode_title'); --> moved to episodes table
+            //$table->integer('duration'); // duration in minutes of the episode --> moved to seasons table
             $table->year('release_year')->nullable();
             $table->string('casts')->nullable();
             $table->string('director')->nullable();

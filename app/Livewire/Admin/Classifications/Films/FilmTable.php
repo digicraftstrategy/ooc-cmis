@@ -122,6 +122,7 @@ class FilmTable extends Component
         $films = Film::query()
             ->with('filmType')
             ->when($this->search, function ($query) {
+                // Quering film title, director, producer and casts fields for search
                 $query->where('film_title', 'like', '%' . $this->search . '%')
                       ->orWhere('director', 'like', '%' . $this->search . '%')
                       ->orWhere('producer', 'like', '%' . $this->search . '%');
@@ -129,12 +130,13 @@ class FilmTable extends Component
                       //->orWhere('casts', 'like', '%' . $this->search . '%');
             })
             ->when($this->filmTitleFilter, function ($query) {
+            // Quering film type for filtering 
                 $query->where('film_type_id', $this->filmTitleFilter);
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
-        // stats for the cards
+        // stats to display on cards
         $stats = [
             'total' => Film::count(),
             'totalSingleTitles' => Film::whereHas('filmType', function($query) {

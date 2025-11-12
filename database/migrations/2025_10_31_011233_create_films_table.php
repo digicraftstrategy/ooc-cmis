@@ -34,7 +34,7 @@ return new class extends Migration
             $table->foreignId('film_type_id')->constrained('film_types')->onDelete('cascade');
 
             $table->timestamps();
-            $table->softDeletes();
+           // $table->softDeletes();
 
             // Indexes for better query performance
             $table->index('film_title');

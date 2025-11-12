@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
+//use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\FilmType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Classification;
@@ -14,7 +14,8 @@ use Illuminate\Support\Str;
 class Film extends Model
 {
 
-    use HasFactory, softDeletes;
+    use HasFactory;
+    //softDeletes;
 
     protected $fillable = [
         'film_title',
