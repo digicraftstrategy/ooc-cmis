@@ -114,8 +114,8 @@
     }">
 
         <!-- Dark overlay when sidebar is open on mobile -->
-        <div class="sidebar-overlay" 
-            :class="{ 'active': sidebarOpen && isMobile }" 
+        <div class="sidebar-overlay"
+            :class="{ 'active': sidebarOpen && isMobile }"
             @click="sidebarOpen = false">
         </div>
 
@@ -128,7 +128,7 @@
                 'w-64 transform translate-x-0': sidebarOpen && isMobile       /* visible on mobile */
             }">
             {{-- Switch sidebar by role if needed --}}
-            {{-- 
+            {{--
             @if (auth()->user()->isAdmin() || auth()->user()->isSystemUser())
                 @include('components.sidebar')
             @else
@@ -171,7 +171,7 @@
                 </button>
 
                 {{-- Optional global search bar for system users --}}
-                {{-- 
+                {{--
                 @if (auth()->user()->isSystemUser())
                     <livewire:global-routes-search />
                     <hr />

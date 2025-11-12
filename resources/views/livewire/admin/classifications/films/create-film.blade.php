@@ -32,7 +32,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Film Title -->
             <div class="md:col-span-2">
-                <label for="film_title" class="block text-sm font-medium text-gray-700 mb-1">Film Title *</label>
+                <label for="film_title" class="block text-sm font-medium text-gray-700 mb-1">Film Title<span class="text-red-500"> * </span></label>
                 <input type="text" wire:model="film_title" id="film_title"
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 @error('film_title') border-red-500 @enderror"
                     placeholder="Enter film title">
@@ -41,9 +41,42 @@
                 @enderror
             </div>
 
+            <!-- Slug Field -->
+            <div class="md:col-span-2">
+                <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
+                    Custom URL Slug
+                    <span class="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <div class="flex items-center space-x-3">
+                    <div class="flex-1">
+                        <input type="text"
+                               wire:model="slug"
+                               id="slug"
+                               @if($autoSlug) disabled @endif
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 @error('slug') border-red-500 @enderror @if($autoSlug) bg-gray-100 cursor-not-allowed @endif"
+                               placeholder="Leave empty for auto-generation">
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox"
+                               wire:model="autoSlug"
+                               id="autoSlug"
+                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+                        <label for="autoSlug" class="ml-2 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            Auto-generate
+                        </label>
+                    </div>
+                </div>
+                @error('slug')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+                <p class="mt-1 text-xs text-gray-500">
+                    Custom URL-friendly version. Leave empty to auto-generate from film title.
+                </p>
+            </div>
+
             <!-- Film Type -->
             <div>
-                <label for="film_type_id" class="block text-sm font-medium text-gray-700 mb-1">Film Type *</label>
+                <label for="film_type_id" class="block text-sm font-medium text-gray-700 mb-1">Film Type <span class="text-red-500">*</span></label>
                 <select wire:model="film_type_id" id="film_type_id"
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 @error('film_type_id') border-red-500 @enderror">
                     <option value="">Select Film Type</option>
@@ -58,7 +91,7 @@
 
             <!-- Duration -->
             <div>
-                <label for="duration" class="block text-sm font-medium text-gray-700 mb-1">Duration (minutes) *</label>
+                <label for="duration" class="block text-sm font-medium text-gray-700 mb-1">Duration (minutes) <span class="text-red-500">*</span></label>
                 <input type="number" wire:model="duration" id="duration" min="1"
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 @error('duration') border-red-500 @enderror"
                     placeholder="e.g., 120">
@@ -82,7 +115,7 @@
                 @enderror
             </div>
 
-            <!-- Genre -->
+            <!-- Genre - Text Input -->
             <div>
                 <label for="genre" class="block text-sm font-medium text-gray-700 mb-1">Genre</label>
                 <input type="text" wire:model="genre" id="genre"
@@ -91,6 +124,9 @@
                 @error('genre')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
+                <p class="mt-1 text-xs text-gray-500">
+                    You can enter multiple genres separated by commas
+                </p>
             </div>
 
             <!-- Language -->
@@ -123,7 +159,7 @@
                 @enderror
             </div>
 
-            <!-- Country -->
+            <!-- Country - Text Input -->
             <div>
                 <label for="country" class="block text-sm font-medium text-gray-700 mb-1">Country</label>
                 <input type="text" wire:model="country" id="country"

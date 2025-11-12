@@ -7,7 +7,8 @@ use Livewire\WithFileUploads;
 use App\Models\Film;
 use App\Models\FilmType;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\File;
 
 class CreateFilm extends Component
 {
@@ -27,8 +28,11 @@ class CreateFilm extends Component
     public $color;
     public $country;
     public $theme;
-    public $poster;
+    public $poster; 
     public $trailer_url;
+    public $slug;
+
+    public bool $autoSlug = true;
 
     public function getReleaseYearConstraints()
     {
@@ -60,6 +64,7 @@ class CreateFilm extends Component
             'theme' => 'nullable|string',
             'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'trailer_url' => 'nullable|url|max:500',
+            'slug' => ['required', 'string', 'max:255', Rule::unique('films', 'slug')],
         ];
     }
 
@@ -74,7 +79,32 @@ class CreateFilm extends Component
             'poster.mimes' => 'The poster must be a JPEG, PNG, JPG, or GIF file.',
             'poster.max' => 'The poster must not be larger than 2MB.',
             'trailer_url.url' => 'Please enter a valid URL for the trailer.',
+            'slug.unique' => 'This slug is already in use. Please choose a different one.',
         ];
+    }
+
+    // Automatically generate slug when film title changes and autoSlug is enabled
+    public function updatedFilmTitle($value)
+    {
+        if ($this->autoSlug) {
+            $this->slug = Str::slug($value);
+        }
+    }
+
+    // When user toggles auto-slug, generate slug if enabling
+    public function updatedAutoSlug($value)
+    {
+        if ($value && $this->film_title) {
+            $this->slug = Str::slug($this->film_title);
+        }
+    }
+
+    // When user manually edits slug, disable auto-slug
+    public function updatedSlug($value)
+    {
+        if ($this->autoSlug && $value !== Str::slug($this->film_title)) {
+            $this->autoSlug = false;
+        }
     }
 
     public function save()
@@ -98,19 +128,18 @@ class CreateFilm extends Component
             $film->country = $this->country;
             $film->theme = $this->theme;
             $film->trailer_url = $this->trailer_url;
-            $film->slug = Str::slug($this->film_title);
+            $film->slug = $this->slug;
 
-            // Handle poster upload
+            // Handle poster upload - save to public/images/film_posters
             if ($this->poster) {
-                $posterPath = $this->poster->store('posters', 'public');
+                $posterPath = $this->poster->store('images/film_posters', 'public');
                 $film->poster_path = $posterPath;
             }
 
             $film->save();
 
-            // Redirect to films index with success message
             session()->flash('success', 'Film created successfully.');
-            return redirect()->route('admin.classifications.films.index');
+            return redirect()->route('admin.classifications.films');
 
         } catch (\Exception $e) {
             session()->flash('error', 'Error creating film: ' . $e->getMessage());
@@ -121,6 +150,7 @@ class CreateFilm extends Component
     {
         $this->reset();
         $this->resetErrorBag();
+        $this->autoSlug = true;
     }
 
     public function render()
@@ -128,20 +158,26 @@ class CreateFilm extends Component
         $currentYear = date('Y');
         $years = range($currentYear, 1900);
 
-        $colors = [
+        // Safe config loading with fallbacks
+        /*
+        $colors = config('filmvariables.colors', [
             'Color' => 'Color',
             'Black & White' => 'Black & White',
             'Both' => 'Both',
-        ];
+        ]);
 
-        $languages = [
+        $languages = config('filmvariables.languages', [
             'English' => 'English',
             'Filipino' => 'Filipino',
             'Tagalog' => 'Tagalog',
             'Bisaya' => 'Bisaya',
             'Ilocano' => 'Ilocano',
             'Other' => 'Other',
-        ];
+        ]);
+        */
+
+        $colors = config('filmvariables.colors');
+        $languages = config('filmvariables.languages');
 
         return view('livewire.admin.classifications.films.create-film', [
             'filmTypes' => FilmType::all(),
