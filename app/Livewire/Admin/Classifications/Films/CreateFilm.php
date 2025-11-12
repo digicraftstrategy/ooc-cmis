@@ -85,7 +85,7 @@ class CreateFilm extends Component
             $film = new Film();
             $film->film_title = $this->film_title;
             $film->film_type_id = $this->film_type_id;
-            $film->casts = $this->casts;
+            $film->cast = $this->casts;
             $film->director = $this->director;
             $film->producer = $this->producer;
             $film->production_company = $this->production_company;
