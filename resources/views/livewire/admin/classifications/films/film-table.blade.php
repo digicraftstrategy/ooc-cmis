@@ -117,6 +117,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </div>
+                
                 <select wire:model.live="filmTitleFilter"
                     class="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 appearance-none text-sm">
                     <option value="">All Film Types</option>
@@ -139,10 +140,10 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gradient-to-r from-blue-50 to-indigo-50">
                     <tr>
-                        <th scope="col" class="w-12 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             #
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider cursor-pointer"
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto cursor-pointer"
                             wire:click="sortBy('film_title')">
                             <div class="flex items-center space-x-1">
                                 <span>Film Title</span>
@@ -151,25 +152,25 @@
                                 @endif
                             </div>
                         </th>
-                        <th scope="col" class="w-24 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Film Type
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Main Actor/Actress
                         </th>
-                        <th scope="col" class="w-20 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Duration
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Director
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Producer
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Production Company
                         </th>
-                        <th scope="col" class="w-20 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Actions
                         </th>
                     </tr>

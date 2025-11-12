@@ -14,7 +14,7 @@ class CreateTvSeries extends Component
     public string $tv_series_title = '';
     public ?int   $season_number = null;
     public string $season_title = '';
-    public ?int   $number_of_episodes = null;   // note: table displays "Episodes #"
+    public string $number_of_episodes = '';   // note: table displays range of "Episodes #"
     public ?int   $duration = null;             // minutes (per episode or average)
     public string $casts = '';
     public string $director = '';
@@ -38,7 +38,7 @@ class CreateTvSeries extends Component
             'tv_series_title'     => ['required', 'string', 'min:2', 'max:255'],
             'season_number'       => ['nullable', 'integer', 'min:1', 'max:10000'],
             'season_title'        => ['nullable', 'string', 'max:255'],
-            'number_of_episodes'  => ['nullable', 'integer', 'min:1', 'max:10000'],
+            'number_of_episodes'  => ['nullable', 'string', 'max:255'],
             'duration'            => ['nullable', 'integer', 'min:1', 'max:5000'],
             'casts'               => ['nullable', 'string', 'max:1000'],
             'director'            => ['nullable', 'string', 'max:255'],
