@@ -33,7 +33,6 @@ return new class extends Migration
             $table->timestamps();
 
             // Indexes for better query performance
-            $table->index('tv_series_title');
             $table->index('release_year');
             $table->index('director');
             $table->index('genre');
