@@ -1,24 +1,39 @@
 <div>
-    <x-slot name='header'>
-        <div class="px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-700">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h2 class="text-2xl font-bold text-white">
-                        PNG Film Classification Ratings
-                    </h2>
-                    <p class="mt-1 text-sm text-blue-100">
-                        Manage film classification ratings and their descriptions
-                    </p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="px-3 py-1 text-xs font-medium bg-blue-500 text-blue-100 rounded-full">
-                        {{ $stats['total'] }} {{ Str::plural('rating', $stats['total']) }}
-                    </span>
+    <!-- Header Section -->
+    <div class="mb-6">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-lg overflow-hidden">
+            <div class="px-6 py-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold text-white mb-1">PNG Film Classification Ratings</h1>
+                        <p class="text-blue-100 opacity-90 text-sm">Manage film classification ratings and their descriptions</p>
+                    </div>
+                    {{-- Commented out modal trigger --}}
+                    {{--
+                    <button wire:click="openCreateModal"
+                        class="px-4 py-2 bg-white text-blue-600 hover:bg-blue-50 border-transparent shadow font-medium rounded-lg transition-all duration-200 flex items-center text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                        Add New Film
+                    </button>
+                    --}}
+                    {{-- Use link to create page instead --}}
+                    <div class="flex">
+                        <x-blue-button wire:click="openCreateModal"
+                            class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Add New Rating
+                        </x-blue-button>
+                    </div>
                 </div>
             </div>
         </div>
-    </x-slot>
-
+    </div>
     <!-- Main Content -->
     <div class="px-6 py-6 space-y-6">
         <!-- Header and search -->
@@ -36,7 +51,6 @@
                             placeholder="Search by rating, or slug...">
                     </div>
                 </div>
-
                 <!-- Active Filter -->
                 <div class="w-48">
                     <select wire:model.live="activeFilter"
@@ -47,20 +61,7 @@
                     </select>
                 </div>
             </div>
-
-            <div class="flex">
-                <x-blue-button wire:click="openCreateModal"
-                    class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    Add New Rating
-                </x-blue-button>
-            </div>
         </div>
-
         <!-- Flash Messages -->
         @if (session()->has('message'))
             <div class="p-4 bg-green-50 border-l-4 border-green-400 rounded-lg shadow-sm"
@@ -114,7 +115,6 @@
                 </div>
             </div>
         @endif
-
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
             <div class="p-4 bg-white rounded-lg shadow-sm border border-gray-200">
