@@ -101,10 +101,12 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gradient-to-r from-blue-50 to-indigo-50">
                     <tr>
-                        <th scope="col" class="w-12 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">
                             #
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider cursor-pointer"
+
+                        <th scope="col"
+                            class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left cursor-pointer"
                             wire:click="sortBy('tv_series_title')">
                             <div class="flex items-center space-x-1">
                                 <span>Series Title</span>
@@ -113,21 +115,23 @@
                                 @endif
                             </div>
                         </th>
-                       <th class="w-20 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Season No.</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Season Title</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Episodes #</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Duration</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Casts</th>
-                        <th class="w-12 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Director</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Producer</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Producer</th>
-                        <th class="w-20 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Language</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Theme</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Released Year</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Genre</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Created at</th>
-                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider text-left">Updated at</th>
-                        <th scope="col" class="w-20 px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+
+                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Season No.</th>
+                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Season Title</th>
+                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Episodes #</th>
+                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Duration</th>
+                        {{--<th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Casts</th> --}}
+                        {{--<th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Director</th> --}}
+                        {{--<th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Producer</th> --}}
+                        {{--<th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Production Company</th> --}}
+                        {{--<th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Language</th> --}}
+                        {{--<th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Theme</th> --}}
+                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Released Year</th>
+                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Genre</th>
+                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Created at</th>
+                        {{--<th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Updated at</th>--}}
+
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">
                             Actions
                         </th>
                     </tr>
@@ -166,36 +170,36 @@
                                 </td>
 
                                 <!-- Casts -->
-                                <td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-56">
+                                {{--<td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-56">
                                     <div class="truncate" title="{{ $tvSeries->casts }}">{{ $tvSeries->casts }}</div>
-                                </td>
+                                </td>--}}
 
                                 <!-- Director -->
-                                <td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-40">
+                                {{--<td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-40">
                                     <div class="truncate" title="{{ $tvSeries->director }}">{{ $tvSeries->director }}</div>
-                                </td>
+                                </td>--}}
 
                                 <!-- Producer -->
-                                <td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-40">
+                                {{--<td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-40">
                                     <div class="truncate" title="{{ $tvSeries->producer }}">{{ $tvSeries->producer }}</div>
-                                </td>
+                                </td>--}}
 
                                 <!-- Production Company -->
-                                <td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-56">
+                                {{--<td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-56">
                                     <div class="truncate" title="{{ $tvSeries->production_company }}">{{ $tvSeries->production_company }}</div>
-                                </td>
+                                </td>--}}
 
                                 <!-- Language -->
-                                <td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-32">
+                                {{--<td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-32">
                                     <div class="truncate" title="{{ $tvSeries->language }}">{{ $tvSeries->language }}</div>
-                                </td>
+                                </td>--}}
 
                                 <!-- Theme (fixed width + wraps long phrases) -->
-                                <td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-64 whitespace-normal break-words">
+                                {{--<td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-64 whitespace-normal break-words">
                                     <!-- optional: clamp to 2 lines if you use the line-clamp plugin -->
                                     <!-- <p class="line-clamp-2" title="{{ $tvSeries->theme }}">{{ $tvSeries->theme }}</p> -->
                                     <p title="{{ $tvSeries->theme }}">{{ $tvSeries->theme }}</p>
-                                </td>
+                                </td>--}}
 
                                 <!-- Release Year -->
                                 <td class="px-3 py-2 text-sm text-slate-700 align-top text-left w-28">
@@ -213,9 +217,9 @@
                                 </td>
 
                                 <!-- Updated at -->
-                                <td class="px-3 py-2 text-xs text-slate-700 align-top text-left whitespace-nowrap w-40">
+                                {{--<td class="px-3 py-2 text-xs text-slate-700 align-top text-left whitespace-nowrap w-40">
                                     {{ $tvSeries->updated_at }}
-                                </td>
+                                </td>--}}
                             <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end">
                                     <!-- Dropdown menu -->
