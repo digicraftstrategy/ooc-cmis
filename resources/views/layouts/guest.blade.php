@@ -63,8 +63,7 @@
                         <h1 class="text-2xl md:text-3xl font-semibold text-center">
                             Censorship Management Information System
                         </h1>
-
-                        <!-- Right Logo -->
+                           <!-- Right Logo -->
                         <div class="flex-shrink-0 mr-4">
                             <x-application-logo class="text-white h-10 w-auto" />
                         </div>

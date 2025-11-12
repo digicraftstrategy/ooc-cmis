@@ -1,0 +1,1 @@
+<img src="{{ url('images/cmis-login-bg3.png') }}" alt="login-bg" class="w-16 h-16" />
