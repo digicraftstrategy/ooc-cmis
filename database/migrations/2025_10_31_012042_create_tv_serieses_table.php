@@ -20,23 +20,23 @@ return new class extends Migration
            // $table->string('number_of_episodes')->nullable();  // total number of episodes in the season
             //$table->string('episode_title'); --> moved to episodes table
             //$table->integer('duration'); // duration in minutes of the episode --> moved to seasons table
-            $table->year('release_year')->nullable();
-            $table->string('casts')->nullable();
-            $table->string('director')->nullable();
-            $table->string('producer')->nullable();
-            $table->string('production_company')->nullable();
-            $table->string('genre')->nullable();
-            $table->string('language')->nullable();
-            $table->boolean('has_subtitle')->default(false);
-            $table->text('theme')->nullable();
-            $table->string('poster_path')->nullable(); // path to the tv series poster image
+            //$table->year('release_year')->nullable();
+            //$table->string('casts')->nullable();
+            //$table->string('director')->nullable();
+            //$table->string('producer')->nullable();
+            //$table->string('production_company')->nullable();
+            //$table->string('genre')->nullable();
+            //$table->string('language')->nullable();
+            //$table->boolean('has_subtitle')->default(false);
+            //$table->text('theme')->nullable();
+            //$table->string('poster_path')->nullable(); // path to the tv series poster image
             $table->timestamps();
 
             // Indexes for better query performance
-            $table->index('tv_series_title');
-            $table->index('release_year');
-            $table->index('director');
-            $table->index('genre');
+            //$table->index('tv_series_title');
+            //$table->index('release_year');
+            //$table->index('director');
+            //$table->index('genre');
         });
     }
 

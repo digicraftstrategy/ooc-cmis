@@ -20,20 +20,20 @@ class TvSeries extends Model
     protected $fillable = [
         'tv_series_title',
         'slug',
-        'season_number',
-        'season_title',
-        'number_of_episodes',
-        'duration',            // minutes
-        'release_year',
-        'casts',
-        'director',
-        'producer',
-        'production_company',
-        'genre',
-        'language',
-        'has_subtitle',
-        'theme',
-        'poster_path',
+        //'season_number',
+       // 'season_title',
+       // 'number_of_episodes',
+       // 'duration',            // minutes
+       // 'release_year',
+       // 'casts',
+       // 'director',
+      //  'producer',
+      //  'production_company',
+       // 'genre',
+       // 'language',
+       // 'has_subtitle',
+       // 'theme',
+       // 'poster_path',
     ];
 
     /** Casts to keep types consistent with Film */
@@ -42,13 +42,18 @@ class TvSeries extends Model
         'release_year'   => 'integer',
         'season_number'  => 'integer',
         'duration'       => 'integer',
-        // consider changing number_of_episodes to integer in DB; for now it’s a string in your migration
     ];
 
     /** Polymorphic classification */
     public function classification()
     {
         return $this->morphOne(Classification::class, 'classifiable');
+    }
+
+    /** Relationship to seasons */
+    public function seasons(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(TvSeriesSeason::class);
     }
 
     /** Slug auto-generation (like Film) */
