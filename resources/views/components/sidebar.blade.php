@@ -288,6 +288,10 @@ new class extends Component {
                         class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         User Types
                     </x-sidebar-link>
+                    <x-sidebar-link route="admin.publication-premises.premises-owner-types" wire:navigate
+                        class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
+                        Premises Owner Types
+                    </x-sidebar-link>
                     <x-sidebar-link route="system.prescribed-activities" wire:navigate
                         class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Prescribed Activities

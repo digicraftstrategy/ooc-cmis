@@ -1,5 +1,5 @@
 <div class="mx-auto max-w-12xl sm:px-6 lg:px-8">
-
+    <livewire:dashboard-navigation lazy />
     @if (auth()->user()->isAdmin())
         <livewire:system.analytics.dashboard.dashboard-main />
 

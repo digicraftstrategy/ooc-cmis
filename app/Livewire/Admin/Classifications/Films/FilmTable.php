@@ -117,35 +117,37 @@ class FilmTable extends Component
         }
     }
 
-    public function render()
+    public function getBaseQuery()
     {
-        $films = Film::query()
-            ->with('filmType')
+        return Film::query()
             ->when($this->search, function ($query) {
-                // Quering film title, director, producer and casts fields for search
                 $query->where('film_title', 'like', '%' . $this->search . '%')
-                      ->orWhere('director', 'like', '%' . $this->search . '%')
-                      ->orWhere('producer', 'like', '%' . $this->search . '%');
-                      //->orWhere('production_compnay', '%' . $this->search . '%')
-                      //->orWhere('casts', 'like', '%' . $this->search . '%');
+                    ->orWhere('director', 'like', '%' . $this->search . '%')
+                    ->orWhere('producer', 'like', '%' . $this->search . '%');
             })
             ->when($this->filmTitleFilter, function ($query) {
-            // Quering film type for filtering 
                 $query->where('film_type_id', $this->filmTitleFilter);
-            })
+            });
+    }
+
+    public function render()
+    {
+        $baseQuery = $this->getBaseQuery();
+
+        $films = $baseQuery
+            ->with('filmType')
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
-        // stats to display on cards
         $stats = [
-            'total' => Film::count(),
-            'totalSingleTitles' => Film::whereHas('filmType', function($query) {
+            'total' => $baseQuery->count(),
+            'totalSingleTitles' => $baseQuery->clone()->whereHas('filmType', function($query) {
                 $query->where('type', 'Single');
             })->count(),
-            'totalSequelTitles' => Film::whereHas('filmType', function($query) {
+            'totalSequelTitles' => $baseQuery->clone()->whereHas('filmType', function($query) {
                 $query->where('type', 'Sequel');
             })->count(),
-            'recent' => Film::latest()->first(),
+            'recent' => $baseQuery->clone()->latest()->first(),
         ];
 
         return view('livewire.admin.classifications.films.film-table', [
