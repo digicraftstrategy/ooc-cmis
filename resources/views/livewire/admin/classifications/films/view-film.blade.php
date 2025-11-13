@@ -88,7 +88,7 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4 pb-3 border-b border-gray-200">Film Poster</h3>
                     <div class="flex justify-center">
-                        <img src="{{ asset('storage/' . $film->poster_path) }}"
+                        <img src="{{ asset('storage/' . $film->poster_path) }}" 
                              alt="{{ $film->film_title }} poster"
                              class="w-48 h-64 object-cover rounded-lg shadow-md border border-gray-200">
                     </div>

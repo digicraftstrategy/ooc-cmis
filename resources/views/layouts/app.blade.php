@@ -148,17 +148,21 @@
                             d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
+                <div class="sticky top-0 z-50 border-b border-gray-200 shadow-sm pt-2 pb-2
+           bg-gradient-to-r from-blue-300 via-blue-500 to-blue-600">
+                <x-header/>
+            </div>
 
                 {{--@if (auth()->user()->isSystemUser())
                     <!-- Global Search Bar -->
                     <livewire:global-routes-search />
                     <hr />
-                @endif--}}
-                
+                @endif
+
                 <!-- Global Search Bar -->
                     <livewire:global-routes-search />
                     <hr />
-
+                    --}}
                 <!-- Page Heading -->
                 @if (isset($header))
                     <header class="bg-white shadow">
