@@ -28,7 +28,7 @@ class FilmTypeSeeder extends Seeder
                     'description' => 'A film that continues the story or expands upon the original film.',
                     'created_at' => now(),
                     'updated_at' => now(),
-                ],
+                ],/*
                 [
                     'type' => 'Feature Film',
                     'slug' => 'feature-film',
@@ -56,7 +56,7 @@ class FilmTypeSeeder extends Seeder
                     'description' => 'A film created using animation techniques, often aimed at children but also enjoyed by adults.',
                     'created_at' => now(),
                     'updated_at' => now(),
-                ],
+                ],*/
         ]);
     }
 }

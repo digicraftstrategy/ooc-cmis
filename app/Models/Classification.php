@@ -11,10 +11,13 @@ class Classification extends Model
     use HasFactory;
 
     protected $fillable = [
-        'classifiable_type','classifiable_id',
-        'classification_rating_id','classification_status_id',
+        'classifiable_type',
+        'classifiable_id',
+        'classification_rating_id',
+        'classification_status_id',
         'remarks','issued_at'
     ];
+
 
     public function classifiable()
     {
