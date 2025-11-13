@@ -11,3 +11,35 @@
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 } */
+/* Login Page Styles */
+
+
+/* LOGIN PAGE BACKGROUND STYLING ------------------------------------ */
+/* LEFT PANEL BACKGROUND IMAGE (Censorship Office) */
+/* Office of Censorship – Login left panel background */
+.login-panel {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Transparent image overlay */
+.login-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/cmis-login-bg3.png'); /* image must be in public/images */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    opacity: 0.25;        /* transparency – increase to 0.35/0.4 for stronger image */
+    pointer-events: none; /* don’t block clicks */
+    z-index: 0;
+}
+
+/* Keep all existing content above the background image */
+.login-panel > * {
+    position: relative;
+    z-index: 1;
+}
+
