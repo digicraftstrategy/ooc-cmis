@@ -209,7 +209,7 @@ Route::group(
                     ->group(function () {
                         Route::get('/classify/{film:slug}', \App\Livewire\Admin\Classifications\Classification\CreateClassification::class)
                         ->name('admin.classifications.create-classification');
-                    });    
+                    });
             });
 
 
@@ -303,6 +303,8 @@ Route::group(
             ->group(function () {
                 Route::get('/', \App\Livewire\Admin\Classifications\TvSeries\TvSeriestable::class)
                     ->name('admin.classifications.tv-series');
+                Route::get('/titles', \App\Livewire\Admin\Classifications\TvSeries\TvSeriesTitleTable::class)
+                    ->name('admin.classifications.tv-series-title');
                 Route::get('/{tv-series:slug}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
                 ->name('admin.classifications.tv-series.show');
                 Route::get('/create', [\App\Http\Controllers\Admin\Classifications\TvSeriesController::class, 'create'])

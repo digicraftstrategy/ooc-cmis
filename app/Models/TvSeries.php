@@ -20,20 +20,20 @@ class TvSeries extends Model
     protected $fillable = [
         'tv_series_title',
         'slug',
-        'season_number',
-        'season_title',
-        'number_of_episodes',
-        'duration',            // minutes
-        'release_year',
-        'casts',
-        'director',
-        'producer',
-        'production_company',
-        'genre',
-        'language',
-        'has_subtitle',
-        'theme',
-        'poster_path',
+        //'season_number',
+       // 'season_title',
+       // 'number_of_episodes',
+       // 'duration',            // minutes
+       // 'release_year',
+       // 'casts',
+       // 'director',
+      //  'producer',
+      //  'production_company',
+       // 'genre',
+       // 'language',
+       // 'has_subtitle',
+       // 'theme',
+       // 'poster_path',
     ];
 
     /** Casts to keep types consistent with Film */

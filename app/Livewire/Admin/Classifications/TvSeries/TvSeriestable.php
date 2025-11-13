@@ -2,150 +2,136 @@
 
 namespace App\Livewire\Admin\Classifications\TvSeries;
 
+use App\Models\TvSeriesSeason;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\TvSeries; // <- ensure this matches your actual class/file name (TvSeries.php)
-use Illuminate\Support\Facades\Storage;
 
 class TvSeriestable extends Component
 {
     use WithPagination;
 
-    // Filters / sorting
-    public string $search = '';
-    public string $sortField = 'tv_series_title'; // default sort matches your column
-    public string $sortDirection = 'asc';
-    public int $perPage = 10;
+    public $search = '';
+    public $perPage = 10;
+    public $sortField = 'season_number';
+    public $sortDirection = 'asc';
+    public $selectedSeasons = [];
 
-    // Modal states (same UX as FilmTable)
-    //public bool $showCreateModal = false;
-    public bool $showEditModal   = false;
-    public bool $showViewModal   = false;
-    public bool $showDeleteModal = false;
+    // Modal states
+    public $showViewModal = false;
+    public $showEditModal = false;
+    public $showDeleteModal = false;
+    public $selectedSeason = null;
 
-    // Inside TvSeriestable (optional)
-    /*protected $listeners = [
-        'tvSeriesCreated' => '$refresh',
-        'closeCreateModal' => 'closeCreateModal',
-    ];*/
-
-    // Selected row
-    public ?TvSeries $selectedTVSeries = null;
-
-    protected $queryString = [
-        'search'        => ['except' => ''],
-        'sortField'     => ['except' => 'tv_series_title'],
-        'sortDirection' => ['except' => 'asc'],
+    protected $listeners = [
+        'seasonUpdated' => '$refresh', 
+        'seasonCreated' => '$refresh'
     ];
 
-    /** Toggle sort like FilmTable */
-    public function sortBy(string $field): void
+    public function sortBy($field)
     {
         if ($this->sortField === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
+            $this->sortField = $field;
             $this->sortDirection = 'asc';
         }
-        $this->sortField = $field;
-        $this->resetPage();
     }
 
-    /** Keep pagination sensible while typing */
-    public function updatingSearch(): void
+    // View Methods
+    public function openViewModal($seasonId)
     {
-        $this->resetPage();
-    }
-
-    // --- Modal open/close helpers (same pattern as FilmTable) ---
-
-    /*public function openCreateModal(): void   { $this->showCreateModal = true;  }
-    public function closeCreateModal(): void  { $this->showCreateModal = false; }*/
-
-    public function openEditModal(int $id): void
-    {
-        $this->selectedTVSeries = TvSeries::with('classification.rating')->findOrFail($id);
-        $this->showEditModal = true;
-    }
-    public function closeEditModal(): void
-    {
-        $this->selectedTVSeries = null;
-        $this->showEditModal = false;
-    }
-
-    public function openViewModal(int $id): void
-    {
-        $this->selectedTVSeries = TvSeries::with('classification.rating')->findOrFail($id);
+        $this->selectedSeason = TvSeriesSeason::with('tvSeries')->findOrFail($seasonId);
         $this->showViewModal = true;
     }
-    public function closeViewModal(): void
+
+    public function closeViewModal()
     {
-        $this->selectedTVSeries = null;
         $this->showViewModal = false;
+        $this->selectedSeason = null;
     }
 
-    public function openDeleteModal(int $id): void
+    // Edit Methods
+    public function openEditModal($seasonId)
     {
-        $this->selectedTVSeries = TvSeries::findOrFail($id);
+        $this->selectedSeason = TvSeriesSeason::findOrFail($seasonId);
+        $this->showEditModal = true;
+    }
+
+    public function closeEditModal()
+    {
+        $this->showEditModal = false;
+        $this->selectedSeason = null;
+    }
+
+    public function updateSeason()
+    {
+        $this->validate([
+            'selectedSeason.season_title' => 'required|string|max:255',
+            'selectedSeason.season_number' => 'required|integer|min:1',
+            'selectedSeason.number_of_episodes' => 'required|integer|min:1',
+            'selectedSeason.released_year' => 'required|integer|min:1900|max:' . date('Y'),
+        ]);
+
+        $this->selectedSeason->save();
+
+        $this->closeEditModal();
+        $this->dispatch('seasonUpdated');
+        session()->flash('message', 'Season updated successfully.');
+    }
+
+    // Delete Methods
+    public function openDeleteModal($seasonId)
+    {
+        $this->selectedSeason = TvSeriesSeason::findOrFail($seasonId);
         $this->showDeleteModal = true;
     }
-    public function closeDeleteModal(): void
+
+    public function closeDeleteModal()
     {
-        $this->selectedTVSeries = null;
         $this->showDeleteModal = false;
+        $this->selectedSeason = null;
     }
 
-    public function deleteTVSeries(): void
+    public function deleteSeason()
     {
-        try {
-            optional($this->selectedTVSeries)->delete();
+        if ($this->selectedSeason) {
+            $seasonTitle = $this->selectedSeason->season_title;
+            $this->selectedSeason->delete();
+
             $this->closeDeleteModal();
-            session()->flash('success', 'TV Series deleted successfully.');
-        } catch (\Throwable $e) {
-            session()->flash('error', 'Error deleting TV Series: '.$e->getMessage());
+            $this->dispatch('seasonDeleted');
+            session()->flash('message', "Season '{$seasonTitle}' deleted successfully.");
         }
     }
 
-    /** DATA SOURCE — aligned to your migration fields */
+    public function bulkDelete()
+    {
+        TvSeriesSeason::whereIn('id', $this->selectedSeasons)->delete();
+        $this->selectedSeasons = [];
+        session()->flash('message', 'Selected seasons deleted successfully.');
+    }
+
     public function render()
     {
-        $term = '%'.$this->search.'%';
-
-        $tvSerieses = TvSeries::query()
-            ->with('seasons') // eager load seasons
-            ->when($this->search, function ($q) use ($term) {
-                $q->where(function ($qq) use ($term) {
-                    $qq->where('tv_series_title', 'like', $term)
-                       ->orWhere('season_number', 'like', $term)
-                       ->orWhere('episode_number', 'like', $term)
-                       ->orWhere('season_title', 'like', $term)
-                       ->orWhere('episode_title', 'like', $term)
-                       ->orWhere('duration', 'like', $term)
-                       ->orWhere('slug', 'like', $term)
-                       ->orWhere('genre', 'like', $term)
-                       ->orWhere('language', 'like', $term)
-                       ->orWhere('production_company', 'like', $term)
-                       ->orWhere('release_year', 'like', $term)
-                       ->orWhere('casts', 'like', $term)
-                       ->orWhere('director', 'like', $term)
-                       ->orWhere('producer', 'like', $term)
-                       ->orWhere('theme', 'like', $term);
-                });
+        $seasons = TvSeriesSeason::with('tvSeries')
+            ->when($this->search, function ($query) {
+                $query->where('season_title', 'like', '%' . $this->search . '%')
+                    ->orWhere('slug', 'like', '%' . $this->search . '%')
+                    ->orWhereHas('tvSeries', function ($query) {
+                        $query->where('title', 'like', '%' . $this->search . '%');
+                    });
             })
-            // you can sort by any of these fields (UI should call sortBy on their <th>)
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
-        // Stats cards (simple example — mirror FilmTable feel)
         $stats = [
-            'total'        => TvSeries::count(),
-            'classified'   => TvSeries::whereHas('classification')->count(),
-            'unclassified' => TvSeries::whereDoesntHave('classification')->count(),
-            'recent'       => TvSeries::latest()->first(),
+            'total' => TvSeriesSeason::count(),
+            'recent' => TvSeriesSeason::latest()->first(),
         ];
 
         return view('livewire.admin.classifications.tv-series.tv-seriestable', [
-            'tvSerieses' => $tvSerieses,
-            'stats'      => $stats,
+            'seasons' => $seasons,
+            'stats' => $stats,
         ]);
     }
 }

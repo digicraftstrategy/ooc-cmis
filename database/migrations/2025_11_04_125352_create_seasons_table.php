@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tv_series_id')->constrained('tv_serieses')->onDelete('cascade');
             $table->string('season_title');
-            $table->string('slug')->unique();
+            $table->string('season_slug')->unique();
             $table->integer('season_number');
             $table->string('number_of_episodes');
             $table->integer('duration'); // average duration in minutes of all episodes of the season
@@ -31,6 +31,8 @@ return new class extends Migration
             $table->string('poster_path')->nullable();
             //$table->string('theme')->nullable(); // summarized theme of all episode of the season
             $table->timestamps();
+
+            $table->unique(['tv_series_id', 'season_number']);
 
             // Indexes for better query performance
             $table->index('release_year');
