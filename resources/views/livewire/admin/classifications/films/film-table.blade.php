@@ -1,4 +1,6 @@
 <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-6 px-4 sm:px-6 lg:px-8">
+    <!------ Navigation Component -->
+     <livewire:admin.classifications.films-publication-navigation />
     <!-- Header Section -->
     <div class="mb-6">
         <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-lg overflow-hidden">
@@ -34,66 +36,48 @@
 
     <!-- Stats Cards Section -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <!-- Total Films -->
-        <div class="bg-white rounded-lg shadow p-4">
-            <div class="flex items-center">
-                <div class="p-2 bg-blue-100 rounded-lg">
-                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
-                    </svg>
-                </div>
-                <div class="ml-4">
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="flex justify-between items-start">
+                <div>
                     <p class="text-sm font-medium text-gray-500">Total Films</p>
-                    <p class="text-xl font-semibold text-gray-900">{{ $stats['total'] }}</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $stats['total'] }}</p>
                 </div>
+                @if($search || $filmTitleFilter)
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        Filtered
+                    </span>
+                @endif
             </div>
         </div>
 
-        <!-- Single Titles -->
-        <div class="bg-white rounded-lg shadow p-4">
-            <div class="flex items-center">
-                <div class="p-2 bg-green-100 rounded-lg">
-                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                </div>
-                <div class="ml-4">
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="flex justify-between items-start">
+                <div>
                     <p class="text-sm font-medium text-gray-500">Single Titles</p>
-                    <p class="text-xl font-semibold text-gray-900">{{ $stats['totalSingleTitles'] }}</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $stats['totalSingleTitles'] }}</p>
                 </div>
             </div>
         </div>
 
-        <!-- Sequel Titles -->
-        <div class="bg-white rounded-lg shadow p-4">
-            <div class="flex items-center">
-                <div class="p-2 bg-yellow-100 rounded-lg">
-                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                </div>
-                <div class="ml-4">
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="flex justify-between items-start">
+                <div>
                     <p class="text-sm font-medium text-gray-500">Sequel Titles</p>
-                    <p class="text-xl font-semibold text-gray-900">{{ $stats['totalSequelTitles'] }}</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $stats['totalSequelTitles'] }}</p>
                 </div>
             </div>
         </div>
 
-        <!-- Recent Film -->
-        <div class="bg-white rounded-lg shadow p-4">
-            <div class="flex items-center">
-                <div class="p-2 bg-purple-100 rounded-lg">
-                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Recent Film</p>
-                    <p class="text-lg font-semibold text-gray-900 truncate" title="{{ $stats['recent']->film_title ?? 'N/A' }}">
-                        {{ $stats['recent']->film_title ?? 'N/A' }}
-                    </p>
-                </div>
-            </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+            <p class="text-sm font-medium text-gray-500">Most Recent</p>
+            <p class="text-lg font-semibold text-gray-900 truncate">
+                {{ $stats['recent'] ? $stats['recent']->film_title : 'N/A' }}
+            </p>
+            @if($stats['recent'])
+                <p class="text-xs text-gray-500">
+                    {{ $stats['recent']->created_at->format('M d, Y') }}
+                </p>
+            @endif
         </div>
     </div>
 
@@ -117,7 +101,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </div>
-                
+
                 <select wire:model.live="filmTitleFilter"
                     class="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 appearance-none text-sm">
                     <option value="">All Film Types</option>
@@ -156,20 +140,23 @@
                             Film Type
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
-                            Main Actor/Actress
+                            Casts
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Duration
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
-                            Director
+                            Genres
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                            Director
+                        </th>
+                        {{--<th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Producer
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Production Company
-                        </th>
+                        </th>--}}
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Actions
                         </th>
@@ -202,12 +189,15 @@
                             <td class="px-3 py-2 whitespace-nowrap">
                                 <div class="text-sm text-gray-700">{{ $film->duration }} min</div>
                             </td>
+                            <td class="px-3 py-2 whitespace-nowrap">
+                                <div class="text-sm text-gray-700">{{ $film->genre }} </div>
+                            </td>
                             <td class="px-3 py-2">
                                 <div class="text-sm text-gray-700 max-w-xs truncate" title="{{ $film->director }}">
                                     {{ $film->director }}
                                 </div>
                             </td>
-                            <td class="px-3 py-2">
+                            {{--<td class="px-3 py-2">
                                 <div class="text-sm text-gray-700 max-w-xs truncate" title="{{ $film->producer }}">
                                     {{ $film->producer }}
                                 </div>
@@ -216,7 +206,7 @@
                                 <div class="text-sm text-gray-700 max-w-xs truncate" title="{{ $film->production_company }}">
                                     {{ $film->production_company }}
                                 </div>
-                            </td>
+                            </td>--}}
                             <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end">
                                     <!-- Dropdown menu -->

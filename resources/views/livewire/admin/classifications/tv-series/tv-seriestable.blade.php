@@ -1,4 +1,5 @@
 <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-6 px-4 sm:px-6 lg:px-8">
+    <livewire:admin.classifications.films-publication-navigation />
     <!-- Header Section -->
     <div class="mb-6">
         <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-lg overflow-hidden">
