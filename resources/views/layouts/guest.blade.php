@@ -47,16 +47,17 @@
             }
         </script>
     </head>
+    <div>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center mt-0 sm:pt-0 bg-gradient-to-br from-dark-blue-900 via-dark-blue-800 to-dark-blue-700">
             <div class="flex max-w-[1100px] w-full min-h-[550px] mt-20 pt-5 shadow-2xl shadow-dark-blue-500/25">
                 <!-- Info Column -->
-                <div class="flex-1 bg-dark-blue-600/85 backdrop-blur-md p-10 rounded-l-2xl text-white flex flex-col border-r border-white/10">
+                    <div class="login-panel flex-1 bg-dark-blue-600/90 backdrop-blur-md p-10 rounded-l-2xl text-white flex flex-col border-r border-white/10">
                     <!-- Logo and MIS Name Header -->
                     <div class="flex items-center justify-center mb-10 bg-blue-100/10 p-2 rounded shadow-emerald-300/25">
                         <!-- Left Logo -->
                         <div class="flex-shrink-0 ml-4">
-                            <x-application-logo-lg class="text-white h-10 w-auto" />
+                                <x-application-logo-lg class="text-white h-10 w-auto"/>
                         </div>
 
                         <!-- Centered MIS Name -->
@@ -65,10 +66,9 @@
                         </h1>
                            <!-- Right Logo -->
                         <div class="flex-shrink-0 mr-4">
-                            <x-application-logo class="text-white h-10 w-auto" />
+                                <x-application-logo class="text-white h-10 w-auto"/>
+                            </div>
                         </div>
-                    </div>
-
                     <div class="mb-8">
                         <h2 class="text-xl font-semibold mb-5 text-gray-200 border-b-2 border-blue-500/50 pb-3">How to Login to Your Account</h2>
 
