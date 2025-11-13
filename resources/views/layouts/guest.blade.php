@@ -46,114 +46,144 @@
                 }
             }
         </script>
+        <style>
+            /* LEFT PANEL BACKGROUND IMAGE (Censorship Office) */
+            /* Office of Censorship – Login left panel background */
+            .login-panel {
+                position: relative;
+                overflow: hidden;
+            }
+
+            /* Transparent image overlay */
+            .login-panel::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-image: url('/images/cmis-login-bg3.png'); /* image must be in public/images */
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                opacity: 0.25;        /* transparency – increase to 0.35/0.4 for stronger image */
+                pointer-events: none; /* don’t block clicks */
+                z-index: 0;
+            }
+
+            /* Keep all existing content above the background image */
+            .login-panel > * {
+                position: relative;
+                z-index: 1;
+            }
+        </style>
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center mt-0 sm:pt-0 bg-gradient-to-br from-dark-blue-900 via-dark-blue-800 to-dark-blue-700">
-            <div class="flex max-w-[1100px] w-full min-h-[550px] mt-20 pt-5 shadow-2xl shadow-dark-blue-500/25">
-                <!-- Info Column -->
-                <div class="flex-1 bg-dark-blue-600/85 backdrop-blur-md p-10 rounded-l-2xl text-white flex flex-col border-r border-white/10">
-                    <!-- Logo and MIS Name Header -->
-                    <div class="flex items-center justify-center mb-10 bg-blue-100/10 p-2 rounded shadow-emerald-300/25">
-                        <!-- Left Logo -->
-                        <div class="flex-shrink-0 ml-4">
-                            <x-application-logo-lg class="text-white h-10 w-auto" />
+    <div>
+        <body class="font-sans text-gray-900 antialiased">
+            <div class="min-h-screen flex flex-col sm:justify-center items-center mt-0 sm:pt-0 bg-gradient-to-br from-dark-blue-900 via-dark-blue-800 to-dark-blue-700">
+                <div class="flex max-w-[1100px] w-full min-h-[550px] mt-20 pt-5 shadow-2xl shadow-dark-blue-500/25">
+                    <!-- Info Column -->
+                    <div class="login-panel relative overflow-hidden flex-1 bg-dark-blue-600/90 backdrop-blur-md p-10 rounded-l-2xl text-white flex flex-col border-r border-white/10">
+                        <!-- Logo and MIS Name Header -->
+                        <div class="flex items-center justify-center mb-10 bg-blue-100/10 p-2 rounded shadow-emerald-300/25">
+                            <!-- Left Logo -->
+                            <div class="flex-shrink-0 ml-4">
+                                <x-application-logo-lg class="text-white h-10 w-auto"/>
+                            </div>
+
+                            <!-- Centered MIS Name -->
+                            <h1 class="text-2xl md:text-3xl font-semibold text-center">
+                                Censorship Management Information System
+                            </h1>
+                            <!-- Right Logo -->
+                            <div class="flex-shrink-0 mr-4">
+                                <x-application-logo class="text-white h-10 w-auto"/>
+                            </div>
+                        </div>
+                        <div class="mb-8">
+                            <h2 class="text-xl font-semibold mb-5 text-gray-200 border-b-2 border-blue-500/50 pb-3">How to Login to Your Account</h2>
+
+                            {{--<div class="flex items-start mb-5">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">1</div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg text-gray-100 font-medium mb-1">Enter Your Credentials</h3>
+                                    <p class="text-sm opacity-80 leading-relaxed">Use your username and password that you created during registration.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start mb-5">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">2</div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg text-gray-100 font-medium mb-1">Two-Factor Authentication</h3>
+                                    <p class="text-sm opacity-80 leading-relaxed">If enabled, verify your identity with a code from your authenticator app.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start mb-5">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">3</div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg text-gray-100 font-medium mb-1">Access Your Dashboard</h3>
+                                    <p class="text-sm opacity-80 leading-relaxed">Once authenticated, you'll be redirected to your personal dashboard.</p>
+                                </div>
+                            </div>--}}
+                        </div>
+                        <div class="mb-8">
+                            <h2 class="text-xl font-semibold mb-5 text-gray-200 border-b-2 border-blue-500/50 pb-3">Onboarding Process for New Clients</h2>
+
+                            {{--<div class="flex items-start mb-5">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">1</div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg text-gray-100 font-medium mb-1">Enter Your Credentials</h3>
+                                    <p class="text-sm opacity-80 leading-relaxed">Use your username and password that you created during registration.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start mb-5">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">2</div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg text-gray-100 font-medium mb-1">Two-Factor Authentication</h3>
+                                    <p class="text-sm opacity-80 leading-relaxed">If enabled, verify your identity with a code from your authenticator app.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start mb-5">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">3</div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg text-gray-100 font-medium mb-1">Access Your Dashboard</h3>
+                                    <p class="text-sm opacity-80 leading-relaxed">Once authenticated, you'll be redirected to your personal dashboard.</p>
+                                </div>
+                            </div>--}}
                         </div>
 
-                        <!-- Centered MIS Name -->
-                        <h1 class="text-2xl md:text-3xl font-semibold text-center">
-                            Censorship Management Information System
-                        </h1>
-                           <!-- Right Logo -->
-                        <div class="flex-shrink-0 mr-4">
-                            <x-application-logo class="text-white h-10 w-auto" />
+                        <div class="mt-auto text-sm bg-blue-900/15 p-4 rounded-xl text-center">
+                            <p><i class="fas fa-question-circle mr-1"></i> Need help? <a href="#" class="text-blue-300 font-medium hover:text-blue-400 hover:underline transition-colors">Contact support</a></p>
                         </div>
                     </div>
 
-                    <div class="mb-8">
-                        <h2 class="text-xl font-semibold mb-5 text-gray-200 border-b-2 border-blue-500/50 pb-3">How to Login to Your Account</h2>
-
-                        {{--<div class="flex items-start mb-5">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">1</div>
-                            <div class="flex-1">
-                                <h3 class="text-lg text-gray-100 font-medium mb-1">Enter Your Credentials</h3>
-                                <p class="text-sm opacity-80 leading-relaxed">Use your username and password that you created during registration.</p>
-                            </div>
+                    <!-- Form Column -->
+                    <div class="flex-1 bg-white rounded-r-2xl flex flex-col justify-center">
+                        <div class="w-full px-8 py-10 bg-white overflow-hidden">
+                            {{ $slot }}
                         </div>
-
-                        <div class="flex items-start mb-5">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">2</div>
-                            <div class="flex-1">
-                                <h3 class="text-lg text-gray-100 font-medium mb-1">Two-Factor Authentication</h3>
-                                <p class="text-sm opacity-80 leading-relaxed">If enabled, verify your identity with a code from your authenticator app.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start mb-5">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">3</div>
-                            <div class="flex-1">
-                                <h3 class="text-lg text-gray-100 font-medium mb-1">Access Your Dashboard</h3>
-                                <p class="text-sm opacity-80 leading-relaxed">Once authenticated, you'll be redirected to your personal dashboard.</p>
-                            </div>
-                        </div>--}}
-                    </div>
-                    <div class="mb-8">
-                        <h2 class="text-xl font-semibold mb-5 text-gray-200 border-b-2 border-blue-500/50 pb-3">Onboarding Process for New Clients</h2>
-
-                        {{--<div class="flex items-start mb-5">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">1</div>
-                            <div class="flex-1">
-                                <h3 class="text-lg text-gray-100 font-medium mb-1">Enter Your Credentials</h3>
-                                <p class="text-sm opacity-80 leading-relaxed">Use your username and password that you created during registration.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start mb-5">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">2</div>
-                            <div class="flex-1">
-                                <h3 class="text-lg text-gray-100 font-medium mb-1">Two-Factor Authentication</h3>
-                                <p class="text-sm opacity-80 leading-relaxed">If enabled, verify your identity with a code from your authenticator app.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start mb-5">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-500 to-dark-blue-600 flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm shadow-md">3</div>
-                            <div class="flex-1">
-                                <h3 class="text-lg text-gray-100 font-medium mb-1">Access Your Dashboard</h3>
-                                <p class="text-sm opacity-80 leading-relaxed">Once authenticated, you'll be redirected to your personal dashboard.</p>
-                            </div>
-                        </div>--}}
-                    </div>
-
-                    <div class="mt-auto text-sm bg-blue-900/15 p-4 rounded-xl text-center">
-                        <p><i class="fas fa-question-circle mr-1"></i> Need help? <a href="#" class="text-blue-300 font-medium hover:text-blue-400 hover:underline transition-colors">Contact support</a></p>
                     </div>
                 </div>
 
-                <!-- Form Column -->
-                <div class="flex-1 bg-white rounded-r-2xl flex flex-col justify-center">
-                    <div class="w-full px-8 py-10 bg-white overflow-hidden">
-                        {{ $slot }}
+                <!-- Footer -->
+                <div class="flex justify-between items-center w-full max-w-[1100px] mt-auto py-5">
+                    <div class="flex gap-5">
+                        <a href="#" class="text-white/70 text-xs hover:text-blue-300 hover:underline transition-colors">Terms of Service</a>
+                        <a href="#" class="text-white/70 text-xs hover:text-blue-300 hover:underline transition-colors">Privacy Policy</a>
+                        <a href="#" class="text-white/70 text-xs hover:text-blue-300 hover:underline transition-colors">Data Protection</a>
+                        <a href="#" class="text-white/70 text-xs hover:text-blue-300 hover:underline transition-colors">Cookie Policy</a>
+                    </div>
+
+                    <div class="text-right">
+                        <p class="text-white/70 text-xs">
+                            Censorship Management Information System &copy; {{ date('Y') }}
+                            <span class="mx-2">|</span>
+                            App v{{ config('app.version', '1.0.0') }}
+                        </p>
                     </div>
                 </div>
             </div>
-
-            <!-- Footer -->
-            <div class="flex justify-between items-center w-full max-w-[1100px] mt-auto py-5">
-                <div class="flex gap-5">
-                    <a href="#" class="text-white/70 text-xs hover:text-blue-300 hover:underline transition-colors">Terms of Service</a>
-                    <a href="#" class="text-white/70 text-xs hover:text-blue-300 hover:underline transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-white/70 text-xs hover:text-blue-300 hover:underline transition-colors">Data Protection</a>
-                    <a href="#" class="text-white/70 text-xs hover:text-blue-300 hover:underline transition-colors">Cookie Policy</a>
-                </div>
-
-                <div class="text-right">
-                    <p class="text-white/70 text-xs">
-                        Censorship Management Information System &copy; {{ date('Y') }}
-                        <span class="mx-2">|</span>
-                        App v{{ config('app.version', '1.0.0') }}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </body>
+        </body>
+    </div>
 </html>
