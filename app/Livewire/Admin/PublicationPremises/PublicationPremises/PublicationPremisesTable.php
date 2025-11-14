@@ -17,7 +17,7 @@ class PublicationPremisesTable extends Component
 
     public $showCreateModal = false;
     public $showDeleteModal = false;
-    public $showModal = false; // ✅ for editing
+    public $showModal = false; 
 
     public $premiseToDelete = null;
     public $premisesToEdit = null;
