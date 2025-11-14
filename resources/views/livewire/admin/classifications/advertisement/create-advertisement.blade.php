@@ -211,17 +211,17 @@
             </p>
 
             <input type="file"
-                   wire:model.live="attachments"
+                   wire:model.live="poster_path"
                    multiple
                    accept=".jpg,.jpeg,.png,.mp4,.pdf,.doc,.docx"
                    class="w-full border rounded-lg p-2 text-sm">
 
-            @error('attachments.*') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+            @error('poster_path.*') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
 
             <!-- Preview -->
-            @if ($attachments)
+            @if ($poster_path)
                 <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                    @foreach ($attachments as $file)
+                    @foreach ($poster_path as $file)
                         <div class="border rounded-lg p-2 text-xs bg-gray-50">
                             <strong>{{ $file->getClientOriginalName() }}</strong><br>
                             <span class="text-gray-500">{{ $file->getSize() }} bytes</span>
