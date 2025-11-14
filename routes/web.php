@@ -323,6 +323,12 @@ Route::group(
                     ->group(function () {
                         Route::get('/', \App\Livewire\Admin\Classifications\VideoGame\VideoGameTable::class)
                             ->name('admin.classifications.video-games');
+                        Route::get('/create', \App\Livewire\Admin\Classifications\VideoGame\CreateVideoGame::class)
+                            ->name('admin.classifications.video-games.create');
+                        Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\VideoGame\EditVideoGame::class)
+                            ->name('admin.classifications.video-games.edit');
+                        Route::get('/view/{id}', \App\Livewire\Admin\Classifications\VideoGame\ViewVideoGame::class)
+                            ->name('admin.classifications.video-games.view');
                     });
 
                 // Audio
@@ -338,6 +344,10 @@ Route::group(
                             ->name('admin.classifications.advertisements');
                         Route::get('/create', \App\Livewire\Admin\Classifications\Advertisement\CreateAdvertisement::class)
                             ->name('admin.classifications.advertisement.create');
+                        Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\Advertisement\EditAdvertisement::class)
+                            ->name('admin.classifications.advertisement.edit');
+                        Route::get('/view/{id}', \App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
+                            ->name('admin.classifications.advertisement.view');
                 });
 
                 // Literature Books
@@ -345,6 +355,12 @@ Route::group(
                     ->group(function () {
                         Route::get('/', \App\Livewire\Admin\Classifications\Literature\LiteratureTable::class)
                             ->name('admin.classifications.literatures');
+                        Route::get('/create', \App\Livewire\Admin\Classifications\Literature\CreateLiterature::class)
+                            ->name('admin.classifications.literatures.create');
+                        Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\Literature\EditLiterature::class)
+                            ->name('admin.classifications.literatures.edit');
+                        Route::get('/view/{id}', \App\Livewire\Admin\Classifications\Literature\ViewLiterature::class)
+                            ->name('admin.classifications.literatures.view');
                 });
             });
 
