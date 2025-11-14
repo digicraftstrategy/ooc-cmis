@@ -42,8 +42,8 @@
 
             <!-- TV Ads -->
             <a
-                href="{{ route('admin.classifications.tv-ads') }}"
-                class="whitespace-nowrap pb-2 px-1 border-b-2 font-medium text-sm transition-colors duration-200 {{ $this->isActive('tv-ads') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}"
+                href="{{ route('admin.classifications.advertisements') }}"
+                class="whitespace-nowrap pb-2 px-1 border-b-2 font-medium text-sm transition-colors duration-200 {{ $this->isActive('advertisements') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}"
             >
                 <div class="flex items-center space-x-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

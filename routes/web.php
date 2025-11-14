@@ -257,10 +257,12 @@ Route::group(
 
 
                 // TV Ads
-                Route::prefix('tv-ads')
+                Route::prefix('advertisements')
                     ->group(function () {
                         Route::get('/', \App\Livewire\Admin\Classifications\Advertisement\AdvertisementTable::class)
-                            ->name('admin.classifications.tv-ads');
+                            ->name('admin.classifications.advertisements');
+                        Route::get('/create', \App\Livewire\Admin\Classifications\Advertisement\CreateAdvertisement::class)
+                            ->name('admin.classifications.advertisement.create');
                 });
 
                 // Literature Books
@@ -330,10 +332,12 @@ Route::group(
                     });
 
                 // TV Ads
-                Route::prefix('tv-ads')
+                Route::prefix('advertisements')
                     ->group(function () {
                         Route::get('/', \App\Livewire\Admin\Classifications\Advertisement\AdvertisementTable::class)
-                            ->name('admin.classifications.tv-ads');
+                            ->name('admin.classifications.advertisements');
+                        Route::get('/create', \App\Livewire\Admin\Classifications\Advertisement\CreateAdvertisement::class)
+                            ->name('admin.classifications.advertisement.create');
                 });
 
                 // Literature Books
