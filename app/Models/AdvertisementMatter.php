@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class AdvertisementMatter extends Model
 {
     protected $fillable = [
-        'advertising_matter','slug','description','main_actor_actress','director','producer',
+        'advertising_matter','slug','description','casts','director','producer',
         'production_company','client_company','release_year','duration','genre','language',
         'has_subtitle','brand_promoted','product_promoted','theme'
     ];

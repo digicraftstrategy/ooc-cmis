@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             TvSeriesSeeder::class,
             ClassificationSeeder::class,
             TvSeriesSeasonSeeder::class,
+            AdvertisingMatterSeeder::class,
         ]);
     }
 }
