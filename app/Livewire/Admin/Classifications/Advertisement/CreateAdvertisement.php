@@ -15,7 +15,7 @@ class CreateAdvertisement extends Component
 
     // FORM FIELDS
     public $advertising_matter;
-    public $main_actor_actress;
+    public $casts;
     public $director;
     public $producer;
     public $production_company;
@@ -55,7 +55,7 @@ class CreateAdvertisement extends Component
 
         return [
             'advertising_matter' => 'required|string|max:255',
-            'main_actor_actress' => 'nullable|string|max:255',
+            'casts' => 'nullable|string|max:255',
             'director' => 'nullable|string|max:255',
             'producer' => 'nullable|string|max:255',
             'production_company' => 'nullable|string|max:255',

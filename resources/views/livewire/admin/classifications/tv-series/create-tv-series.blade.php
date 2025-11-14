@@ -1,6 +1,48 @@
-<div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-    <h2 class="text-xl font-semibold text-gray-800 mb-6">Add TV Series Season</h2>
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
 
+    <!-- Page Header -->
+    <header class="px-4 sm:px-6 lg:px-8 py-6">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-lg overflow-hidden">
+            <div class="px-6 py-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-white">Create TV Series Season</h1>
+                        <p class="text-blue-100 opacity-90 text-sm">
+                            Register a new season for a TV series so officers can classify and rate.
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <a href="{{ url()->previous() }}"
+                           class="px-3 py-2 text-sm rounded-lg bg-white/10 text-white hover:bg-white/20 border border-white/20 transition">
+                            Back
+                        </a>
+                        <button
+                            wire:click="save"
+                            wire:loading.attr="disabled"
+                            class="inline-flex items-center px-4 py-2 text-sm rounded-lg bg-white text-blue-700 hover:bg-blue-50 shadow disabled:opacity-50">
+                            <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                            </svg>
+                            Save Season
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Breadcrumb -->
+                <nav class="mt-4 text-xs text-blue-100">
+                    <ol class="flex items-center gap-2">
+                        <li><a href="{{ route('admin.classifications.tv-series') }}" class="hover:underline">TV Series</a></li>
+                        <li>/</li>
+                        <li class="text-white font-medium">Create Season</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Notifications -->
     @if (session()->has('success'))
         <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded">
             {{ session('success') }}
