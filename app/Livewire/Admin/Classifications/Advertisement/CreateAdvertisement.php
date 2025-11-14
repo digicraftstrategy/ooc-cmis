@@ -28,7 +28,7 @@ class CreateAdvertisement extends Component
     public $brand_promoted;
     public $product_promoted;
     public $theme;
-    public $submission_file; // file upload
+    public $poster_path;
     public $slug;
 
     public bool $autoSlug = true;
@@ -72,7 +72,7 @@ class CreateAdvertisement extends Component
             'product_promoted' => 'nullable|string|max:255',
             'theme' => 'nullable|string',
 
-            'submission_file' => 'nullable|mimes:pdf,mp4,mov,m4v,avi,mkv,jpeg,png|max:51200', // 50MB max
+            'poster_path' => 'nullable|mimes:pdf,mp4,mov,m4v,avi,mkv,jpeg,png|max:51200', // 50MB max
 
             'slug' => ['required', 'string', 'max:255', Rule::unique('advertisement_matters', 'slug')],
         ];
@@ -149,9 +149,9 @@ class CreateAdvertisement extends Component
             $ad->slug = $this->slug;
 
             // FILE UPLOAD
-            if ($this->submission_file) {
-                $path = $this->submission_file->store('advertisements/submissions', 'public');
-                $ad->submission_file_path = $path;
+            if ($this->sposter_path) {
+                $path = $this->poster_path->store('advertisements/submissions', 'public');
+                $ad->poster_path_path = $path;
             }
 
             $ad->save();
