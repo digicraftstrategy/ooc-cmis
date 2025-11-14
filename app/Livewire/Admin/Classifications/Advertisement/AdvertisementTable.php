@@ -83,7 +83,7 @@ class AdvertisementTable extends Component
             ->when($this->search, function ($q) use ($term) {
                 $q->where(function ($qq) use ($term) {
                     $qq->where('advertising_matter', 'like', $term)
-                       ->orWhere('main_actor_actress', 'like', $term)
+                       ->orWhere('casts', 'like', $term)
                        ->orWhere('director', 'like', $term)
                        ->orWhere('producer', 'like', $term)
                        ->orWhere('production_company', 'like', $term)
