@@ -130,7 +130,7 @@ class CreateAdvertisement extends Component
         try {
             $ad = new AdvertisementMatter();
             $ad->advertising_matter = $this->advertising_matter;
-            $ad->main_actor_actress = $this->main_actor_actress;
+            $ad->casts = $this->casts;
             $ad->director = $this->director;
             $ad->producer = $this->producer;
             $ad->production_company = $this->production_company;

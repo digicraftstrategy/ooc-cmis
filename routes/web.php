@@ -342,7 +342,9 @@ Route::group(
                     ->group(function () {
                         Route::get('/', \App\Livewire\Admin\Classifications\Advertisement\AdvertisementTable::class)
                             ->name('admin.classifications.advertisements');
-                        Route::get('/create', \App\Livewire\Admin\Classifications\Advertisement\CreateAdvertisement::class)
+                        Route::get('/{advert:slug}', \App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
+                            ->name('admin.classifications.advertisement.show');
+                        Route::get('{/create', \App\Livewire\Admin\Classifications\Advertisement\CreateAdvertisement::class)
                             ->name('admin.classifications.advertisement.create');
                         Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\Advertisement\EditAdvertisement::class)
                             ->name('admin.classifications.advertisement.edit');
