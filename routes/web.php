@@ -162,12 +162,17 @@ Route::group(
 
                  Route::get('/view/{id}', \App\Livewire\Admin\PublicationPremises\PremisesOwner\ViewPremisesOwners::class)
                      ->name('admin.publication-premises.premises-owner.view');
-                Route::get('/{id}/manage', \App\Livewire\Admin\PublicationPremises\PremisesOwner\ManagePremises::class)
-                     ->name('admin.publication-premises.premises-owner.manage');
+
+                //Route::get('/{id}/manage', \App\Livewire\Admin\PublicationPremises\PremisesOwner\ManagePremises::class)
+                       // ->name('admin.publication-premises.premises-owner.manage');
 
                 Route::group(['prefix' => '/{id}/publication-premises', 'middleware' => []], function () {
-                    Route::get('/', \App\Livewire\Admin\PublicationPremises\PublicationPremises\PublicationPremisesTable::class)
-                        ->name('admin.publication-premises.premises');
+
+
+                   //Route::get('/', \App\Livewire\Admin\PublicationPremises\PublicationPremises\PublicationPremisesTable::class)
+                        //->name('admin.publication-premises.premises');
+
+
                     Route::get('/register', \App\Livewire\Admin\PublicationPremises\PublicationPremises\CreatePublicationPremises::class)
                         ->name('admin.publication-premises.premises.create');
                 });
