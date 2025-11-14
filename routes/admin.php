@@ -117,15 +117,38 @@ Route::group(
 Route::group(
     [
         'middleware' => ['auth', 'verified'],
-        'prefix' => 'publication-premises'
+        //'prefix' => 'premises-owners'
     ],
     function () {
 
         // Publication Premises
         Route::prefix('premises-owners')
             ->group(function () {
+                // Premises Owners table
                 Route::get('/', \App\Livewire\Admin\PublicationPremises\PremisesOwner\PremisesOwnersTable::class)
                     ->name('admin.publication-premises.premises-owner');
+
+                // Individual Premises owner per uuid
+                Route::group(['prefix' => 'manage/{id}', 'middleware' => []], function () {
+                    Route::get('/', \App\Livewire\Admin\PublicationPremises\PremisesOwner\ManagePremises::class)
+                    ->name('admin.publication-premises.premises-owner.manage');
+
+                    // Manage Premises Per owner
+                    Route::group(['prefix' => '/publication-premises', 'middleware' => []], function () {
+                        Route::get('/', \App\Livewire\Admin\PublicationPremises\PublicationPremises\PublicationPremisesTable::class)
+                            ->name('admin.publication-premises.premises');
+
+                            /** Might be a need to also add a route group for managing resources such as invoicing,
+                             * licensing, etc per premsies. Where individual premises for each owner can be accessed by the premises uuid
+                             */
+                    });
+
+                    // Manage Classifications Per Owner
+                    Route::group(['prefix' => '/classified-films-publications', 'middleware' => []], function () {
+                        Route::get('/', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
+                            ->name('admin.classifications.classified-films-publications');
+                    });
+                });
         });
     }
 );

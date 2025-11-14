@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-3">
-                        <x-blue-button-link href="{{ route('admin.classifications.manage-classifications', $premisesOwner->uuid) }}" wire:navigate
+                        <x-blue-button-link href="{{ route('admin.classifications.classified-films-publications', $premisesOwner->uuid) }}" wire:navigate
                             class="bg-white/10 gap-2 hover:bg-white/20 text-white border-white/20 backdrop-blur-sm">
                             <x-icons.pencil-square class="w-5 h-5" />
                             Manage Films & Publications
