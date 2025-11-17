@@ -28,7 +28,7 @@ class CreateFilm extends Component
     public $color;
     public $country;
     public $theme;
-    public $poster; 
+    public $poster_path;
     public $trailer_url;
     public $slug;
 
@@ -62,7 +62,7 @@ class CreateFilm extends Component
             'color' => 'nullable|string|max:50',
             'country' => 'nullable|string|max:255',
             'theme' => 'nullable|string',
-            'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'poster_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'trailer_url' => 'nullable|url|max:500',
             'slug' => ['required', 'string', 'max:255', Rule::unique('films', 'slug')],
         ];
@@ -75,9 +75,9 @@ class CreateFilm extends Component
         return [
             'release_year.min' => 'Release year must be after 1900.',
             'release_year.max' => "Release year cannot be later than {$releaseYearConstraints['maxYear']}.",
-            'poster.image' => 'The poster must be an image file.',
-            'poster.mimes' => 'The poster must be a JPEG, PNG, JPG, or GIF file.',
-            'poster.max' => 'The poster must not be larger than 2MB.',
+            'poster_path.image' => 'The poster must be an image file.',
+            'poster_path.mimes' => 'The poster must be a JPEG, PNG, JPG, or GIF file.',
+            'poster_path.max' => 'The poster must not be larger than 2MB.',
             'trailer_url.url' => 'Please enter a valid URL for the trailer.',
             'slug.unique' => 'This slug is already in use. Please choose a different one.',
         ];
@@ -115,7 +115,7 @@ class CreateFilm extends Component
             $film = new Film();
             $film->film_title = $this->film_title;
             $film->film_type_id = $this->film_type_id;
-            $film->cast = $this->casts;
+            $film->casts = $this->casts;
             $film->director = $this->director;
             $film->producer = $this->producer;
             $film->production_company = $this->production_company;
@@ -131,8 +131,8 @@ class CreateFilm extends Component
             $film->slug = $this->slug;
 
             // Handle poster upload - save to public/images/film_posters
-            if ($this->poster) {
-                $posterPath = $this->poster->store('images/film_posters', 'public');
+            if ($this->poster_path) {
+                $posterPath = $this->poster_path->store('images/film_posters', 'public');
                 $film->poster_path = $posterPath;
             }
 
