@@ -227,9 +227,9 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0">
-                                            @if($classificationRating->icon_path)
+                                            @if($classificationRating->icon_url && $classificationRating->iconExists())
                                                 <img
-                                                    src="{{ $classificationRating->icon_path }}"
+                                                    src="{{ $classificationRating->icon_url }}"
                                                     alt="{{ $classificationRating->rating }}"
                                                     class="w-12 h-12 object-contain bg-white border border-gray-200 rounded-lg p-1"
                                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -241,7 +241,7 @@
                                                     </span>
                                                 </div>
                                             @else
-                                                <!-- Show fallback only when no icon exists -->
+                                                <!-- Show fallback when no icon exists or icon file not found -->
                                                 <div class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-lg border border-blue-200">
                                                     <span class="text-sm font-bold text-blue-700">
                                                         {{ substr($classificationRating->rating, 0, 2) }}
@@ -266,7 +266,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                                                <td class="px-6 py-4">
                                     <div class="text-sm text-gray-900 max-w-prose">
                                         {{ $classificationRating->description }}
                                     </div>
@@ -510,7 +510,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Create Rating Modal -->
     <div x-data="{ open: @entangle('showCreateModal') }"
          x-show="open"
