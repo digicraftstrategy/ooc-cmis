@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-3">
-                        <x-blue-button-link href="{{ route('admin.classifications.classified-films-publications', $premisesOwner->uuid) }}" wire:navigate
+                        {{--<x-blue-button-link href="{{ route('admin.classifications.classified-films-publications', $premisesOwner->uuid) }}" wire:navigate
                             class="bg-white/10 gap-2 hover:bg-white/20 text-white border-white/20 backdrop-blur-sm">
                             <x-icons.pencil-square class="w-5 h-5" />
                             Manage Films & Publications
@@ -30,10 +30,15 @@
                             class="bg-white/10 gap-2hover:bg-white/20 text-white border-white/20 backdrop-blur-sm">
                             <x-icons.pencil-square class="w-5 h-5" />
                             Manage Users
-                        </x-blue-button-link>
+                        </x-blue-button-link>--}}
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Navigation Section - Improved for responsiveness -->
+        <div class="mb-8">
+            <livewire:admin.owners-management-nav :premisesOwnerUuid="$premisesOwner->uuid" />
         </div>
 
         <!-- Main Content Grid -->
