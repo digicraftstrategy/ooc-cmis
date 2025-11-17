@@ -287,6 +287,7 @@ Route::group(
         Route::prefix('manage-films-publications')
             ->group(function () {
                 // Films
+                /*
                 Route::prefix('films')
                 ->group(function () {
                     Route::get('/', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
@@ -295,10 +296,10 @@ Route::group(
                         ->name('admin.classifications.films.create');
                     Route::get('/{film:slug}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
                         ->name('admin.classifications.films.show');
-                    /*
+
                     Route::get('/edit/{film}', \App\Livewire\Admin\Classifications\Films\EditFilm::class)
                         ->name('admin.classifications.films.edit');
-                    */
+
                 });
 
                 // TV Series
@@ -349,7 +350,7 @@ Route::group(
                         Route::get('/', \App\Livewire\Admin\Classifications\Advertisement\AdvertisementTable::class)
                             ->name('admin.classifications.advertisements');
                         /*Route::get('/{advert:slug}', \App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
-                            ->name('admin.classifications.advertisement.show');*/
+                            ->name('admin.classifications.advertisement.show');
                         Route::get('/create', \App\Livewire\Admin\Classifications\Advertisement\CreateAdvertisement::class)
                             ->name('admin.classifications.advertisement.create');
                         Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\Advertisement\EditAdvertisement::class)
@@ -358,7 +359,7 @@ Route::group(
                             ->name('admin.classifications.advertisement.view');
                              // View by slug (keep this LAST so it doesn't swallow /create, /edit, etc.)
                         /*Route::get('/{advert:slug}', App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
-                            ->name('admin.classifications.advertisement.show');*/
+                            ->name('admin.classifications.advertisement.show');
                 });
 
                 // Literature Books
@@ -376,7 +377,7 @@ Route::group(
 
                             Route::get('/{literature:slug}', \App\Livewire\Admin\Classifications\Literature\ViewLiterature::class)
                                 ->name('admin.classifications.literatures.view');
-                        });
+                        }); */
                 /*Route::prefix('literatures')
                     ->group(function () {
                         Route::get('/', \App\Livewire\Admin\Classifications\Literature\LiteratureTable::class)
@@ -395,7 +396,7 @@ Route::group(
             ->name('admin.classifications.films');
         Route::get('/films/{film}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
             ->name('admin.classifications.films.show');
-        */
+
 
         //Route::get('/classified-items', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
            // ->name('admin.classifications.classified-items');
@@ -407,7 +408,7 @@ Route::group(
                 Route::get('/create', \App\Livewire\Admin\Classifications\Classification\CreateClassification::class)
                     ->name('admin.classifications.classified-items.create');
 
-            });
+            });*/
     }
 
 );

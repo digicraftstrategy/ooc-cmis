@@ -160,6 +160,94 @@ Route::group(
         'prefix' => 'classifications'
     ],
     function () {
-        //
+        Route::prefix('classified-items')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
+                    ->name('admin.classifications.classified-items');
+                Route::get('/create', \App\Livewire\Admin\Classifications\Classification\CreateClassification::class)
+                    ->name('admin.classifications.classified-items.create');
+
+            });
+
+        // Films
+        Route::prefix('films')
+        ->group(function () {
+            Route::get('/', \App\Livewire\Admin\Classifications\Films\FilmTable::class)
+                ->name('admin.classifications.films');
+            Route::get('/create', [\App\Http\Controllers\Admin\Classifications\FilmController::class, 'create'])
+                ->name('admin.classifications.films.create');
+            Route::get('/{film:slug}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
+                ->name('admin.classifications.films.show');
+            /*
+            Route::get('/edit/{film}', \App\Livewire\Admin\Classifications\Films\EditFilm::class)
+                ->name('admin.classifications.films.edit');
+            */
+        });
+
+        // TV Series
+        Route::prefix('tv-series')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\TvSeries\TvSeriestable::class)
+                    ->name('admin.classifications.tv-series');
+                Route::get('/titles', \App\Livewire\Admin\Classifications\TvSeries\TvSeriesTitleTable::class)
+                    ->name('admin.classifications.tv-series-title');
+                Route::get('/{tv-series:slug}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
+                ->name('admin.classifications.tv-series.show');
+                Route::get('/create', [\App\Http\Controllers\Admin\Classifications\TvSeriesController::class, 'create'])
+                    ->name('admin.classifications.tv-series.create');
+                //Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\TvSeries\EditTvSeries::class)
+                    //->name('admin.classifications.tv-series.edit');
+                //Route::get('/view/{id}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
+                    //->name('admin.classifications.tv-series.view');
+            });
+
+        // Video Games
+        Route::prefix('video-games')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\VideoGame\VideoGameTable::class)
+                    ->name('admin.classifications.video-games');
+                Route::get('/create', \App\Livewire\Admin\Classifications\VideoGame\CreateVideoGame::class)
+                    ->name('admin.classifications.video-games.create');
+                Route::get('/edit/{game}', \App\Livewire\Admin\Classifications\VideoGame\EditVideoGame::class)
+                    ->name('admin.classifications.video-games.edit');
+                Route::get('/{game:slug}', \App\Livewire\Admin\Classifications\VideoGame\ViewVideoGame::class)
+                    ->name('admin.classifications.video-games.view');
+            });
+
+        // TV Ads
+        Route::prefix('advertisements')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\Advertisement\AdvertisementTable::class)
+                    ->name('admin.classifications.advertisements');
+                /*Route::get('/{advert:slug}', \App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
+                    ->name('admin.classifications.advertisement.show');*/
+                Route::get('/create', \App\Livewire\Admin\Classifications\Advertisement\CreateAdvertisement::class)
+                    ->name('admin.classifications.advertisement.create');
+                Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\Advertisement\EditAdvertisement::class)
+                    ->name('admin.classifications.advertisement.edit');
+                Route::get('/view/{id}', \App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
+                    ->name('admin.classifications.advertisement.view');
+                /*Route::get('/{advert:slug}', App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
+                    ->name('admin.classifications.advertisement.show');*/
+        });
+
+        // Literature Books
+        Route::prefix('literatures')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\Literature\LiteratureTable::class)
+                    ->name('admin.classifications.literatures');
+                Route::get('/create', \App\Livewire\Admin\Classifications\Literature\CreateLiterature::class)
+                    ->name('admin.classifications.literatures.create');
+                Route::get('/edit/{literature}', \App\Livewire\Admin\Classifications\Literature\EditLiterature::class)
+                    ->name('admin.classifications.literatures.edit');
+                Route::get('/{literature:slug}', \App\Livewire\Admin\Classifications\Literature\ViewLiterature::class)
+                    ->name('admin.classifications.literatures.view');
+            });
+
+        // Audio
+        Route::prefix('audios')
+            ->group(function () {
+                // Routing for audio here
+            });
     }
 );
