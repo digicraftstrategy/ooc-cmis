@@ -321,13 +321,19 @@ Route::group(
                     // Video Games
                 Route::prefix('video-games')
                     ->group(function () {
+
                         Route::get('/', \App\Livewire\Admin\Classifications\VideoGame\VideoGameTable::class)
                             ->name('admin.classifications.video-games');
+
+                        // STATIC ROUTES MUST COME FIRST
                         Route::get('/create', \App\Livewire\Admin\Classifications\VideoGame\CreateVideoGame::class)
                             ->name('admin.classifications.video-games.create');
-                        Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\VideoGame\EditVideoGame::class)
+
+                        Route::get('/edit/{game}', \App\Livewire\Admin\Classifications\VideoGame\EditVideoGame::class)
                             ->name('admin.classifications.video-games.edit');
-                        Route::get('/view/{id}', \App\Livewire\Admin\Classifications\VideoGame\ViewVideoGame::class)
+
+                        // NOW the dynamic slug route can safely come last
+                        Route::get('/{game:slug}', \App\Livewire\Admin\Classifications\VideoGame\ViewVideoGame::class)
                             ->name('admin.classifications.video-games.view');
                     });
 
@@ -342,18 +348,36 @@ Route::group(
                     ->group(function () {
                         Route::get('/', \App\Livewire\Admin\Classifications\Advertisement\AdvertisementTable::class)
                             ->name('admin.classifications.advertisements');
-                        Route::get('/{advert:slug}', \App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
-                            ->name('admin.classifications.advertisement.show');
-                        Route::get('{/create', \App\Livewire\Admin\Classifications\Advertisement\CreateAdvertisement::class)
+                        /*Route::get('/{advert:slug}', \App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
+                            ->name('admin.classifications.advertisement.show');*/
+                        Route::get('/create', \App\Livewire\Admin\Classifications\Advertisement\CreateAdvertisement::class)
                             ->name('admin.classifications.advertisement.create');
                         Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\Advertisement\EditAdvertisement::class)
                             ->name('admin.classifications.advertisement.edit');
                         Route::get('/view/{id}', \App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
                             ->name('admin.classifications.advertisement.view');
+                             // View by slug (keep this LAST so it doesn't swallow /create, /edit, etc.)
+                        /*Route::get('/{advert:slug}', App\Livewire\Admin\Classifications\Advertisement\ViewAdvertisement::class)
+                            ->name('admin.classifications.advertisement.show');*/
                 });
 
                 // Literature Books
-                Route::prefix('literatures')
+                // manage-films-publications/literatures
+                    Route::prefix('literatures')
+                        ->group(function () {
+                            Route::get('/', \App\Livewire\Admin\Classifications\Literature\LiteratureTable::class)
+                                ->name('admin.classifications.literatures');
+
+                            Route::get('/create', \App\Livewire\Admin\Classifications\Literature\CreateLiterature::class)
+                                ->name('admin.classifications.literatures.create');
+
+                            Route::get('/edit/{literature}', \App\Livewire\Admin\Classifications\Literature\EditLiterature::class)
+                                ->name('admin.classifications.literatures.edit');
+
+                            Route::get('/{literature:slug}', \App\Livewire\Admin\Classifications\Literature\ViewLiterature::class)
+                                ->name('admin.classifications.literatures.view');
+                        });
+                /*Route::prefix('literatures')
                     ->group(function () {
                         Route::get('/', \App\Livewire\Admin\Classifications\Literature\LiteratureTable::class)
                             ->name('admin.classifications.literatures');
@@ -363,7 +387,7 @@ Route::group(
                             ->name('admin.classifications.literatures.edit');
                         Route::get('/view/{id}', \App\Livewire\Admin\Classifications\Literature\ViewLiterature::class)
                             ->name('admin.classifications.literatures.view');
-                });
+                });*/
             });
 
 
@@ -376,5 +400,6 @@ Route::group(
         //Route::get('/{id}/classified-items', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
          //   ->name('admin.classifications.classified-items');
     }
+
 );
 require __DIR__.'/auth.php';
