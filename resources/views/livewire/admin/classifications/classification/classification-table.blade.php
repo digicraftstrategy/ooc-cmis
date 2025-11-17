@@ -167,17 +167,20 @@
                             Classified Item
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
-                            Type
+                            Category
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Rating
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
-                            Status
+                            Duration
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
-                            Category
+                            Status
                         </th>
+                        {{--<th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                            Category
+                        </th>--}}
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Date Classified
                         </th>
@@ -198,28 +201,15 @@
 
                             <!-- Classified Item -->
                             <td class="px-3 py-2 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-8 w-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                                        @if ($classification->classifiable && $classification->classifiable_type === \App\Models\TvSeriesSeason::class)
-                                            <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                            </svg>
-                                        @else
-                                            <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
-                                            </svg>
+                                <div class="text-sm font-semibold text-gray-900 max-w-xs truncate">
+                                    @if ($classification->classifiable && $classification->classifiable_type === \App\Models\TvSeriesSeason::class)
+                                        {{ optional($classification->classifiable->tvSeries)->tv_series_title ?? 'N/A' }}
+                                        @if($classification->classifiable->season_title)
+                                            <span class="text-gray-500 text-xs">– {{ $classification->classifiable->season_title }}</span>
                                         @endif
-                                    </div>
-                                    <div class="text-sm font-semibold text-gray-900 max-w-xs truncate">
-                                        @if ($classification->classifiable && $classification->classifiable_type === \App\Models\TvSeriesSeason::class)
-                                            {{ optional($classification->classifiable->tvSeries)->tv_series_title ?? 'N/A' }}
-                                            @if($classification->classifiable->season_title)
-                                                <span class="text-gray-500 text-xs">– {{ $classification->classifiable->season_title }}</span>
-                                            @endif
-                                        @else
-                                            {{ $classification->getClassifiableTitle() }}
-                                        @endif
-                                    </div>
+                                    @else
+                                        {{ $classification->getClassifiableTitle() }}
+                                    @endif
                                 </div>
                             </td>
 
@@ -264,6 +254,12 @@
                                     </span>
                                 </div>
                             </td>
+                            <!-- Duration -->
+                            <td class="px-3 py-2 whitespace-nowrap">
+                                <div class="text-sm text-gray-700">
+                                    {{ $classification->classifiable->duration ?? 'N/A' }} min
+                                </div>
+                            </td>
 
                             <!-- Status -->
                             <td class="px-3 py-2 whitespace-nowrap">
@@ -278,11 +274,11 @@
                             </td>
 
                             <!-- Category -->
-                            <td class="px-3 py-2 whitespace-nowrap">
+                            {{--<td class="px-3 py-2 whitespace-nowrap">
                                 <div class="text-sm text-gray-700">
                                     {{ $classification->category->name ?? 'N/A' }}
                                 </div>
-                            </td>
+                            </td>--}}
 
                             <!-- Date -->
                             <td class="px-3 py-2 whitespace-nowrap">
