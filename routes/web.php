@@ -397,8 +397,17 @@ Route::group(
             ->name('admin.classifications.films.show');
         */
 
-        //Route::get('/{id}/classified-items', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
-         //   ->name('admin.classifications.classified-items');
+        //Route::get('/classified-items', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
+           // ->name('admin.classifications.classified-items');
+
+        Route::prefix('classified-items')
+            ->group(function () {
+                Route::get('/', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
+                    ->name('admin.classifications.classified-items');
+                Route::get('/create', \App\Livewire\Admin\Classifications\Classification\CreateClassification::class)
+                    ->name('admin.classifications.classified-items.create');
+
+            });
     }
 
 );
