@@ -160,7 +160,7 @@
                                class="w-full text-sm border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 @error('film_title') border-rose-400 @enderror"
                                placeholder="e.g. The Highlands Run">
                         @error('film_title') <p class="text-xs text-rose-600 mt-1">{{ $message }}</p> @enderror
-                        
+
             <!-- Genre - Text Input -->
             <div>
                 <label for="genre" class="block text-sm font-medium text-gray-700 mb-1">Genre</label>
@@ -380,7 +380,7 @@
             </div>
         </form>
     </main>
-    
+
         <!-- Form Actions -->
         <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
             <button type="button" wire:click="resetForm"
