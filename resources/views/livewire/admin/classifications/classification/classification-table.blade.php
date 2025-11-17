@@ -164,7 +164,7 @@
                             #
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
-                            Classified Item
+                            Title
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Category
@@ -204,9 +204,15 @@
                                 <div class="text-sm font-semibold text-gray-900 max-w-xs truncate">
                                     @if ($classification->classifiable && $classification->classifiable_type === \App\Models\TvSeriesSeason::class)
                                         {{ optional($classification->classifiable->tvSeries)->tv_series_title ?? 'N/A' }}
-                                        @if($classification->classifiable->season_title)
-                                            <span class="text-gray-500 text-xs">– {{ $classification->classifiable->season_title }}</span>
-                                        @endif
+                                        <div class="text-gray-500 text-xs mt-1">
+                                            @if($classification->classifiable->season_title && $classification->classifiable->number_of_episodes)
+                                                {{ $classification->classifiable->season_title }} - {{ $classification->classifiable->number_of_episodes }} episodes
+                                            @elseif($classification->classifiable->season_title)
+                                                {{ $classification->classifiable->season_title }}
+                                            @elseif($classification->classifiable->number_of_episodes)
+                                                {{ $classification->classifiable->number_of_episodes }} episodes
+                                            @endif
+                                        </div>
                                     @else
                                         {{ $classification->getClassifiableTitle() }}
                                     @endif

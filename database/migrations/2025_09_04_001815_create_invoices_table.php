@@ -21,11 +21,14 @@ return new class extends Migration
             $table->decimal('tax', 10, 2)->default(0.00); // Tax
             $table->decimal('total', 10, 2)->default(0.00); // Amount after tax
 
-            $table->string('billing_email'); // Can come from the premsies if no new email if provided
-            $table->string('billing_address')->nullable(); // Can come from premsiess if no new address is provided
+            $table->string('billing_email')->nullable(); // Can come from the premsies owner if no new email if provided
+            $table->string('billing_address')->nullable(); // Can come from premises owner if no new address is provided
 
             $table->enum('status', ['pending', 'paid', 'cancelled','overdue'])->default('pending');
             $table->text('notes')->nullable();
+
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')->references('id')->on('premises_owners')->cascadeOnDelete();
 
             $table->unsignedBigInteger('premises_id');
             $table->foreign('premises_id')->references('id')->on('premises')->onDelete('cascade');
