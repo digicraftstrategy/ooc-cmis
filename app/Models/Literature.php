@@ -8,4 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Literature extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+            'literature_title',
+            'slug',
+            'author',
+            'publisher',
+            'publication_year',
+            'pages',
+            'genre',
+            'summary',
+            'cover_art_path',
+        ];
+
+    // If later you add user_id:
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
 }

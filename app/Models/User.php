@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -43,6 +44,11 @@ class User extends Authenticatable
     public function hasAnyRole(array $slugs): bool
     {
         return $this->role && in_array($this->role->slug, $slugs); // SON Add this line
+    }
+
+    public function advertisements(): HasMany
+    {
+        return $this->hasMany(AdvertisementMatter::class);
     }
 
     /**
