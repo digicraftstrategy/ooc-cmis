@@ -1,17 +1,206 @@
 <?php
 
 namespace Database\Seeders;
-
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class VideoGamingSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        DB::table('video_games')->insert([
+
+            [
+                'video_game_title'   => 'Legends of the Kumul Warrior',
+                'slug'               => Str::slug('Legends of the Kumul Warrior'),
+                'main_characters'    => 'Aru Kora, Chief Laria',
+                'developer'          => 'Bilum Game Studios',
+                'publisher'          => 'PNG Interactive',
+                'release_year'       => 2024,
+                'release_date'       => '2024-06-10',
+                'genre'              => 'Action-Adventure',
+                'platform'           => 'PC, PlayStation',
+                'average_playtime'   => 25,
+                'game_mode'          => 'Single-player',
+                'language'           => 'English',
+                'has_subtitle'       => 1,
+                'cover_art_path'     => 'games/covers/kumul-warrior.jpg',
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+            [
+                'video_game_title'   => 'Rumble in Port Moresby',
+                'slug'               => Str::slug('Rumble in Port Moresby'),
+                'main_characters'    => 'Jay Kila, Robo Bilas',
+                'developer'          => 'PacificGamers',
+                'publisher'          => 'OceanByte Publishing',
+                'release_year'       => 2022,
+                'release_date'       => '2022-11-20',
+                'genre'              => 'Fighting',
+                'platform'           => 'Xbox, PC',
+                'average_playtime'   => 15,
+                'game_mode'          => 'Multi-player',
+                'language'           => 'English, Tok Pisin',
+                'has_subtitle'       => 0,
+                'cover_art_path'     => 'games/covers/rumble-port-moresby.jpg',
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+            [
+                'video_game_title'   => 'Tapa Island Survival',
+                'slug'               => Str::slug('Tapa Island Survival'),
+                'main_characters'    => 'Maro, Sina',
+                'developer'          => 'IslandCode Studios',
+                'publisher'          => 'TropicWave Media',
+                'release_year'       => 2023,
+                'release_date'       => '2023-09-15',
+                'genre'              => 'Survival',
+                'platform'           => 'PC',
+                'average_playtime'   => 40,
+                'game_mode'          => 'Single-player',
+                'language'           => 'English',
+                'has_subtitle'       => 1,
+                'cover_art_path'     => 'games/covers/tapa-island.jpg',
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+            [
+                'video_game_title'   => 'Spirit of the Sepik River',
+                'slug'               => Str::slug('Spirit of the Sepik River'),
+                'main_characters'    => 'Tama, River Guardian',
+                'developer'          => 'Hauslain Digital Arts',
+                'publisher'          => 'Sepik Creations',
+                'release_year'       => 2021,
+                'release_date'       => '2021-04-30',
+                'genre'              => 'Adventure',
+                'platform'           => 'PC, Nintendo Switch',
+                'average_playtime'   => 18,
+                'game_mode'          => 'Single-player',
+                'language'           => 'English',
+                'has_subtitle'       => 0,
+                'cover_art_path'     => 'games/covers/sepik-river.jpg',
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+            [
+                'video_game_title'   => 'Highlands Rally XT',
+                'slug'               => Str::slug('Highlands Rally XT'),
+                'main_characters'    => 'Driver Kapi, Navigator Seki',
+                'developer'          => 'Kumul Motorsport Games',
+                'publisher'          => 'Apex Velocity Labs',
+                'release_year'       => 2025,
+                'release_date'       => '2025-01-12',
+                'genre'              => 'Racing',
+                'platform'           => 'PlayStation, PC',
+                'average_playtime'   => 12,
+                'game_mode'          => 'Both',
+                'language'           => 'English',
+                'has_subtitle'       => 1,
+                'cover_art_path'     => 'games/covers/highlands-rally.jpg',
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+            [
+                'video_game_title'   => 'BilumCraft Builder',
+                'slug'               => Str::slug('BilumCraft Builder'),
+                'main_characters'    => 'Creative Player',
+                'developer'          => 'BilumSoft',
+                'publisher'          => 'PNG Sandbox Studio',
+                'release_year'       => 2020,
+                'release_date'       => '2020-08-04',
+                'genre'              => 'Sandbox / Creative',
+                'platform'           => 'PC',
+                'average_playtime'   => 100,
+                'game_mode'          => 'Both',
+                'language'           => 'English',
+                'has_subtitle'       => 1,
+                'cover_art_path'     => 'games/covers/bilumcraft.jpg',
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+            [
+                'video_game_title'   => 'Kokoda Path Heroes',
+                'slug'               => Str::slug('Kokoda Path Heroes'),
+                'main_characters'    => 'Darius, Captain Ranu',
+                'developer'          => 'Frontline Studios PNG',
+                'publisher'          => 'History Interactive',
+                'release_year'       => 2021,
+                'release_date'       => '2021-02-19',
+                'genre'              => 'Historical Strategy',
+                'platform'           => 'PC',
+                'average_playtime'   => 30,
+                'game_mode'          => 'Single-player',
+                'language'           => 'English',
+                'has_subtitle'       => 0,
+                'cover_art_path'     => 'games/covers/kokoda-path.jpg',
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+            [
+                'video_game_title'   => 'Star Traders: PNG Frontier',
+                'slug'               => Str::slug('Star Traders: PNG Frontier'),
+                'main_characters'    => 'Nova, Captain Hemi',
+                'developer'          => 'Galaxy Code Studio',
+                'publisher'          => 'Nebula Works',
+                'release_year'       => 2023,
+                'release_date'       => '2023-12-01',
+                'genre'              => 'Sci-Fi RPG',
+                'platform'           => 'PC, PlayStation, Xbox',
+                'average_playtime'   => 50,
+                'game_mode'          => 'Both',
+                'language'           => 'English',
+                'has_subtitle'       => 1,
+                'cover_art_path'     => 'games/covers/png-frontier.jpg',
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+            [
+                'video_game_title'   => 'Aerial Guardians of Wewak',
+                'slug'               => Str::slug('Aerial Guardians of Wewak'),
+                'main_characters'    => 'Ace Pilot Rigo',
+                'developer'          => 'SkyForge Studios',
+                'publisher'          => 'HighFlyer Media',
+                'release_year'       => 2022,
+                'release_date'       => '2022-03-22',
+                'genre'              => 'Flight Simulator',
+                'platform'           => 'PC',
+                'average_playtime'   => 35,
+                'game_mode'          => 'Single-player',
+                'language'           => 'English',
+                'has_subtitle'       => 0,
+                'cover_art_path'     => 'games/covers/wewak-guardians.jpg',
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+            [
+                'video_game_title'   => 'Tomb of the Asaro Mask',
+                'slug'               => Str::slug('Tomb of the Asaro Mask'),
+                'main_characters'    => 'Explorer Nami, Spirit Guide',
+                'developer'          => 'SpiritMask Interactive',
+                'publisher'          => 'Asaro Valley Media',
+                'release_year'       => 2025,
+                'release_date'       => '2025-05-09',
+                'genre'              => 'Puzzle Adventure',
+                'platform'           => 'Nintendo Switch, PC',
+                'average_playtime'   => 20,
+                'game_mode'          => 'Single-player',
+                'language'           => 'English',
+                'has_subtitle'       => 1,
+                'cover_art_path'     => 'games/covers/asaro-mask.jpg',
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ],
+
+        ]);
     }
 }

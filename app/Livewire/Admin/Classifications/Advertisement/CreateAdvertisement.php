@@ -147,6 +147,8 @@ class CreateAdvertisement extends Component
             $ad->theme = $this->theme;
 
             $ad->slug = $this->slug;
+            $ad->user_id = auth()->id();
+
 
             // FILE UPLOAD
             if ($this->sposter_path) {
