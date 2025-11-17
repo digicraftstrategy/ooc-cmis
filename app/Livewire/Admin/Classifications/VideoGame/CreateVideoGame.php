@@ -108,9 +108,9 @@ class CreateVideoGame extends Component
         ]);
 
         // If you track creator:
-        if (auth()->check()) {
+        /*if (auth()->check()) {
             $game->user_id = auth()->id();
-        }
+        }*/
 
         $game->save();
 
