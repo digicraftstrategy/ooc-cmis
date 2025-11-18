@@ -50,7 +50,7 @@ class CreateClassification extends Component
         $this->ratings    = ClassificationRating::orderBy('rating')->get();
         $this->categories = ClassificationCategory::orderBy('name')->get();
 
-        // Optional: default classification date to today
+        // Default classification date to today
         $this->classification_date = now()->toDateString();
     }
 
@@ -90,6 +90,9 @@ class CreateClassification extends Component
         }
     }
 
+    /**
+     * Load ONLY unclassified items for the selected type.
+     */
     protected function loadItemsForType(string $type)
     {
         $class = $this->resolveClassFromType($type);
@@ -98,15 +101,11 @@ class CreateClassification extends Component
             return collect();
         }
 
-        // Example: only show unclassified films
-        if ($class === Film::class) {
-            return $class::where('has_classified', false)
-                ->orderBy('id', 'desc')
-                ->get();
-        }
-
-        // Other types: load all for now
-        return $class::orderBy('id', 'desc')->get();
+        // Expect each model to have: public function classification(): MorphOne
+        // This ensures items that already have a classification are NOT shown.
+        return $class::whereDoesntHave('classification')
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     /**

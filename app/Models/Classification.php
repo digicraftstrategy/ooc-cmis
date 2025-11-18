@@ -13,6 +13,7 @@ use App\Models\Audio;
 use App\Models\PremisesOwner;
 use App\Models\ClassificationRating;
 use App\Models\ClassificationCategory;
+use App\Models\VideoGaming;
 
 class Classification extends Model
 {
@@ -41,15 +42,15 @@ class Classification extends Model
     ];
 
     /**
-     * Automatically keep has_classified in sync on the classifiable model.
-     * One classifiable (e.g. Film) has at most one Classification.
+     * Automatically keep has_classified in sync on supported classifiable models.
+     * One classifiable (e.g. Film, Season, Literature, etc.) has at most one Classification.
      */
     protected static function booted()
     {
         static::created(function (Classification $classification) {
             $model = $classification->classifiable;
 
-            if ($model && $model->isFillable('has_classified')) {
+            if (static::supportsHasClassified($model)) {
                 $model->update(['has_classified' => true]);
             }
         });
@@ -57,10 +58,30 @@ class Classification extends Model
         static::deleted(function (Classification $classification) {
             $model = $classification->classifiable;
 
-            if ($model && $model->isFillable('has_classified')) {
+            if (static::supportsHasClassified($model)) {
                 $model->update(['has_classified' => false]);
             }
         });
+    }
+
+    /**
+     * Only flip has_classified for the content models we care about.
+     */
+    protected static function supportsHasClassified($model): bool
+    {
+        if (! $model) {
+            return false;
+        }
+
+        $isSupportedType =
+            $model instanceof Film
+            || $model instanceof TvSeriesSeason
+            || $model instanceof Literature
+            || $model instanceof AdvertisementMatter
+            || $model instanceof Audio
+            || $model instanceof VideoGaming;
+
+        return $isSupportedType && $model->isFillable('has_classified');
     }
 
     /*
@@ -91,12 +112,11 @@ class Classification extends Model
 
     /**
      * Virtual "film" attribute so Blade can use $classification->film->film_title.
-     * This does NOT run another query – it just reuses the polymorphic relation.
      */
     public function getFilmAttribute()
     {
         if ($this->classifiable_type === Film::class) {
-            return $this->classifiable; // already a Film instance when loaded
+            return $this->classifiable;
         }
 
         return null;
@@ -106,21 +126,8 @@ class Classification extends Model
     |--------------------------------------------------------------------------
     | Accessors / View Helpers
     |--------------------------------------------------------------------------
-    |
-    | These give you nice properties like:
-    | - $classification->item_title
-    | - $classification->media_type_label
-    | - $classification->display_title
-    | - $classification->status_badge_color
-    |
-    | And the older helper methods now just proxy to these accessors.
-    |
     */
 
-    /**
-     * Title of the underlying item (Film, Season, Literature, etc.).
-     * Usage: $classification->item_title
-     */
     public function getItemTitleAttribute(): string
     {
         if (! $this->classifiable) {
@@ -155,6 +162,12 @@ class Classification extends Model
                     ?? $this->classifiable->title
                     ?? 'N/A';
 
+            case VideoGaming::class:
+                return $this->classifiable->display_title
+                    ?? $this->classifiable->video_game_title
+                    ?? $this->classifiable->title
+                    ?? 'N/A';
+
             default:
                 return $this->classifiable->display_title
                     ?? $this->classifiable->title
@@ -163,10 +176,6 @@ class Classification extends Model
         }
     }
 
-    /**
-     * Human-readable media type.
-     * Usage: $classification->media_type_label
-     */
     public function getMediaTypeLabelAttribute(): string
     {
         switch ($this->classifiable_type) {
@@ -180,24 +189,18 @@ class Classification extends Model
                 return 'Advertisement';
             case Audio::class:
                 return 'Audio';
+            case VideoGaming::class:
+                return 'Video Game';
             default:
                 return class_basename($this->classifiable_type ?? 'Item');
         }
     }
 
-    /**
-     * Combined label, e.g. "Film – The Lion King"
-     * Usage: $classification->display_title
-     */
     public function getDisplayTitleAttribute(): string
     {
         return $this->media_type_label . ' – ' . $this->item_title;
     }
 
-    /**
-     * Status badge color classes (Tailwind).
-     * Usage: $classification->status_badge_color
-     */
     public function getStatusBadgeColorAttribute(): string
     {
         return match ($this->classification_status) {
@@ -223,9 +226,6 @@ class Classification extends Model
         return $this->media_type_label;
     }
 
-    /**
-     * For compatibility with existing Blade.
-     */
     public function getStatusBadgeColor(): string
     {
         return $this->status_badge_color;

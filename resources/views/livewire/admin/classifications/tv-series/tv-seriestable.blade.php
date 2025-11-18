@@ -23,39 +23,70 @@
     </div>
 
     <!-- Stats Cards Section -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <!-- Total Seasons -->
-        <div class="bg-white rounded-lg shadow p-4">
-            <div class="flex items-center">
-                <div class="p-2 bg-blue-100 rounded-lg">
-                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
-                    </svg>
-                </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Total Seasons</p>
-                    <p class="text-xl font-semibold text-gray-900">{{ $stats['total'] }}</p>
-                </div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <!-- Total Seasons -->
+    <div class="bg-white rounded-lg shadow p-4">
+        <div class="flex items-center">
+            <div class="p-2 bg-blue-100 rounded-lg">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
+                </svg>
             </div>
-        </div>
-
-        <!-- Recent Season -->
-        <div class="bg-white rounded-lg shadow p-4">
-            <div class="flex items-center">
-                <div class="p-2 bg-purple-100 rounded-lg">
-                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Recent Season</p>
-                    <p class="text-lg font-semibold text-gray-900 truncate" title="{{ $stats['recent']->season_title ?? 'N/A' }}">
-                        {{ $stats['recent']->season_title ?? 'N/A' }}
-                    </p>
-                </div>
+            <div class="ml-4">
+                <p class="text-sm font-medium text-gray-500">Total Seasons</p>
+                <p class="text-xl font-semibold text-gray-900">{{ $stats['total'] }}</p>
             </div>
         </div>
     </div>
+
+    <!-- Classified Seasons -->
+    <div class="bg-white rounded-lg shadow p-4">
+        <div class="flex items-center">
+            <div class="p-2 bg-green-100 rounded-lg">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="text-sm font-medium text-gray-500">Classified</p>
+                <p class="text-xl font-semibold text-green-600">{{ $stats['totalClassified'] }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unclassified Seasons -->
+    <div class="bg-white rounded-lg shadow p-4">
+        <div class="flex items-center">
+            <div class="p-2 bg-amber-100 rounded-lg">
+                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="text-sm font-medium text-gray-500">Unclassified</p>
+                <p class="text-xl font-semibold text-amber-600">{{ $stats['totalUnclassified'] }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Season -->
+    <div class="bg-white rounded-lg shadow p-4">
+        <div class="flex items-center">
+            <div class="p-2 bg-purple-100 rounded-lg">
+                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="text-sm font-medium text-gray-500">Recent Season</p>
+                <p class="text-lg font-semibold text-gray-900 truncate" title="{{ $stats['recent']->season_title ?? 'N/A' }}">
+                    {{ $stats['recent']->season_title ?? 'N/A' }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <!-- Search and Filter Section -->
     <div class="mb-4 bg-white rounded-lg shadow-sm p-4">
@@ -137,6 +168,9 @@
                             </div>
                         </th>
                         <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">Genre</th>
+                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">
+                            Classification
+                        </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">
                             Actions
                         </th>
@@ -179,6 +213,18 @@
                                 <div class="truncate max-w-xs" title="{{ is_array($season->genre) ? implode(', ', $season->genre) : $season->genre }}">
                                     {{ is_array($season->genre) ? implode(', ', $season->genre) : $season->genre }}
                                 </div>
+                            </td>
+                            <!-- Classification status -->
+                            <td class="px-3 py-2 text-sm text-slate-700 align-top text-left">
+                                @if($season->has_classified)
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                        Classified
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">
+                                        Unclassified
+                                    </span>
+                                @endif
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end">

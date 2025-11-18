@@ -46,13 +46,23 @@
     @endif
 
     <!-- Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div class="bg-white p-4 rounded-lg shadow">
             <p class="text-sm font-medium text-gray-500">Total Literatures</p>
             <p class="text-2xl font-bold text-gray-900">{{ $stats['total'] }}</p>
         </div>
 
-        <div class="bg-white p-4 rounded-lg shadow md:col-span-2">
+        <div class="bg-white p-4 rounded-lg shadow">
+            <p class="text-sm font-medium text-gray-500">Classified</p>
+            <p class="text-2xl font-bold text-gray-900">{{ $stats['classified'] }}</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg shadow">
+            <p class="text-sm font-medium text-gray-500">Unclassified</p>
+            <p class="text-2xl font-bold text-gray-900">{{ $stats['unclassified'] }}</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg shadow">
             <p class="text-sm font-medium text-gray-500">Most Recent</p>
             <p class="text-lg font-semibold text-gray-900 truncate">
                 {{ $stats['recent']?->literature_title ?? 'N/A' }}
@@ -64,6 +74,7 @@
             @endif
         </div>
     </div>
+
 
     <!-- Search -->
     <div class="mb-4 bg-white rounded-lg shadow-sm p-4">
@@ -125,6 +136,9 @@
                             Genre
                         </th>
                         <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                            Classification
+                        </th>
+                        <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
                             Actions
                         </th>
                     </tr>
@@ -155,6 +169,17 @@
                             </td>
                             <td class="px-3 py-2 text-sm text-gray-700">
                                 {{ $literature->genre ?? '—' }}
+                            </td>
+                            <td class="px-3 py-2 text-sm">
+                                @if($literature->has_classified)
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                        Classified
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">
+                                        Unclassified
+                                    </span>
+                                @endif
                             </td>
                             <td class="px-3 py-2 text-sm text-right">
                                 <a href="{{ route('admin.classifications.literatures.edit', $literature->id) }}"

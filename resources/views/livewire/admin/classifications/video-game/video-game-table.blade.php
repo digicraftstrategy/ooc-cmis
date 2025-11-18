@@ -116,6 +116,9 @@
                     <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">Mode</th>
                     <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">Developer</th>
                     <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">Release Year</th>
+                    <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                        Classification
+                    </th>
                     <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider">Actions</th>
                 </tr>
                 </thead>
@@ -141,6 +144,18 @@
                             {{ $game->developer ?? '—' }}
                         </td>
                         <td class="px-3 py-2 text-sm text-gray-700">{{ $game->release_year ?? '—' }}</td>
+                        <!-- Classification status -->
+                        <td class="px-3 py-2 text-sm text-gray-700">
+                            @if($game->has_classified)
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                    Classified
+                                </span>
+                            @else
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">
+                                    Unclassified
+                                </span>
+                            @endif
+                        </td>
                         <td class="px-3 py-2 text-sm text-right">
                             <div class="flex justify-end gap-2">
                                 <a href="{{ route('admin.classifications.video-games.view', $game->slug) }}"

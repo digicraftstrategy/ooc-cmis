@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\Classification;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class TvSeriesSeason extends Model
 {
@@ -41,6 +43,21 @@ class TvSeriesSeason extends Model
         'has_classified' => 'boolean',
         //'number_of_episodes' => 'integer',
     ];
+
+    public function classification(): MorphOne
+    {
+        return $this->morphOne(Classification::class, 'classifiable');
+    }
+
+    public function scopeClassified($query)
+    {
+        return $query->whereHas('classification');
+    }
+
+    public function scopeUnclassified($query)
+    {
+        return $query->whereDoesntHave('classification');
+    }
 
     public function tvSeries(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
