@@ -64,3 +64,4 @@ class VideoGaming extends Model
             ?? 'Video Game #'.$this->id;
     }
 }
+
