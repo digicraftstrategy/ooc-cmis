@@ -19,13 +19,24 @@ class Literature extends Model
             'genre',
             'summary',
             'cover_art_path',
+            'has_classified'
         ];
+
+    protected $casts = [
+        'has_classified' => 'boolean',
+    ];
 
     // If later you add user_id:
     // public function user()
     // {
     //     return $this->belongsTo(User::class);
     // }
+
+    // Optional relationship to classification if you have it:
+    public function classification()
+    {
+        return $this->morphOne(Classification::class, 'classifiable');
+    }
 
     public function getDisplayTitleAttribute(): string
     {
