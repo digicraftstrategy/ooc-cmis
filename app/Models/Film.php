@@ -29,6 +29,7 @@ class Film extends Model
         'language',
         'duration',
         'has_subtitle',
+        'has_classified',
         'theme',
         'color',
         'country',
@@ -42,6 +43,7 @@ class Film extends Model
         'has_subtitle' => 'boolean',
         'release_year' => 'integer',
         'duration' => 'integer',
+        'has_classified' => 'boolean'
     ];
 
 
