@@ -26,6 +26,7 @@ return new class extends Migration
             $table->enum('game_mode', ['Single-player', 'Multi-player', 'Both'])->nullable();
             $table->string('language')->nullable();
             $table->boolean('has_subtitle')->default(false);
+            $table->boolean('has_classified')->default(false);
             $table->string('cover_art_path')->nullable(); // URL to the cover art image
             $table->timestamps();
         });
