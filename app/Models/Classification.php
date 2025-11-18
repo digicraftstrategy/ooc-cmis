@@ -40,6 +40,31 @@ class Classification extends Model
         'classification_status' => 'Approved',
     ];
 
+    protected static function booted()
+    {
+        static::created(function (Classification $classification){
+            $model = $classification->classifiable;
+
+            if ($model && $model->isFillable('has_classified')){
+                $model->updated(['has_classified' => true]);
+            }
+        });
+
+        static::deleted(function(Classification $classification){
+            $model = $classification->classifiable;
+
+            if (!$model) {
+                return;
+            }
+
+            if (method_exists($model, 'classification')){
+                if ($model->classifications()->count() === 0 && $model->isFillable('has_classified')){
+                    $model->update(['has_classified' => false]);
+                }
+            }
+        });
+    }
+
     public function classifiable(): MorphTo
     {
         return $this->morphTo();
