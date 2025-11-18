@@ -28,7 +28,7 @@
                     <div class="flex items-center gap-2">
                         <a href="{{ route('admin.classifications.films') }}"
                            class="px-3 py-2 text-sm rounded-lg bg-white/10 text-white hover:bg-white/20 border border-white/20 transition">
-                            Back to Films
+                            Back
                         </a>
                         <button
                             wire:click="save"
@@ -314,5 +314,5 @@
                 </button>
             </div>
         </form>
-    </main>
+    </main>
 </div>

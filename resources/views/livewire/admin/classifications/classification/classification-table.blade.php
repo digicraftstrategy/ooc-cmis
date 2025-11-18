@@ -56,7 +56,7 @@
                 <div>
                     <p class="text-sm font-medium text-gray-500">Approved</p>
                     <p class="text-2xl font-bold text-green-600">
-                        {{ $classifications->where('classification_status', 'Approved')->count() }}
+                        {{ $totalApproved }}
                     </p>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                 <div>
                     <p class="text-sm font-medium text-gray-500">Rejected</p>
                     <p class="text-2xl font-bold text-red-600">
-                        {{ $classifications->where('classification_status', 'Rejected')->count() }}
+                        {{ $totalRejected }}
                     </p>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                 <div>
                     <p class="text-sm font-medium text-gray-500">Second Opinion</p>
                     <p class="text-2xl font-bold text-amber-600">
-                        {{ $classifications->where('is_second_opinion', true)->count() }}
+                        {{ $totalSecondOpinion }}
                     </p>
                 </div>
             </div>
@@ -130,6 +130,7 @@
                     <option value="season">TV Series</option>
                     <option value="literature">Literature</option>
                     <option value="advertisement_matter">Advertisement</option>
+                    <option value="video_game">Video Game</option>
                     <option value="audio">Audio</option>
                 </select>
             </div>
