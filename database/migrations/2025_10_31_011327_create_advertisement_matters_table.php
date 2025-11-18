@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('product_promoted')->nullable(); // Product being promoted in the advertisement
             $table->text('theme')->nullable();
             $table->string('poster_path')->nullable(); // path to the advertisement poster image
+            $table->boolean('has_classified')->default(false);
             $table->timestamps();
 
             // Indexes for better query performance

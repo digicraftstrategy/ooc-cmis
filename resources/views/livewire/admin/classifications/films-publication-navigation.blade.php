@@ -90,7 +90,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                             d="M11 3v4a1 1 0 001 1h4"/>
                     </svg>
-                    <span>Classified Films & Publications</span>
+                    <span>Rated Films & Publications</span>
                 </div>
             </a>
             <!-- Classification Ratings -->

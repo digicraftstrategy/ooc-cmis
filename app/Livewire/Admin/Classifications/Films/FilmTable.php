@@ -163,7 +163,7 @@ class FilmTable extends Component
                     $query->where('type', 'Sequel');
                 })->count(),
 
-            'recent'             => $baseQuery->clone()->latest()->first(),
+            'recent' => $baseQuery->clone()->latest()->first(),
         ];
 
         return view('livewire.admin.classifications.films.film-table', [

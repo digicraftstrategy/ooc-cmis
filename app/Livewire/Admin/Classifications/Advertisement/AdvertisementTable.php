@@ -10,8 +10,9 @@ use Illuminate\Support\Facades\Storage;
 class AdvertisementTable extends Component
 {
     use WithPagination;
+
     public $search = '';
-    public $advertisementTitleFilter = '';
+    public $advertisementTitleFilter = ''; // (not used yet, but kept)
     public $sortField = 'advertising_matter';
     public $sortDirection = 'asc';
     public $perPage = 10;
@@ -21,11 +22,12 @@ class AdvertisementTable extends Component
     public $showViewModal = false;
 
     public $selectedAdvertisement = null;
+
     protected $queryString = [
-        'search' => ['except' => ''],
-        'advertisementTitleFilter' => ['except' => ''],
-        'sortField' => ['except' => 'advertising_matter'],
-        'sortDirection' => ['except' => 'asc'],
+        'search'                  => ['except' => ''],
+        'advertisementTitleFilter'=> ['except' => ''],
+        'sortField'               => ['except' => 'advertising_matter'],
+        'sortDirection'           => ['except' => 'asc'],
     ];
 
     public function sortBy($field)
@@ -38,6 +40,7 @@ class AdvertisementTable extends Component
 
         $this->sortField = $field;
     }
+
     public function openDeleteModal($advertisementId)
     {
         $this->selectedAdvertisement = AdvertisementMatter::findOrFail($advertisementId);
@@ -53,8 +56,10 @@ class AdvertisementTable extends Component
     public function deleteAdvertisement()
     {
         try {
-            // Delete associated file if exists
-            if ($this->selectedAdvertisement->submission_file_path && Storage::exists($this->selectedAdvertisement->submission_file_path)) {
+            if (
+                $this->selectedAdvertisement->submission_file_path &&
+                Storage::exists($this->selectedAdvertisement->submission_file_path)
+            ) {
                 Storage::delete($this->selectedAdvertisement->submission_file_path);
             }
 
@@ -66,20 +71,15 @@ class AdvertisementTable extends Component
             session()->flash('error', 'Error deleting advertisement: ' . $e->getMessage());
         }
     }
-    /*public function getBaseQuery()
-        {
-            return AdvertisementMatter::query()
-                ->when($this->search, function ($query) {
-                    $query->where('advertising_matter', 'like', '%' . $this->search . '%')
-                        ->orWhere('director', 'like', '%' . $this->search . '%')
-                        ->orWhere('producer', 'like', '%' . $this->search . '%');
-                });
-        }*/
-    public function render()
+
+    /**
+     * Base query so table and stats share same filters.
+     */
+    protected function getBaseQuery()
     {
         $term = '%'.$this->search.'%';
-         $advertisements = AdvertisementMatter::query()
-            //->with('seasons') // eager load seasons
+
+        return AdvertisementMatter::query()
             ->when($this->search, function ($q) use ($term) {
                 $q->where(function ($qq) use ($term) {
                     $qq->where('advertising_matter', 'like', $term)
@@ -97,22 +97,38 @@ class AdvertisementTable extends Component
                        ->orWhere('product_promoted', 'like', $term)
                        ->orWhere('theme', 'like', $term);
                 });
-            })
-            // you can sort by any of these fields (UI should call sortBy on their <th>)
+            });
+    }
+
+    public function render()
+    {
+        $baseQuery = $this->getBaseQuery();
+
+        $advertisements = (clone $baseQuery)
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
-        // Stats cards (simple example — mirror FilmTable feel)
         $stats = [
-            'total'        => AdvertisementMatter::count(),
-            'classified'   => AdvertisementMatter::whereHas('classification')->count(),
-            'unclassified' => AdvertisementMatter::whereDoesntHave('classification')->count(),
-            'recent'       => AdvertisementMatter::latest()->first(),
+            'total'        => (clone $baseQuery)->count(),
+
+            // Use has_classified just like Films / Video Games / Seasons
+            'classified'   => (clone $baseQuery)
+                ->where('has_classified', true)
+                ->count(),
+
+            'unclassified' => (clone $baseQuery)
+                ->where(function ($q) {
+                    $q->where('has_classified', false)
+                      ->orWhereNull('has_classified');
+                })
+                ->count(),
+
+            'recent'       => (clone $baseQuery)->latest()->first(),
         ];
+
         return view('livewire.admin.classifications.advertisement.advertisement-table', [
-            'films' => $advertisements,
+            'films' => $advertisements, // keeping your existing var name
             'stats' => $stats,
-            //'filmTypes' => FilmType::all(),
         ]);
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Livewire\Admin\Classifications\TvSeries;
 
@@ -66,10 +66,10 @@ class TvSeriestable extends Component
     public function updateSeason()
     {
         $this->validate([
-            'selectedSeason.season_title' => 'required|string|max:255',
-            'selectedSeason.season_number' => 'required|integer|min:1',
+            'selectedSeason.season_title'       => 'required|string|max:255',
+            'selectedSeason.season_number'      => 'required|integer|min:1',
             'selectedSeason.number_of_episodes' => 'required|integer|min:1',
-            'selectedSeason.released_year' => 'required|integer|min:1900|max:' . date('Y'),
+            'selectedSeason.released_year'      => 'required|integer|min:1900|max:' . date('Y'),
         ]);
 
         $this->selectedSeason->save();
@@ -111,27 +111,45 @@ class TvSeriestable extends Component
         session()->flash('message', 'Selected seasons deleted successfully.');
     }
 
+    protected function getBaseQuery()
+    {
+        return TvSeriesSeason::with('tvSeries')
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('season_title', 'like', '%' . $this->search . '%')
+                      ->orWhere('season_slug', 'like', '%' . $this->search . '%')
+                      ->orWhereHas('tvSeries', function ($q2) {
+                          $q2->where('tv_series_title', 'like', '%' . $this->search . '%');
+                      });
+                });
+            });
+    }
+
     public function render()
     {
-        $seasons = TvSeriesSeason::with('tvSeries')
-            ->when($this->search, function ($query) {
-                $query->where('season_title', 'like', '%' . $this->search . '%')
-                    ->orWhere('slug', 'like', '%' . $this->search . '%')
-                    ->orWhereHas('tvSeries', function ($query) {
-                        $query->where('title', 'like', '%' . $this->search . '%');
-                    });
-            })
+        $baseQuery = $this->getBaseQuery();
+
+        $seasons = (clone $baseQuery)
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
         $stats = [
-            'total' => TvSeriesSeason::count(),
-            'recent' => TvSeriesSeason::latest()->first(),
+            'total'             => (clone $baseQuery)->count(),
+            'totalClassified'   => (clone $baseQuery)
+                ->where('has_classified', true)
+                ->count(),
+            'totalUnclassified' => (clone $baseQuery)
+                ->where(function ($q) {
+                    $q->where('has_classified', false)
+                      ->orWhereNull('has_classified');
+                })
+                ->count(),
+            'recent'            => (clone $baseQuery)->latest()->first(),
         ];
 
         return view('livewire.admin.classifications.tv-series.tv-seriestable', [
             'seasons' => $seasons,
-            'stats' => $stats,
+            'stats'   => $stats,
         ]);
     }
 }
