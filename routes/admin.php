@@ -160,7 +160,7 @@ Route::group(
         'prefix' => 'classifications'
     ],
     function () {
-        Route::prefix('classified-items')
+        Route::prefix('classified-films-publications')
             ->group(function () {
                 Route::get('/', \App\Livewire\Admin\Classifications\Classification\ClassificationTable::class)
                     ->name('admin.classifications.classified-items');
