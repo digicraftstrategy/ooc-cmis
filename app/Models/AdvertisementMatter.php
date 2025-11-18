@@ -8,10 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class AdvertisementMatter extends Model
 {
     protected $fillable = [
-    'advertising_matter','slug','description','casts','director','producer',
-    'production_company','client_company','release_year','duration','genre',
-    'language','has_subtitle','brand_promoted','product_promoted','theme',
-    'user_id'
+    'advertising_matter',
+    'slug',
+    'description',
+    'casts','director',
+    'producer',
+    'production_company',
+    'client_company',
+    'release_year',
+    'duration',
+    'genre',
+    'language',
+    'has_subtitle',
+    'brand_promoted',
+    'product_promoted',
+    'theme',
+    'user_id',
+    'has_classified'
+    ];
+
+    protected $casts = [
+        'has_classified' => 'boolean',
     ];
     
     public function user()
