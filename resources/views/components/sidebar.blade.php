@@ -167,11 +167,11 @@ new class extends Component {
                     </svg>
                 </button>
                 <div x-show="(!sidebarCollapsed || isMobile) && invoicesOpen" x-collapse class="mt-1 space-y-1 ml-4">
-                    {{--<x-sidebar-link route="invoices.list" wire:navigate
+                    <x-sidebar-link route="admin.invoices.list" wire:navigate
                         class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         All Invoices
                     </x-sidebar-link>
-                    <x-sidebar-link route="invoices.create" wire:navigate
+                    {{--<x-sidebar-link route="invoices.create" wire:navigate
                         class="block px-4 py-2 ml-4 text-slate-300 transition duration-150 rounded-lg hover:bg-blue-600/20 hover:text-white">
                         Create Invoice
                     </x-sidebar-link>
