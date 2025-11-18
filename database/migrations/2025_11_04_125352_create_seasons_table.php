@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('has_subtitle')->default(false);
             $table->text('theme')->nullable();
             $table->string('poster_path')->nullable();
+            $table->boolean('has_classified')->default(false);
             //$table->string('theme')->nullable(); // summarized theme of all episode of the season
             $table->timestamps();
 
