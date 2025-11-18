@@ -28,7 +28,8 @@ class TvSeriesSeason extends Model
         'language',
         'has_subtitle',
         'theme',
-        'poster_path'
+        'poster_path',
+        'has_classified'
     ];
 
     protected $casts = [
@@ -37,6 +38,7 @@ class TvSeriesSeason extends Model
         'has_subtitle' => 'boolean',
         'release_year' => 'integer',
         'season_number' => 'integer',
+        'has_classified' => 'boolean',
         //'number_of_episodes' => 'integer',
     ];
 
