@@ -140,19 +140,35 @@ class FilmTable extends Component
             ->paginate($this->perPage);
 
         $stats = [
-            'total' => $baseQuery->count(),
-            'totalSingleTitles' => $baseQuery->clone()->whereHas('filmType', function($query) {
-                $query->where('type', 'Single');
-            })->count(),
-            'totalSequelTitles' => $baseQuery->clone()->whereHas('filmType', function($query) {
-                $query->where('type', 'Sequel');
-            })->count(),
-            'recent' => $baseQuery->clone()->latest()->first(),
+            'total'              => $baseQuery->count(),
+            
+            'totalClassified'    => $baseQuery->clone()
+                ->where('has_classified', true)
+                ->count(),
+
+            'totalUnclassified'  => $baseQuery->clone()
+                ->where(function ($q) {
+                    $q->where('has_classified', false)
+                    ->orWhereNull('has_classified');
+                })
+                ->count(),
+
+            'totalSingleTitles'  => $baseQuery->clone()
+                ->whereHas('filmType', function($query) {
+                    $query->where('type', 'Single');
+                })->count(),
+
+            'totalSequelTitles'  => $baseQuery->clone()
+                ->whereHas('filmType', function($query) {
+                    $query->where('type', 'Sequel');
+                })->count(),
+
+            'recent'             => $baseQuery->clone()->latest()->first(),
         ];
 
         return view('livewire.admin.classifications.films.film-table', [
-            'films' => $films,
-            'stats' => $stats,
+            'films'     => $films,
+            'stats'     => $stats,
             'filmTypes' => FilmType::all(),
         ]);
     }

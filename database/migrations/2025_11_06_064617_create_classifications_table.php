@@ -25,10 +25,17 @@ return new class extends Migration
             // Polymorphic relation: creates classifiable_id + classifiable_type (+ index)
             $table->morphs('classifiable');
 
-            // Foreign keys to parent tables
-            $table->foreignId('classification_rating_id')->constrained('classification_ratings')->cascadeOnDelete();
+            //  Enforce only ONE classification per classifiable (Film, Season, etc.)
+            $table->unique(['classifiable_id', 'classifiable_type']);
 
-            $table->foreignId('classification_category_id')->constrained('classification_categories')->cascadeOnDelete();
+            // Foreign keys to parent tables
+            $table->foreignId('classification_rating_id')
+                  ->constrained('classification_ratings')
+                  ->cascadeOnDelete();
+
+            $table->foreignId('classification_category_id')
+                  ->constrained('classification_categories')
+                  ->cascadeOnDelete();
 
             $table->timestamps();
         });

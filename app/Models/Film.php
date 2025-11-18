@@ -29,6 +29,7 @@ class Film extends Model
         'language',
         'duration',
         'has_subtitle',
+        'has_classified',
         'theme',
         'color',
         'country',
@@ -42,10 +43,8 @@ class Film extends Model
         'has_subtitle' => 'boolean',
         'release_year' => 'integer',
         'duration' => 'integer',
+        'has_classified' => 'boolean'
     ];
-
-
-
 
     public function classification()
     {
@@ -95,5 +94,12 @@ class Film extends Model
     public function getTitleForListAttribute(): string
     {
         return $this->film_title ?? '';
+    }
+
+    public function getDisplayTitleAttribute(): string
+    {
+        return $this->film_title
+            ?? $this->title
+            ?? 'Untitled Film #'.$this->id;
     }
 }

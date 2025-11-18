@@ -81,4 +81,12 @@ class TvSeriesSeason extends Model
     {
         return $query->where('tv_series_id', $seriesId);
     }
+
+    public function getDisplayTitleAttribute(): string
+    {
+        $seriesTitle = optional($this->tvSeries)->tv_series_title ?? 'TV Series';
+        $seasonTitle = $this->season_title ?? 'Season';
+
+        return "{$seriesTitle} - {$seasonTitle}";
+    }
 }

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('payment_method'); //e.g., credit card, bank transfer, cash
             $table->string('notes')->nullable();
 
-            $table->unsignedBigInteger('invoice_id');
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            //$table->unsignedBigInteger('invoice_id');
+            //$table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();
         });
     }

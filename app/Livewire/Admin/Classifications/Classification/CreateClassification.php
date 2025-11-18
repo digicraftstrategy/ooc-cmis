@@ -47,8 +47,11 @@ class CreateClassification extends Component
             'video_gaming'         => 'Video Gaming',
         ];
 
-        $this->ratings = ClassificationRating::orderBy('rating')->get();
+        $this->ratings    = ClassificationRating::orderBy('rating')->get();
         $this->categories = ClassificationCategory::orderBy('name')->get();
+
+        // Optional: default classification date to today
+        $this->classification_date = now()->toDateString();
     }
 
     protected function rules()
@@ -78,11 +81,11 @@ class CreateClassification extends Component
     }
 
     /**
-     * Reset second opinion fields when checkbox is unchecked
+     * Reset second opinion fields when checkbox is unchecked.
      */
     public function updatedIsSecondOpinion($value)
     {
-        if (!$value) {
+        if (! $value) {
             $this->second_opinion_by = null;
         }
     }
@@ -95,7 +98,14 @@ class CreateClassification extends Component
             return collect();
         }
 
-        // Adjust orderBy/columns to whatever you prefer
+        // Example: only show unclassified films
+        if ($class === Film::class) {
+            return $class::where('has_classified', false)
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+
+        // Other types: load all for now
         return $class::orderBy('id', 'desc')->get();
     }
 
@@ -110,7 +120,7 @@ class CreateClassification extends Component
             'literature'           => Literature::class,
             'advertisement_matter' => AdvertisementMatter::class,
             'audio'                => Audio::class,
-            'video_gaming'          => VideoGaming::class,
+            'video_gaming'         => VideoGaming::class,
             default                => null,
         };
     }
@@ -126,21 +136,30 @@ class CreateClassification extends Component
             return;
         }
 
-        Classification::create([
-            'classification_reason'      => $this->classification_reason,
-            'classification_date'        => $this->classification_date,
-            'viewed_by'                  => $this->viewed_by,
-            'is_second_opinion'          => $this->is_second_opinion,
-            'second_opinion_by'          => $this->second_opinion_by,
-            'classification_status'      => $this->classification_status,
-            'notes'                      => $this->notes,
-            'classifiable_id'            => $this->classifiable_id,
-            'classifiable_type'          => $class,
-            'classification_rating_id'   => $this->classification_rating_id,
-            'classification_category_id' => $this->classification_category_id,
-        ]);
+        $classification = Classification::updateOrCreate(
+            [
+                'classifiable_id'   => $this->classifiable_id,
+                'classifiable_type' => $class,
+            ],
+            [
+                'classification_reason'      => $this->classification_reason,
+                'classification_date'        => $this->classification_date ?? now(),
+                'viewed_by'                  => $this->viewed_by,
+                'is_second_opinion'          => $this->is_second_opinion,
+                'second_opinion_by'          => $this->second_opinion_by,
+                'classification_status'      => $this->classification_status,
+                'notes'                      => $this->notes,
+                'classification_rating_id'   => $this->classification_rating_id,
+                'classification_category_id' => $this->classification_category_id,
+            ]
+        );
 
-        session()->flash('message', 'Classification created successfully.');
+        session()->flash(
+            'message',
+            $classification->wasRecentlyCreated
+                ? 'Classification created successfully.'
+                : 'Classification updated successfully.'
+        );
 
         // Reset form fields and item list
         $this->reset([
@@ -157,6 +176,10 @@ class CreateClassification extends Component
             'classification_category_id',
             'items',
         ]);
+
+        // Optional: re-set default status/date
+        $this->classification_status = 'Approved';
+        $this->classification_date   = now()->toDateString();
     }
 
     public function render()

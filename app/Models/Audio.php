@@ -27,4 +27,12 @@ class Audio extends Model
         // return $this->audio_title ?? '';
         return $this->title ?? '';
     }
+
+    public function getDisplayTitleAttribute(): string
+    {
+        return $this->audio_title
+            ?? $this->title
+            ?? $this->name
+            ?? 'Audio #'.$this->id;
+    }
 }
