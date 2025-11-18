@@ -35,7 +35,8 @@
     </div>
 
     <!-- Stats Cards Section -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-6">
+        <!-- Total Films -->
         <div class="bg-white p-4 rounded-lg shadow">
             <div class="flex justify-between items-start">
                 <div>
@@ -50,6 +51,27 @@
             </div>
         </div>
 
+        <!-- Classified Films (NEW) -->
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Classified</p>
+                    <p class="text-2xl font-bold text-green-600">{{ $stats['totalClassified'] }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unclassified Films (NEW) -->
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Unclassified</p>
+                    <p class="text-2xl font-bold text-amber-600">{{ $stats['totalUnclassified'] }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Single Titles -->
         <div class="bg-white p-4 rounded-lg shadow">
             <div class="flex justify-between items-start">
                 <div>
@@ -59,6 +81,7 @@
             </div>
         </div>
 
+        <!-- Sequel Titles -->
         <div class="bg-white p-4 rounded-lg shadow">
             <div class="flex justify-between items-start">
                 <div>
@@ -68,6 +91,7 @@
             </div>
         </div>
 
+        <!-- Most Recent -->
         <div class="bg-white p-4 rounded-lg shadow">
             <p class="text-sm font-medium text-gray-500">Most Recent</p>
             <p class="text-lg font-semibold text-gray-900 truncate">
@@ -80,6 +104,7 @@
             @endif
         </div>
     </div>
+
 
     <!-- Search and Filter Section -->
     <div class="mb-4 bg-white rounded-lg shadow-sm p-4">
@@ -140,6 +165,10 @@
                             Film Type
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                            Classification
+                        </th>
+
+                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Casts
                         </th>
                         <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
@@ -180,6 +209,17 @@
                                 <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
                                     {{ $film->filmType->type ?? 'N/A' }}
                                 </span>
+                            </td>
+                            <td class="px-3 py-2 whitespace-nowrap">
+                                @if($film->has_classified)
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                        Classified
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">
+                                        Unclassified
+                                    </span>
+                                @endif
                             </td>
                             <td class="px-3 py-2">
                                 <div class="text-sm text-gray-700 max-w-xs truncate" title="{{ $film->casts }}">
