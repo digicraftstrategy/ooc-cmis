@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('language')->nullable();
             $table->integer('duration');
             $table->boolean('has_subtitle')->default(false);
-            $table->boolean('has_classified')->default(false);
+            $table->boolean('has_classified')->default(false); // track classification status of each film against the Classification model
             $table->string('color')->nullable();
             $table->string('country')->nullable();
             $table->text('theme')->nullable();
