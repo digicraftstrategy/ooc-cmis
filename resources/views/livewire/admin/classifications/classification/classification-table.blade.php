@@ -9,7 +9,10 @@
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
                         <h1 class="text-xl md:text-2xl font-bold text-white mb-1">Manage Classified Films & Publications</h1>
-                        <p class="text-blue-100 opacity-90 text-sm">Manage all contents classified in the system</p>
+                        <p class="text-blue-100 opacity-90 text-sm">
+                            Manage all contents classified in the system. Classified contents includes Films,<br>
+                            TV Series, Video Games, Music, TV Advertisements, Literatures, etc..
+                        </p>
                     </div>
 
                     <!-- Add New Classification Button -->
@@ -202,8 +205,9 @@
                             <!-- Classified Item -->
                             <td class="px-3 py-2 whitespace-nowrap">
                                 <div class="text-sm font-semibold text-gray-900 max-w-xs truncate">
+                                    {{ $classification->item_title }}
+
                                     @if ($classification->classifiable && $classification->classifiable_type === \App\Models\TvSeriesSeason::class)
-                                        {{ optional($classification->classifiable->tvSeries)->tv_series_title ?? 'N/A' }}
                                         <div class="text-gray-500 text-xs mt-1">
                                             @if($classification->classifiable->season_title && $classification->classifiable->number_of_episodes)
                                                 {{ $classification->classifiable->season_title }} - {{ $classification->classifiable->number_of_episodes }} episodes
@@ -213,8 +217,6 @@
                                                 {{ $classification->classifiable->number_of_episodes }} episodes
                                             @endif
                                         </div>
-                                    @else
-                                        {{ $classification->getClassifiableTitle() }}
                                     @endif
                                 </div>
                             </td>
@@ -222,7 +224,7 @@
                             <!-- Type -->
                             <td class="px-3 py-2 whitespace-nowrap">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                                    {{ $classification->getClassifiableTypeName() }}
+                                    {{ $classification->media_type_label }}
                                 </span>
                             </td>
 
@@ -269,14 +271,18 @@
 
                             <!-- Status -->
                             <td class="px-3 py-2 whitespace-nowrap">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ $classification->getStatusBadgeColor() }}">
+                                {{--<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ $classification->getStatusBadgeColor() }}">
                                     {{ $classification->classification_status }}
                                 </span>
                                 @if($classification->is_second_opinion)
                                     <span class="inline-block ml-1 text-xs text-amber-600" title="Second Opinion">
                                         ⚡
                                     </span>
-                                @endif
+                                @endif--}}
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ $classification->status_badge_color }}">
+                                    {{ $classification->classification_status }}
+                                </span>
+
                             </td>
 
                             <!-- Category -->

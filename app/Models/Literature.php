@@ -26,4 +26,12 @@ class Literature extends Model
     // {
     //     return $this->belongsTo(User::class);
     // }
+
+    public function getDisplayTitleAttribute(): string
+    {
+        return $this->literature_title
+            ?? $this->title
+            ?? $this->name
+            ?? 'Literature #'.$this->id;
+    }
 }

@@ -17,11 +17,11 @@ return new class extends Migration
             $table->integer('quantity')->default(1);
             $table->decimal('total', 10, 2)->default(0.00);
 
-            $table->unsignedBigInteger('invoice_id');
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            //$table->unsignedBigInteger('invoice_id');
+            //$table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
 
-            $table->unsignedBigInteger('prescribed_activity_id');
-            $table->foreign('prescribed_activity_id')->references('id')->on('prescribed_activities')->onDelete('cascade');
+            //$table->unsignedBigInteger('prescribed_activity_id');
+            //$table->foreign('prescribed_activity_id')->references('id')->on('prescribed_activities')->onDelete('cascade');
             $table->timestamps();
         });
     }

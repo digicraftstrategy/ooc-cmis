@@ -33,5 +33,13 @@ class AdvertisementMatter extends Model
     {
         return $this->advertising_matter ?? '';
     }
+
+    public function getDisplayTitleAttribute(): string
+    {
+        return $this->advertising_matter
+            ?? $this->title
+            ?? $this->name
+            ?? 'Advertisement #'.$this->id;
+    }
 }
 

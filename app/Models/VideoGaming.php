@@ -55,5 +55,13 @@ class VideoGaming extends Model
     {
         return $this->video_game_title ?? '';
     }
+
+    public function getDisplayTitleAttribute(): string
+    {
+        return $this->video_game_title
+            ?? $this->title
+            ?? $this->name
+            ?? 'Video Game #'.$this->id;
+    
 }
 

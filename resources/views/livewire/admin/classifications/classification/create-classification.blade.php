@@ -68,24 +68,14 @@
                             <select
                                 id="classifiable_id"
                                 wire:model="classifiable_id"
+                                @disabled(!$classifiable_type)
                                 class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                                 required
-                                {{ !$classifiable_type ? 'disabled' : '' }}
                             >
                                 <option value="">Select Item</option>
                                 @foreach($items as $item)
                                     <option value="{{ $item->id }}">
-                                        @if($classifiable_type === 'season')
-                                            {{ optional($item->tvSeries)->tv_series_title ?? 'N/A' }} - {{ $item->season_title ?? 'N/A' }}
-                                        @elseif($classifiable_type  === 'film')
-                                            {{ $item->title ?? $item->film_title ?? 'N/A' }}
-                                        @elseif($classifiable_type === 'advertisement_matter')
-                                            {{ $item->title ?? $item->advertising_matter ?? 'N/A' }}
-                                        @elseif($classifiable_type === 'video_gaming')
-                                            {{ $item->title ?? $item->video_game_title ?? 'N/A' }}
-                                        @else
-                                            {{ $item->title ?? $item->name ?? 'Item #' . $item->id }}
-                                        @endif
+                                        {{ $item->display_title }}
                                     </option>
                                 @endforeach
                             </select>
@@ -236,21 +226,21 @@
                         </div>
 
                         @if($is_second_opinion)
-                        <div class="mt-4">
-                            <label for="second_opinion_by" class="block text-sm font-medium text-gray-700 mb-2">
-                                Second Opinion By
-                            </label>
-                            <input
-                                type="text"
-                                id="second_opinion_by"
-                                wire:model="second_opinion_by"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                                placeholder="Person providing second opinion"
-                            >
-                            @error('second_opinion_by')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+                            <div class="mt-4">
+                                <label for="second_opinion_by" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Second Opinion By
+                                </label>
+                                <input
+                                    type="text"
+                                    id="second_opinion_by"
+                                    wire:model="second_opinion_by"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                                    placeholder="Person providing second opinion"
+                                >
+                                @error('second_opinion_by')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
                         @endif
                     </div>
 
@@ -282,6 +272,7 @@
                     </a>
                     <button
                         type="submit"
+                        wire:loading.attr="disabled"
                         class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
                     >
                         <svg wire:loading.remove class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -290,7 +281,7 @@
                         <svg wire:loading class="-ml-1 mr-2 h-5 w-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2v4m0 12v4m8-10h-4M6 12H2"></path>
                         </svg>
-                        Create Classification
+                        Save Classification
                     </button>
                 </div>
             </form>
@@ -305,7 +296,7 @@
                     </svg>
                     <div>
                         <h3 class="text-lg font-medium text-gray-900">Processing</h3>
-                        <p class="text-gray-600">Creating classification...</p>
+                        <p class="text-gray-600">Saving classification...</p>
                     </div>
                 </div>
             </div>

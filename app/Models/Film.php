@@ -46,9 +46,6 @@ class Film extends Model
         'has_classified' => 'boolean'
     ];
 
-
-
-
     public function classification()
     {
         return $this->morphOne(Classification::class, 'classifiable');
@@ -97,5 +94,12 @@ class Film extends Model
     public function getTitleForListAttribute(): string
     {
         return $this->film_title ?? '';
+    }
+
+    public function getDisplayTitleAttribute(): string
+    {
+        return $this->film_title
+            ?? $this->title
+            ?? 'Untitled Film #'.$this->id;
     }
 }

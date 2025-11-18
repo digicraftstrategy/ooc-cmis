@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Film;
-use App\Models\Season;
+use App\Models\TvSeriesSeason;
 use App\Models\Literature;
 use App\Models\AdvertisementMatter;
 use App\Models\Audio;
@@ -31,39 +31,43 @@ class Classification extends Model
     ];
 
     protected $casts = [
-        'is_second_opinion' => 'boolean',
-        'classification_date' => 'date',
+        'is_second_opinion'    => 'boolean',
+        'classification_date'  => 'date',
     ];
 
     protected $attributes = [
-        'is_second_opinion' => false,
-        'classification_status' => 'Approved',
+        'is_second_opinion'    => false,
+        'classification_status'=> 'Approved',
     ];
 
+    /**
+     * Automatically keep has_classified in sync on the classifiable model.
+     * One classifiable (e.g. Film) has at most one Classification.
+     */
     protected static function booted()
     {
-        static::created(function (Classification $classification){
+        static::created(function (Classification $classification) {
             $model = $classification->classifiable;
 
-            if ($model && $model->isFillable('has_classified')){
-                $model->updated(['has_classified' => true]);
+            if ($model && $model->isFillable('has_classified')) {
+                $model->update(['has_classified' => true]);
             }
         });
 
-        static::deleted(function(Classification $classification){
+        static::deleted(function (Classification $classification) {
             $model = $classification->classifiable;
 
-            if (!$model) {
-                return;
-            }
-
-            if (method_exists($model, 'classification')){
-                if ($model->classifications()->count() === 0 && $model->isFillable('has_classified')){
-                    $model->update(['has_classified' => false]);
-                }
+            if ($model && $model->isFillable('has_classified')) {
+                $model->update(['has_classified' => false]);
             }
         });
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
 
     public function classifiable(): MorphTo
     {
@@ -98,7 +102,26 @@ class Classification extends Model
         return null;
     }
 
-    public function getClassifiableTitle(): string
+    /*
+    |--------------------------------------------------------------------------
+    | Accessors / View Helpers
+    |--------------------------------------------------------------------------
+    |
+    | These give you nice properties like:
+    | - $classification->item_title
+    | - $classification->media_type_label
+    | - $classification->display_title
+    | - $classification->status_badge_color
+    |
+    | And the older helper methods now just proxy to these accessors.
+    |
+    */
+
+    /**
+     * Title of the underlying item (Film, Season, Literature, etc.).
+     * Usage: $classification->item_title
+     */
+    public function getItemTitleAttribute(): string
     {
         if (! $this->classifiable) {
             return 'N/A';
@@ -106,30 +129,45 @@ class Classification extends Model
 
         switch ($this->classifiable_type) {
             case Film::class:
-                return $this->classifiable->film_title ?? 'N/A';
-
-            case TvSeriesSeason::class:
-                return $this->classifiable->season_title
-                    ?? $this->classifiable->tv_series_title
+                return $this->classifiable->display_title
+                    ?? $this->classifiable->film_title
                     ?? 'N/A';
 
+            case TvSeriesSeason::class:
+                return $this->classifiable->display_title
+                    ?? ($this->classifiable->season_title
+                        ?? $this->classifiable->tv_series_title
+                        ?? 'N/A');
+
             case Literature::class:
-                return $this->classifiable->literature_title ?? 'N/A';
+                return $this->classifiable->display_title
+                    ?? $this->classifiable->literature_title
+                    ?? 'N/A';
 
             case AdvertisementMatter::class:
-                return $this->classifiable->advertising_matter ?? 'N/A';
+                return $this->classifiable->display_title
+                    ?? $this->classifiable->advertising_matter
+                    ?? 'N/A';
 
             case Audio::class:
-                return $this->classifiable->audio_title
+                return $this->classifiable->display_title
+                    ?? $this->classifiable->audio_title
                     ?? $this->classifiable->title
                     ?? 'N/A';
 
             default:
-                return $this->classifiable->title ?? 'N/A';
+                return $this->classifiable->display_title
+                    ?? $this->classifiable->title
+                    ?? $this->classifiable->name
+                    ?? 'N/A';
         }
     }
 
-    public function getClassifiableTypeName(): string
+    /**
+     * Human-readable media type.
+     * Usage: $classification->media_type_label
+     */
+    public function getMediaTypeLabelAttribute(): string
     {
         switch ($this->classifiable_type) {
             case Film::class:
@@ -148,14 +186,48 @@ class Classification extends Model
     }
 
     /**
-     * Get the status badge color
+     * Combined label, e.g. "Film – The Lion King"
+     * Usage: $classification->display_title
+     */
+    public function getDisplayTitleAttribute(): string
+    {
+        return $this->media_type_label . ' – ' . $this->item_title;
+    }
+
+    /**
+     * Status badge color classes (Tailwind).
+     * Usage: $classification->status_badge_color
+     */
+    public function getStatusBadgeColorAttribute(): string
+    {
+        return match ($this->classification_status) {
+            'Approved' => 'bg-green-100 text-green-800',
+            'Rejected' => 'bg-red-100 text-red-800',
+            default    => 'bg-gray-100 text-gray-800',
+        };
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Backwards-compatible helper methods
+    |--------------------------------------------------------------------------
+    */
+
+    public function getClassifiableTitle(): string
+    {
+        return $this->item_title;
+    }
+
+    public function getClassifiableTypeName(): string
+    {
+        return $this->media_type_label;
+    }
+
+    /**
+     * For compatibility with existing Blade.
      */
     public function getStatusBadgeColor(): string
     {
-        return match($this->classification_status) {
-            'Approved' => 'bg-green-100 text-green-800',
-            'Rejected' => 'bg-red-100 text-red-800',
-            default => 'bg-gray-100 text-gray-800',
-        };
+        return $this->status_badge_color;
     }
 }
