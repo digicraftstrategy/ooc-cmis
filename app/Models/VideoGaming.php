@@ -62,6 +62,5 @@ class VideoGaming extends Model
             ?? $this->title
             ?? $this->name
             ?? 'Video Game #'.$this->id;
-    
+    }
 }
-
