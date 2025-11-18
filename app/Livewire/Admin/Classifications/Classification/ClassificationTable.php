@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Classifications\Classification;
 
 use App\Models\AdvertisementMatter;
+use App\Models\VideoGaming;
 use App\Models\Audio;
 use App\Models\Classification;
 use App\Models\Film;
@@ -71,6 +72,9 @@ class ClassificationTable extends Component
                     break;
                 case 'advertisement_matter':
                     $query->whereHasMorph('classifiable', [AdvertisementMatter::class]);
+                    break;
+                case 'video_game':
+                    $query->whereHasMorph('classifiable', [VideoGaming::class]);
                     break;
                 case 'audio':
                     $query->whereHasMorph('classifiable', [Audio::class]);

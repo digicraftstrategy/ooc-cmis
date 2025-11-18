@@ -130,6 +130,7 @@
                     <option value="season">TV Series</option>
                     <option value="literature">Literature</option>
                     <option value="advertisement_matter">Advertisement</option>
+                    <option value="video_game">Video Game</option>
                     <option value="audio">Audio</option>
                 </select>
             </div>
