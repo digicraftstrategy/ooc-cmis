@@ -75,7 +75,17 @@
                                 <option value="">Select Item</option>
                                 @foreach($items as $item)
                                     <option value="{{ $item->id }}">
-                                        {{ $item->display_title }}
+                                        {{-- Prefer a display_title accessor if it exists, otherwise fall back --}}
+                                        {{ $item->display_title
+                                            ?? $item->film_title
+                                            ?? $item->season_title
+                                            ?? $item->tv_series_title
+                                            ?? $item->literature_title
+                                            ?? $item->advertising_matter
+                                            ?? $item->video_game_title
+                                            ?? $item->audio_title
+                                            ?? 'Item #'.$item->id
+                                        }}
                                     </option>
                                 @endforeach
                             </select>
@@ -85,7 +95,8 @@
 
                             @if($classifiable_type && $items->isEmpty())
                                 <p class="mt-2 text-sm text-amber-600">
-                                    No items found for the selected media type.
+                                    No unclassified items found for the selected media type.  
+                                    (All items of this type may have already been classified.)
                                 </p>
                             @endif
                         </div>

@@ -181,6 +181,10 @@
                             class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
                             Director
                         </th>
+                        <th scope="col"
+                            class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                            Classification
+                        </th>
 
                         <th scope="col"
                             class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
@@ -257,7 +261,18 @@
                                     {{ $advert->director ?? '—' }}
                                 </div>
                             </td>
-
+                            <!-- Classification -->
+                            <td class="px-3 py-2 whitespace-nowrap">
+                                @if($advert->has_classified)
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                        Classified
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">
+                                        Unclassified
+                                    </span>
+                                @endif
+                            </td>
                             <!-- Actions -->
                             <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end">

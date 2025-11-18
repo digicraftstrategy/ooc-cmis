@@ -50,8 +50,6 @@ class VideoGameTable extends Component
     public function deleteGame()
     {
         try {
-            // If you store files in cover_art_path and want to delete them,
-            // you can decode JSON and delete from storage here.
             $this->selectedGame->delete();
 
             $this->closeDeleteModal();
@@ -61,11 +59,14 @@ class VideoGameTable extends Component
         }
     }
 
-    public function render()
+    /**
+     * Base query so table + stats use the same filters.
+     */
+    protected function getBaseQuery()
     {
         $term = '%'.$this->search.'%';
 
-        $games = VideoGaming::query()
+        return VideoGaming::query()
             ->when($this->search, function ($q) use ($term) {
                 $q->where(function ($qq) use ($term) {
                     $qq->where('video_game_title', 'like', $term)
@@ -77,15 +78,33 @@ class VideoGameTable extends Component
                        ->orWhere('language', 'like', $term)
                        ->orWhere('game_mode', 'like', $term);
                 });
-            })
+            });
+    }
+
+    public function render()
+    {
+        $baseQuery = $this->getBaseQuery();
+
+        $games = (clone $baseQuery)
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
         $stats = [
-            'total'        => VideoGaming::count(),
-            'classified'   => VideoGaming::whereHas('classification')->count(),
-            'unclassified' => VideoGaming::whereDoesntHave('classification')->count(),
-            'recent'       => VideoGaming::latest()->first(),
+            'total'        => (clone $baseQuery)->count(),
+
+            // Use has_classified (same pattern as Film & TvSeriesSeason)
+            'classified'   => (clone $baseQuery)
+                ->where('has_classified', true)
+                ->count(),
+
+            'unclassified' => (clone $baseQuery)
+                ->where(function ($q) {
+                    $q->where('has_classified', false)
+                      ->orWhereNull('has_classified');
+                })
+                ->count(),
+
+            'recent'       => (clone $baseQuery)->latest()->first(),
         ];
 
         return view('livewire.admin.classifications.video-game.video-game-table', [

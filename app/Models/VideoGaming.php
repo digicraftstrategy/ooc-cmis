@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Classification;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class VideoGaming extends Model
 {
@@ -43,7 +44,7 @@ class VideoGaming extends Model
     }
 
     // Optional relationship to classification if you have it:
-    public function classification()
+    public function classification(): MorphOne
     {
         return $this->morphOne(Classification::class, 'classifiable');
     }
@@ -56,6 +57,16 @@ class VideoGaming extends Model
     public function getTitleForListAttribute(): string
     {
         return $this->video_game_title ?? '';
+    }
+
+    public function scopeClassified($query)
+    {
+        return $query->whereHas('classification');
+    }
+
+    public function scopeUnclassified($query)
+    {
+        return $query->whereDoesntHave('classification');
     }
 
     public function getDisplayTitleAttribute(): string
