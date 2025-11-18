@@ -25,13 +25,15 @@ class VideoGaming extends Model
         'game_mode',        // 'Single-player','Multi-player','Both'
         'language',
         'has_subtitle',
-        'cover_art_path', 
+        'cover_art_path',
+        'has_classified'
     ];
 
     protected $casts = [
         'release_date'     => 'date',
         'has_subtitle'     => 'boolean',
         'average_playtime' => 'integer',
+        'has_classified' => 'boolean'
     ];
 
     // If you want to track creator later:
