@@ -91,7 +91,7 @@ class ClassificationTable extends Component
                     ->orWhere('viewed_by', 'like', $like)
                     ->orWhere('second_opinion_by', 'like', $like)
                     ->orWhere('classification_status', 'like', $like)
-                    ->orWhere('notes', 'like', $like)
+                    //->orWhere('notes', 'like', $like)
 
                     // Rating
                     ->orWhereHas('rating', function ($ratingQuery) use ($like) {

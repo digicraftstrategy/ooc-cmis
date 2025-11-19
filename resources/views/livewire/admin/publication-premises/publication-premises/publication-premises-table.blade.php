@@ -115,9 +115,9 @@
                             <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider">
                                 Location
                             </th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                            {{--<th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider">
                                 Activities
-                            </th>
+                            </th>--}}
                              <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider">
                                 Status
                             </th>
