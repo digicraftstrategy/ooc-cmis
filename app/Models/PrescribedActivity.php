@@ -22,6 +22,11 @@ class PrescribedActivity extends Model
         'prescribed_activity_type_id'
     ];
 
+    protected $casts = [
+        'prescribed_fee' => 'decimal:2',
+        'is_active'      => 'boolean',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -51,5 +56,10 @@ class PrescribedActivity extends Model
     public function presmisesActivity(): HasMany
     {
         return $this->hasMany(PublicationPremises::class, 'prescribed_activity_id');
+    }
+    
+    public function invoiceItems(): HasMany
+    {
+        return $this->hasMany(InvoiceItem::class, 'prescribed_activity_id');
     }
 }
