@@ -11,11 +11,12 @@ class Province extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'code',
         'name',
-        'region_id'
+        'region_id',
+        'latitude',
+        'longitude',
     ];
 
     public function region(): BelongsTo
