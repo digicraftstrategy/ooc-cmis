@@ -183,6 +183,18 @@ class CreateClassification extends Component
 
     public function render()
     {
+        // Ensure these are always Collections for the Blade helpers (firstWhere, etc.)
+        if (! $this->items instanceof \Illuminate\Support\Collection) {
+            $this->items = collect($this->items);
+        }
+
+        if (! $this->ratings instanceof \Illuminate\Support\Collection) {
+            $this->ratings = collect($this->ratings);
+        }
+
+        if (! $this->categories instanceof \Illuminate\Support\Collection) {
+            $this->categories = collect($this->categories);
+        }
         return view('livewire.admin.classifications.classification.create-classification', [
             'mediaTypes' => $this->mediaTypes,
             'items'      => $this->items,
