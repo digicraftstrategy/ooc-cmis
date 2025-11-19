@@ -1,4 +1,4 @@
-<div 
+<div
 x-data="{ showGuidelines: false, guidelineTab: 'overview' }"
 class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
 
@@ -175,7 +175,7 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
                         </div>
 
                         <!-- Category -->
-                        {{--<div>
+                        <div>
                              <label for="classification_category_id" class="block text-xs font-medium text-slate-600 mb-2">
                                 Category <span class="text-rose-600">*</span>
                             </label>
@@ -193,7 +193,7 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
                             @error('classification_category_id')
                                 <p class="mt-1 text-xs text-rose-600">{{ $message }}</p>
                             @enderror
-                        </div> --}}
+                        </div>
                     </div>
                 </section>
 
@@ -685,8 +685,8 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
                                     <span class="text-sm">🚔</span> (a) Crime
                                 </dt>
                                 <dd class="mt-1">
-                                    Some films revolve around a criminal story line.  
-                                    Is the theme encouraging crime or is it criminally instructive?  
+                                    Some films revolve around a criminal story line.
+                                    Is the theme encouraging crime or is it criminally instructive?
                                     Would the tactics used be easily copied?
                                 </dd>
                             </div>
@@ -707,8 +707,8 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
                                     <span class="text-sm">👻</span> (a) Horror
                                 </dt>
                                 <dd class="mt-1">
-                                    Our country is filled with so many traditional beliefs and fears.  
-                                    This should not be compounded by spine-chilling fantasy made for commercial reasons only.  
+                                    Our country is filled with so many traditional beliefs and fears.
+                                    This should not be compounded by spine-chilling fantasy made for commercial reasons only.
                                     Materials of this nature should be for <strong>“Mature Audience Only.”</strong>
                                 </dd>
                             </div>
@@ -719,8 +719,8 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
                                     <span class="text-sm">❤️</span> (a) Sex
                                 </dt>
                                 <dd class="mt-1">
-                                    Not all sex scenes are obscene or pornographic.  
-                                    The manner in which the scene is presented must be observed carefully  
+                                    Not all sex scenes are obscene or pornographic.
+                                    The manner in which the scene is presented must be observed carefully
                                     to ensure that vulgar elements are not portrayed.
                                 </dd>
                             </div>
@@ -731,8 +731,8 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
                                     <span class="text-sm">💬</span> (a) Language
                                 </dt>
                                 <dd class="mt-1">
-                                    The dialogue understood by Papua New Guineans should also be acceptable.  
-                                    Constant use of expletives or unjustified use of coarse language  
+                                    The dialogue understood by Papua New Guineans should also be acceptable.
+                                    Constant use of expletives or unjustified use of coarse language
                                     may offend the viewing public.
                                 </dd>
                             </div>
@@ -750,13 +750,13 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
 
                                 <dd>
                                     <span class="font-semibold">Religion:</span>
-                                    Destructive criticism and or demeaning of religious groups in the country  
+                                    Destructive criticism and or demeaning of religious groups in the country
                                     should be observed carefully.
                                 </dd>
 
                                 <dd>
                                     <span class="font-semibold">Nationalism:</span>
-                                    Films artistically created to undermine our national unity, independence  
+                                    Films artistically created to undermine our national unity, independence
                                     and system of government must be seriously considered.
                                 </dd>
                             </div>
@@ -773,8 +773,8 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
                         </h3>
 
                         <p class="mb-2 text-slate-600">
-                            The guidelines below are a summary of the above.  
-                            Please consult all of these considerations before applying a particular classification.  
+                            The guidelines below are a summary of the above.
+                            Please consult all of these considerations before applying a particular classification.
                             If the Censor is in doubt then the matter should be referred to the Chief Censor for a committee decision.
                         </p>
 
@@ -803,12 +803,12 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
                                         hand-to-hand fighting. No scenes of blood-letting or killing.
                                     </li>
                                     <li>
-                                        <strong>Sex:</strong> Partial nudity from head to toe in non-sexual context.  
+                                        <strong>Sex:</strong> Partial nudity from head to toe in non-sexual context.
                                         Discreet verbal references to matters of sex.
                                     </li>
                                     <li><strong>Language:</strong> Use of expletives.</li>
                                     <li>
-                                        <strong>Others:</strong> A disaster or accident without graphic views.  
+                                        <strong>Others:</strong> A disaster or accident without graphic views.
                                         No scenes of horror or supernatural.
                                     </li>
                                 </ul>
@@ -823,12 +823,12 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
                                     <li><strong>Violence:</strong> Scenes of hand-to-hand combat and use of weapons.</li>
                                     <li><strong></strong> Minimal depictions of blood-letting and killing if justified.</li>
                                     <li>
-                                        <strong>Sex:</strong> Implicit sexual activity not visually portrayed and in justifiable circumstances.  
+                                        <strong>Sex:</strong> Implicit sexual activity not visually portrayed and in justifiable circumstances.
                                         Full backal nudity.
                                     </li>
                                     <li><strong>Language:</strong> Minimal use of coarse language – if justified.</li>
                                     <li>
-                                        <strong>Others:</strong> Mild scenes of horror, obscured close-up views of accidents or disasters.  
+                                        <strong>Others:</strong> Mild scenes of horror, obscured close-up views of accidents or disasters.
                                         No use of drugs.
                                     </li>
                                 </ul>
@@ -847,7 +847,7 @@ class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
                                         <strong>Violence:</strong> Brief depictions of violence if justified (not explicit).
                                     </li>
                                     <li>
-                                        <strong>Sex:</strong> Brief sexual activity in justified circumstances,  
+                                        <strong>Sex:</strong> Brief sexual activity in justified circumstances,
                                         brief full frontal nudity not in sexual context.
                                     </li>
                                     <li><strong>Language:</strong> Occasional use of coarse language.</li>

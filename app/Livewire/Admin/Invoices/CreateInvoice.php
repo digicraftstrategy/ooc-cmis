@@ -138,7 +138,7 @@ class CreateInvoice extends Component
 
         $this->recalculateTotals();
     }
-
+    // Calculating totals for each item selected in the invoice
     protected function recalculateTotals(): void
     {
         $subtotal = 0;
