@@ -13,19 +13,23 @@ class PremisesChart extends Component
 
     public function mount()
     {
-        // Generate labels for the last 6 months
-        $months = collect(range(0, 5))->map(function ($i) {
-            return Carbon::now()->subMonths($i);
-        })->reverse();
+        // Group premises by date and order by date
+        $premisesByDate = PublicationPremises::selectRaw('DATE(created_at) as date, COUNT(*) as daily_total')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
-        $this->labels = $months->map(fn($m) => $m->format('M'))->toArray();
+        $cumulativeTotal = 0;
 
-        // Count total premises created each month
-        $this->data = $months->map(function ($m) {
-            return PublicationPremises::whereMonth('created_at', $m->month)
-                ->whereYear('created_at', $m->year)
-                ->count();
-        })->toArray();
+        foreach ($premisesByDate as $row) {
+            $cumulativeTotal += $row->daily_total;
+
+            // Label: e.g. "05 Jan", "21 Feb"
+            $this->labels[] = Carbon::parse($row->date)->format('d M');
+
+            // Data: cumulative count of premises up to that date
+            $this->data[] = $cumulativeTotal;
+        }
     }
 
     public function render()
