@@ -253,9 +253,11 @@ Route::group(
 );
 
 // Invoices
-    Route::prefix('invoices')
-        ->group(function() {
-            Route::get('/', \App\Livewire\Admin\Invoices\InvoiceTable::class)
-                ->name('admin.invoices.list');
+Route::prefix('invoices')
+    ->group(function() {
+        Route::get('/', \App\Livewire\Admin\Invoices\InvoiceTable::class)
+            ->name('admin.invoices.list');
+        Route::get('/create', \App\Livewire\Admin\Invoices\CreateInvoice::class)
+            ->name('admin.invoice.create');
 
-        });
+    });

@@ -8,10 +8,10 @@
             <div class="px-6 py-6">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 class="text-xl md:text-2xl font-bold text-white mb-1">Manage Rated Films & Publications</h1>
+                        <h1 class="text-xl md:text-2xl font-bold text-white mb-1">Manage Rated Contents</h1>
                         <p class="text-blue-100 opacity-90 text-sm">
                             Manage all rated contents in the system including Films, TV Series, Video Games, <br>
-                            Music, TV Advertisements, Literatures, etc..
+                            Music, TV Advertisements, Literatures, Sex Enhancement Products (SEP's), llicit websites, etc..
                         </p>
                     </div>
 
