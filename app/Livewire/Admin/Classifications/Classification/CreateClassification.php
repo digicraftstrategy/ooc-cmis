@@ -47,7 +47,7 @@ class CreateClassification extends Component
             'video_gaming'         => 'Video Gaming',
         ];
 
-        $this->ratings    = ClassificationRating::orderBy('rating')->get();
+        $this->ratings    = ClassificationRating::where('is_active', true)->orderBy('rating')->get();
         $this->categories = ClassificationCategory::orderBy('name')->get();
 
         // Default classification date to today

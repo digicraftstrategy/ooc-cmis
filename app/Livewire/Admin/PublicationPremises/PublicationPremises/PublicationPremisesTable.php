@@ -125,8 +125,8 @@ class PublicationPremisesTable extends Component
     {
         $query = PublicationPremises::with([
             'premises_province:id,name',
-            'prescribedActivity:id,activity_type',
-            'prescribedActivities:id,activity_type'
+            //'prescribedActivity:id,activity_type',
+            //'prescribedActivities:id,activity_type'
         ])->where('premises_owner_id', $this->premisesOwner->id);
 
         if ($this->search) {
