@@ -73,7 +73,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Invoice Type</label>
-                        <select wire:model="invoice_type"
+                        <select wire:model.live="invoice_type"
                                 class="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                             <option value="premises">Premises (Registration / Renewal)</option>
                             <option value="classification">Classification of Films & Publications</option>
@@ -83,14 +83,14 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Invoice Date</label>
-                        <input type="date" wire:model="invoice_date"
+                        <input type="date" wire:model.live="invoice_date"
                                class="block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                         @error('invoice_date') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Due Date</label>
-                        <input type="date" wire:model="due_date"
+                        <input type="date" wire:model.live="due_date"
                                class="block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                         @error('due_date') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
                     </div>
@@ -110,8 +110,10 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Owner</label>
-                        <select wire:model="owner_id"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Owner <span class="text-red-500">*</span>
+                        </label>
+                        <select wire:model.live="owner_id"
                                 class="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                             <option value="">-- Select Owner --</option>
                             @foreach($owners as $owner)
@@ -123,29 +125,29 @@
 
                     @if($invoice_type === 'premises')
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Premises</label>
-                            <select wire:model="premises_id"
-                                    class="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
-                                <option value="">-- Select Premises --</option>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Premises <span class="text-red-500">*</span>
+                            </label>
+                            <select wire:model.live="premises_id"
+                                    class="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                    @if(!$owner_id) disabled @endif>
+                                <option value="">
+                                    @if(!$owner_id)
+                                        -- Select an owner first --
+                                    @elseif($premisesOptions->isEmpty())
+                                        -- No premises found for this owner --
+                                    @else
+                                        -- Select Premises --
+                                    @endif
+                                </option>
                                 @foreach($premisesOptions as $premises)
                                     <option value="{{ $premises->id }}">{{ $premises->premises_name ?? 'Premises #'.$premises->id }}</option>
                                 @endforeach
                             </select>
                             @error('premises_id') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
-                        </div>
-                    @else
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Classification Item</label>
-                            <select wire:model="classification_item_id"
-                                    class="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
-                                <option value="">-- Select Classification --</option>
-                                @foreach($classificationItems as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->id }} - {{ $item->title ?? 'Classification #'.$item->id }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('classification_item_id') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
+                            @if($owner_id && $premisesOptions->isEmpty())
+                                <p class="text-sm text-amber-600 mt-1">This owner has no registered premises.</p>
+                            @endif
                         </div>
                     @endif
                 </div>
@@ -153,23 +155,26 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Billing Email</label>
-                        <input type="email" wire:model="billing_email"
-                               class="block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                        <input type="email" wire:model.blur="billing_email"
+                               class="block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                               placeholder="email@example.com">
                         @error('billing_email') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Billing Address</label>
-                        <textarea wire:model="billing_address" rows="2"
-                                  class="block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"></textarea>
+                        <textarea wire:model.blur="billing_address" rows="2"
+                                  class="block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                  placeholder="Enter billing address"></textarea>
                         @error('billing_address') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
                     </div>
                 </div>
 
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
-                    <textarea wire:model="notes" rows="2"
-                              class="block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"></textarea>
+                    <textarea wire:model.blur="notes" rows="2"
+                              class="block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                              placeholder="Add any additional notes or instructions"></textarea>
                     @error('notes') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
                 </div>
             </div>
@@ -198,29 +203,29 @@
                     <table class="min-w-full divide-y divide-gray-200 text-sm">
                         <thead class="bg-gradient-to-r from-blue-50 to-indigo-50">
                             <tr>
-                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto text-left">
-                                    Activity
+                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">
+                                    Activity <span class="text-red-500">*</span>
                                 </th>
 
                                 @if($invoice_type === 'classification')
-                                    <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto text-left">
-                                        Classification Item
+                                    <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">
+                                        Classification Item <span class="text-red-500">*</span>
                                     </th>
                                 @endif
 
-                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto text-left">
-                                    Description
+                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-left">
+                                    Description <span class="text-red-500">*</span>
                                 </th>
-                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto text-center">
-                                    Qty
+                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-center">
+                                    Qty <span class="text-red-500">*</span>
                                 </th>
-                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto text-right">
-                                    Unit Amount
+                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-right">
+                                    Unit Amount <span class="text-red-500">*</span>
                                 </th>
-                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto text-right">
+                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap text-right">
                                     Line Total
                                 </th>
-                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto"></th>
+                                <th class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap"></th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -228,7 +233,7 @@
                                 <tr class="hover:bg-gray-50 transition-colors duration-150">
                                     <!-- Activity -->
                                     <td class="px-3 py-2">
-                                        <select wire:model="items.{{ $index }}.prescribed_activity_id"
+                                        <select wire:model.live="items.{{ $index }}.prescribed_activity_id"
                                                 class="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                                             <option value="">-- Select Activity --</option>
                                             @foreach($availableActivities as $activity)
@@ -245,12 +250,12 @@
                                     <!-- Classification item per line (only for classification invoices) -->
                                     @if($invoice_type === 'classification')
                                         <td class="px-3 py-2">
-                                            <select wire:model="items.{{ $index }}.classification_item_id"
+                                            <select wire:model.live="items.{{ $index }}.classification_item_id"
                                                     class="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                                                 <option value="">-- Select Classification --</option>
                                                 @foreach($classificationItems as $class)
                                                     <option value="{{ $class->id }}">
-                                                        {{ $class->id }} - {{ $class->title ?? 'Classification #'.$class->id }}
+                                                        {{ $class->id }} - {{ $class->item_title }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -262,8 +267,9 @@
 
                                     <!-- Description -->
                                     <td class="px-3 py-2">
-                                        <input type="text" wire:model="items.{{ $index }}.description"
-                                               class="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                                        <input type="text" wire:model.blur="items.{{ $index }}.description"
+                                               class="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                               placeholder="Item description">
                                         @error("items.$index.description")
                                         <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                                         @enderror
@@ -271,7 +277,7 @@
 
                                     <!-- Qty -->
                                     <td class="px-3 py-2 text-center">
-                                        <input type="number" min="1" wire:model="items.{{ $index }}.quantity"
+                                        <input type="number" min="1" wire:model.live="items.{{ $index }}.quantity"
                                                class="w-16 px-2 py-1.5 text-sm border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center transition-colors duration-200">
                                         @error("items.$index.quantity")
                                         <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
@@ -281,7 +287,7 @@
                                     <!-- Unit -->
                                     <td class="px-3 py-2 text-right">
                                         <input type="number" step="0.01" min="0"
-                                               wire:model="items.{{ $index }}.unit_amount"
+                                               wire:model.live="items.{{ $index }}.unit_amount"
                                                class="w-24 px-2 py-1.5 text-sm border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right transition-colors duration-200">
                                         @error("items.$index.unit_amount")
                                         <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
@@ -318,6 +324,10 @@
                         </tbody>
                     </table>
                 </div>
+
+                @error('items')
+                <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
+                @enderror
             </div>
         </div>
 
@@ -339,13 +349,14 @@
                         <span class="font-semibold text-gray-900">K {{ number_format($subtotal, 2) }}</span>
                     </div>
 
-                    <div class="flex justify-between items-center pb-3 border-b border-gray-200">
-                        <span class="text-sm text-gray-600">Tax:</span>
-                        <div class="flex items-center">
-                            <input type="number" step="0.01" min="0" wire:model="tax"
-                                   class="w-24 px-2 py-1 text-sm border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right transition-colors duration-200">
-                            @error('tax') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+                    <div class="pb-3 border-b border-gray-200">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm text-gray-600">Tax:</label>
                         </div>
+                        <input type="number" step="0.01" min="0" wire:model.live="tax"
+                               class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-right transition-colors duration-200"
+                               placeholder="0.00">
+                        @error('tax') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="flex justify-between items-center pt-2">
@@ -356,6 +367,9 @@
                     <div class="pt-4 mt-4 border-t border-gray-200">
                         <button type="button" wire:click="save"
                                 class="w-full px-4 py-3 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg shadow-sm hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-2 -mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
                             Save Invoice
                         </button>
                     </div>

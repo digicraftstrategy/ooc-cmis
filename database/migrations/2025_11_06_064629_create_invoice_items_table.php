@@ -16,15 +16,10 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             // Ties this line to a PrescribedActivity (fee schedule)
-            $table->foreignId('prescribed_activity_id')
-                ->constrained('prescribed_activities')
-                ->restrictOnDelete();
+            $table->foreignId('prescribed_activity_id')->constrained('prescribed_activities')->restrictOnDelete();
 
             // (NEW) Optional classification item per line
-            $table->foreignId('classification_item_id')
-                ->nullable()
-                ->constrained('classifications')
-                ->nullOnDelete();
+            $table->foreignId('classification_item_id')->nullable()->constrained('classifications')->nullOnDelete();
 
             $table->string('description');
             $table->integer('quantity')->default(1);
