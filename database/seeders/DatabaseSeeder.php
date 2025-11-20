@@ -37,7 +37,8 @@ class DatabaseSeeder extends Seeder
             AdvertisingMatterSeeder::class,
             VideoGamingSeeder::class,
             LiteratureSeeder::class,
-            PremisesSeeder::class
+            PremisesSeeder::class,
+            PaymentMethodSeeder::class,
         ]);
     }
 }
