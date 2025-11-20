@@ -36,7 +36,7 @@
                 </div>
                 <div>
                     <p class="text-sm font-medium text-gray-500">Total Invoices</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $invoices->total() }}</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $stats['total'] }}</p>
                 </div>
             </div>
         </div>
@@ -51,9 +51,7 @@
                 </div>
                 <div>
                     <p class="text-sm font-medium text-gray-500">Paid</p>
-                    <p class="text-2xl font-bold text-green-600">
-                        {{ $invoices->where('status', 'paid')->count() }}
-                    </p>
+                    <p class="text-2xl font-bold text-green-600">{{ $stats['paid'] }}</p>
                 </div>
             </div>
         </div>
@@ -68,9 +66,7 @@
                 </div>
                 <div>
                     <p class="text-sm font-medium text-gray-500">Pending</p>
-                    <p class="text-2xl font-bold text-amber-600">
-                        {{ $invoices->where('status', 'pending')->count() }}
-                    </p>
+                    <p class="text-2xl font-bold text-amber-600">{{ $stats['pending'] }}</p>
                 </div>
             </div>
         </div>
@@ -85,9 +81,7 @@
                 </div>
                 <div>
                     <p class="text-sm font-medium text-gray-500">Overdue</p>
-                    <p class="text-2xl font-bold text-red-600">
-                        {{ $invoices->where('status', 'overdue')->count() }}
-                    </p>
+                    <p class="text-2xl font-bold text-red-600">{{ $stats['overdue'] }}</p>
                 </div>
             </div>
         </div>
@@ -148,7 +142,7 @@
 
             <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-500">
-                    {{ $invoices->total() }} invoices found
+                    {{ $invoices->total() }} invoice{{ $invoices->total() === 1 ? '' : 's' }} found
                 </span>
                 <select
                     wire:model.live="perPage"
@@ -162,7 +156,7 @@
         </div>
     </div>
 
-    <!-- Success Message -->
+    <!-- Success/Error Messages -->
     @if (session()->has('message'))
         <div class="mb-4 p-4 bg-green-50 border-l-4 border-green-500 rounded-lg shadow-sm">
             <div class="flex">
@@ -178,55 +172,67 @@
         </div>
     @endif
 
+    @if (session()->has('error'))
+        <div class="mb-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg shadow-sm">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-red-700">{{ session('error') }}</p>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- Compact Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gradient-to-r from-blue-50 to-indigo-50">
                     <tr>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">
                             <button type="button" wire:click="sortBy('invoice_number')" class="flex items-center gap-1 group focus:outline-none">
                                 Invoice #
-                                <svg class="h-4 w-4 text-gray-400 group-hover:text-gray-500"
-                                     :class="{ 'text-blue-600': $sortField === 'invoice_number', 'rotate-180': $sortField === 'invoice_number' && $sortDirection === 'desc' }"
+                                <svg class="h-4 w-4 transition-transform duration-200 {{ $sortField === 'invoice_number' ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-500' }} {{ $sortField === 'invoice_number' && $sortDirection === 'desc' ? 'rotate-180' : '' }}"
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
                                 </svg>
                             </button>
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">
                             <button type="button" wire:click="sortBy('invoice_date')" class="flex items-center gap-1 group focus:outline-none">
                                 Date
-                                <svg class="h-4 w-4 text-gray-400 group-hover:text-gray-500"
-                                     :class="{ 'text-blue-600': $sortField === 'invoice_date', 'rotate-180': $sortField === 'invoice_date' && $sortDirection === 'desc' }"
+                                <svg class="h-4 w-4 transition-transform duration-200 {{ $sortField === 'invoice_date' ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-500' }} {{ $sortField === 'invoice_date' && $sortDirection === 'desc' ? 'rotate-180' : '' }}"
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
                                 </svg>
                             </button>
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">
                             Type
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">
                             Owner
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">
                             Premises / Classifications
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
-                            <button type="button" wire:click="sortBy('total')" class="flex items-center justify-end gap-1 group focus:outline-none">
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">
+                            <button type="button" wire:click="sortBy('total')" class="flex items-center gap-1 group focus:outline-none">
                                 Total
-                                <svg class="h-4 w-4 text-gray-400 group-hover:text-gray-500"
-                                     :class="{ 'text-blue-600': $sortField === 'total', 'rotate-180': $sortField === 'total' && $sortDirection === 'desc' }"
+                                <svg class="h-4 w-4 transition-transform duration-200 {{ $sortField === 'total' ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-500' }} {{ $sortField === 'total' && $sortDirection === 'desc' ? 'rotate-180' : '' }}"
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
                                 </svg>
                             </button>
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">
                             Status
                         </th>
-                        <th scope="col" class="px-3 py-3 text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap w-auto">
+                        <th scope="col" class="px-3 py-3 text-center text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">
                             Actions
                         </th>
                     </tr>
@@ -235,8 +241,8 @@
                     @forelse ($invoices as $invoice)
                         <tr class="hover:bg-gray-50 transition-colors duration-150">
                             <!-- Invoice Number -->
-                            <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900 text-center">
-                                <div class="flex items-center justify-center">
+                            <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                <div class="flex items-center">
                                     <div class="bg-blue-100 p-2 rounded-lg mr-2">
                                         <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -250,6 +256,9 @@
                             <td class="px-3 py-2 whitespace-nowrap">
                                 <div class="text-sm text-gray-700">
                                     {{ $invoice->invoice_date?->format('M d, Y') ?? 'N/A' }}
+                                </div>
+                                <div class="text-xs text-gray-500">
+                                    Due: {{ $invoice->due_date?->format('M d, Y') ?? 'N/A' }}
                                 </div>
                             </td>
 
@@ -286,24 +295,42 @@
                                         {{ $invoice->premises->premises_name ?? '—' }}
                                     @else
                                         @php
-                                            $classCount = $invoice->items
-                                                ->pluck('classification_item_id')
+                                            // Get all classification items from invoice items
+                                            $classificationItems = $invoice->items
+                                                ->filter(fn($item) => !is_null($item->classification_item_id))
+                                                ->map(fn($item) => $item->classificationItem)
                                                 ->filter()
-                                                ->unique()
-                                                ->count();
+                                                ->unique('id');
+
+                                            $classCount = $classificationItems->count();
                                         @endphp
-                                        <div class="flex items-center">
-                                            <span class="inline-flex items-center justify-center h-5 w-5 rounded-full bg-gray-100 text-gray-800 text-xs font-medium mr-2">
-                                                {{ $classCount }}
-                                            </span>
-                                            <span>classification item{{ $classCount === 1 ? '' : 's' }}</span>
-                                        </div>
+
+                                        @if($classCount > 0)
+                                            <div class="space-y-1">
+                                                @foreach($classificationItems->take(2) as $classItem)
+                                                    <div class="flex items-start text-xs">
+                                                        <span class="inline-flex items-center justify-center h-5 w-5 rounded-full bg-purple-100 text-purple-800 text-xs font-medium mr-2 flex-shrink-0">
+                                                            {{ $classItem->id }}
+                                                        </span>
+                                                        <span class="line-clamp-1">{{ $classItem->item_title }}</span>
+                                                    </div>
+                                                @endforeach
+
+                                                @if($classCount > 2)
+                                                    <div class="text-xs text-gray-500 pl-7">
+                                                        +{{ $classCount - 2 }} more
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @else
+                                            <span class="text-gray-400 text-xs">No classification items</span>
+                                        @endif
                                     @endif
                                 </div>
                             </td>
 
                             <!-- Total -->
-                            <td class="px-3 py-2 whitespace-nowrap text-right">
+                            <td class="px-3 py-2 whitespace-nowrap">
                                 <div class="text-sm font-semibold text-gray-900">
                                     K {{ number_format($invoice->total, 2) }}
                                 </div>
@@ -340,8 +367,8 @@
                             </td>
 
                             <!-- Actions -->
-                            <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="flex justify-end">
+                            <td class="px-3 py-2 whitespace-nowrap text-center text-sm font-medium">
+                                <div class="flex justify-center">
                                     <!-- Dropdown menu -->
                                     <div class="relative" x-data="{ open: false }">
                                         <button
@@ -363,12 +390,12 @@
                                             x-transition:leave="transition ease-in duration-75"
                                             x-transition:leave-start="transform opacity-100 scale-100"
                                             x-transition:leave-end="transform opacity-0 scale-95"
-                                            class="absolute right-0 z-10 mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-1"
+                                            class="absolute right-0 z-10 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1"
                                             style="display: none;"
                                         >
                                             <!-- View option -->
                                             <a
-                                                {{--href="{{ route('admin.invoices.show', $invoice->id) ?? '#' }}"--}}
+                                                href="#"
                                                 @click="open = false"
                                                 class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-150"
                                             >
@@ -379,24 +406,57 @@
                                                 View Details
                                             </a>
 
-                                            <!-- Edit option -->
-                                            <a
-                                                {{--href="{{ route('admin.invoices.edit', $invoice->id) ?? '#' }}"--}}
-                                                @click="open = false"
-                                                class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-150"
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                                Edit
-                                            </a>
+                                            <!-- Mark as Paid (only for pending/overdue) -->
+                                            @if(in_array($invoice->status, ['pending', 'overdue']))
+                                                <button
+                                                    wire:click="markAsPaid({{ $invoice->id }})"
+                                                    wire:confirm="Mark this invoice as paid?"
+                                                    @click="open = false"
+                                                    class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-150"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    Mark as Paid
+                                                </button>
+                                            @endif
+
+                                            <!-- Mark as Cancelled (only for pending/overdue) -->
+                                            @if(in_array($invoice->status, ['pending', 'overdue']))
+                                                <button
+                                                    wire:click="markAsCancelled({{ $invoice->id }})"
+                                                    wire:confirm="Cancel this invoice?"
+                                                    @click="open = false"
+                                                    class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors duration-150"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                                                    </svg>
+                                                    Cancel Invoice
+                                                </button>
+                                            @endif
+
+                                            <!-- Edit option (only for pending/overdue) -->
+                                            @if(in_array($invoice->status, ['pending', 'overdue']))
+                                                <a
+                                                    href="#"
+                                                    @click="open = false"
+                                                    class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors duration-150"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                    </svg>
+                                                    Edit
+                                                </a>
+                                            @endif
 
                                             <!-- Delete option -->
+                                            <div class="border-t border-gray-200 my-1"></div>
                                             <button
                                                 wire:click="deleteInvoice({{ $invoice->id }})"
-                                                wire:confirm="Are you sure you want to delete this invoice?"
+                                                wire:confirm="Are you sure you want to delete this invoice? This action cannot be undone."
                                                 @click="open = false"
-                                                class="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 transition-colors duration-150"
+                                                class="flex items-center w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-150"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -428,7 +488,7 @@
         <!-- Pagination -->
         @if($invoices->hasPages())
             <div class="px-4 py-3 bg-gray-50 border-t border-gray-200">
-                {{ $invoices->links('vendor.pagination.tailwind') }}
+                {{ $invoices->links() }}
             </div>
         @endif
     </div>
