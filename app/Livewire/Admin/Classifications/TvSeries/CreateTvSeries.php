@@ -339,15 +339,21 @@ class CreateTvSeries extends Component
                 ];
 
                 // Step 4: Create season
-                $season = TvSeriesSeason::create($seasonData);
+                TvSeriesSeason::create($seasonData);
             });
 
             // Success message
-            session()->flash('success', $this->createNewSeries
-                ? 'TV Series and Season created successfully.'
-                : 'New season added to existing TV Series successfully.');
+            session()->flash('success', 
+            $this->createNewSeries
 
-            // Emit events
+                ? 'TV Series and Season created successfully.'
+                : 'New season added to existing TV Series successfully.'
+            );
+
+                 // IMPORTANT: adjust this route name to match your actual listing route
+            $this->redirectRoute('admin.classifications.tv-series');
+
+            // // Emit events
             $this->dispatch('tvSeriesCreated');
             $this->dispatch('closeCreateModal');
 

@@ -98,8 +98,15 @@ class TvSeriestable extends Component
     {
         try {
             optional($this->selectedTVSeries)->delete();
+
             $this->closeDeleteModal();
+
+            // Flash success for the centered dialog
             session()->flash('success', 'TV Series deleted successfully.');
+
+            // Redirect to the listing so the layout (and dialog) are rendered
+            $this->redirectRoute('admin.classifications.tv-series'); // adjust route name if different
+
         } catch (\Throwable $e) {
             session()->flash('error', 'Error deleting TV Series: '.$e->getMessage());
         }

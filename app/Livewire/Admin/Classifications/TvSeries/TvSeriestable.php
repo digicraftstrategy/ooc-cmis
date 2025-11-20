@@ -22,11 +22,13 @@ class TvSeriestable extends Component
     public $showDeleteModal = false;
     public $selectedSeason = null;
 
-    protected $listeners = [
-        'seasonUpdated' => '$refresh', 
-        'seasonCreated' => '$refresh'
+    // protected $listeners = [
+    //     'seasonUpdated' => '$refresh', 
+    //     'seasonCreated' => '$refresh'
+    // ];
+        protected $listeners = [
+        'delete-season-confirmed' => 'deleteSeason',
     ];
-
     public function sortBy($field)
     {
         if ($this->sortField === $field) {
@@ -92,15 +94,30 @@ class TvSeriestable extends Component
         $this->selectedSeason = null;
     }
 
-    public function deleteSeason()
+    public function deleteSeason(): void
     {
-        if ($this->selectedSeason) {
-            $seasonTitle = $this->selectedSeason->season_title;
-            $this->selectedSeason->delete();
+        try {
+            if (!$this->selectedSeason) {
+                throw new \Exception('No season selected for deletion.');
+            }
 
-            $this->closeDeleteModal();
-            $this->dispatch('seasonDeleted');
-            session()->flash('message', "Season '{$seasonTitle}' deleted successfully.");
+            $season = $this->selectedSeason;
+
+            // Perform the delete
+            $season->delete();
+
+            // Clear selection / local modal state
+            $this->selectedSeason   = null;
+            $this->showDeleteModal  = false;
+
+            // Flash success for the centered dialog
+            session()->flash('success', 'Season deleted successfully.');
+
+            // Redirect to the listing so layout + dialog re-render
+            $this->redirectRoute('admin.classifications.tv-series'); // adjust route name if needed
+
+        } catch (\Throwable $e) {
+            session()->flash('error', 'Error deleting Season: ' . $e->getMessage());
         }
     }
 

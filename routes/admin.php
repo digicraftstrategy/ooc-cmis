@@ -176,6 +176,8 @@ Route::group(
                 ->name('admin.classifications.films');
             Route::get('/create', [\App\Http\Controllers\Admin\Classifications\FilmController::class, 'create'])
                 ->name('admin.classifications.films.create');
+            Route::get('/edit/{film:slug}', \App\Livewire\Admin\Classifications\Films\EditFilm::class)
+                ->name('admin.classifications.films.edit');
             Route::get('/{film:slug}', \App\Livewire\Admin\Classifications\Films\ViewFilm::class)
                 ->name('admin.classifications.films.show');
             /*
