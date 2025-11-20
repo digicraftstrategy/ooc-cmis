@@ -27,6 +27,10 @@ class FilmTable extends Component
     // Selected film
     public $selectedFilm;
 
+    protected $listeners = [
+        'delete-film-confirmed' => 'deleteFilm',
+    ];
+
     protected $queryString = [
         'search' => ['except' => ''],
         'filmTitleFilter' => ['except' => ''],
@@ -100,19 +104,52 @@ class FilmTable extends Component
         $this->showDeleteModal = false;
     }
 
-    public function deleteFilm()
+    // public function deleteFilm()
+    // {
+    //     try {
+    //         // Delete associated file if exists
+    //         if ($this->selectedFilm->submission_file_path && Storage::exists($this->selectedFilm->submission_file_path)) {
+    //             Storage::delete($this->selectedFilm->submission_file_path);
+    //         }
+
+    //         $this->selectedFilm->delete();
+
+    //         $this->closeDeleteModal();
+    //         session()->flash('success', 'Film deleted successfully.');
+    //     } catch (\Exception $e) {
+    //         session()->flash('error', 'Error deleting film: ' . $e->getMessage());
+    //     }
+    // }
+
+    //Delete Function to take effect on global delete modal.
+    //Should use the same implementation accross all tables that has a delete action.
+    public function deleteFilm(): void
     {
         try {
-            // Delete associated file if exists
-            if ($this->selectedFilm->submission_file_path && Storage::exists($this->selectedFilm->submission_file_path)) {
-                Storage::delete($this->selectedFilm->submission_file_path);
+            if (!$this->selectedFilm) {
+                throw new \Exception('No film selected for deletion.');
             }
 
-            $this->selectedFilm->delete();
+            $film = $this->selectedFilm;
 
-            $this->closeDeleteModal();
+            // Delete associated file if exists
+            if ($film->submission_file_path && Storage::disk('public')->exists($film->submission_file_path)) {
+                Storage::disk('public')->delete($film->submission_file_path);
+            }
+
+            $film->delete();
+
+            // Clear selection
+            $this->selectedFilm = null;
+            $this->showDeleteModal = false;
+
+            // Flash success for the centered dialog
             session()->flash('success', 'Film deleted successfully.');
-        } catch (\Exception $e) {
+
+            // Redirect back to films listing so layout + dialog render
+            $this->redirectRoute('admin.classifications.films'); // make sure this route name exists
+
+        } catch (\Throwable $e) {
             session()->flash('error', 'Error deleting film: ' . $e->getMessage());
         }
     }
