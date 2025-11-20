@@ -23,6 +23,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script> --}}
 
     <!-- Layout styling -->
     <style>
@@ -187,6 +189,13 @@
                 <!-- Page Content -->
                 <div class="py-6 transition-all duration-300">
                     <div class="px-4 mx-auto max-w-12xl sm:px-6 lg:px-8">
+
+                        <!-- Delete Confirmation Modal -->
+                        <x-global-delete-modal />
+
+                        {{-- Global flash dialog --}}
+                        <x-global-success-message/>
+                        
                         {{ $slot }}
                     </div>
                 </div>
