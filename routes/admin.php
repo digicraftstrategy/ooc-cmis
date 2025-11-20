@@ -193,10 +193,11 @@ Route::group(
                     ->name('admin.classifications.tv-series');
                 Route::get('/titles', \App\Livewire\Admin\Classifications\TvSeries\TvSeriesTitleTable::class)
                     ->name('admin.classifications.tv-series-title');
-                Route::get('/{tv-series:slug}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
-                ->name('admin.classifications.tv-series.show');
                 Route::get('/create', [\App\Http\Controllers\Admin\Classifications\TvSeriesController::class, 'create'])
                     ->name('admin.classifications.tv-series.create');
+                Route::get('/{tv-series:slug}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
+                ->name('admin.classifications.tv-series.view');
+                
                 //Route::get('/edit/{id}', \App\Livewire\Admin\Classifications\TvSeries\EditTvSeries::class)
                     //->name('admin.classifications.tv-series.edit');
                 //Route::get('/view/{id}', \App\Livewire\Admin\Classifications\TvSeries\ViewTvSeries::class)
