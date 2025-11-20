@@ -36,7 +36,6 @@ class CreateInvoice extends Component
     public $classificationItems = [];
     public $availableActivities;
 
-    // Each item now includes classification_item_id
     public array $items = [];
 
     public function mount(): void
@@ -54,8 +53,23 @@ class CreateInvoice extends Component
     protected function loadDropdowns(): void
     {
         $this->owners = PremisesOwner::orderBy('owners_name')->get();
-        $this->premisesOptions = PublicationPremises::orderBy('premises_name')->get();
-        $this->classificationItems = Classification::orderBy('id', 'desc')->get();
+        $this->loadPremisesForOwner();
+
+        // Load classification items with their relationships for better display
+        $this->classificationItems = Classification::with(['classifiable', 'rating', 'category'])
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    protected function loadPremisesForOwner(): void
+    {
+        if ($this->owner_id) {
+            $this->premisesOptions = PublicationPremises::where('premises_owner_id', $this->owner_id)
+                ->orderBy('premises_name')
+                ->get();
+        } else {
+            $this->premisesOptions = collect();
+        }
     }
 
     protected function loadActivitiesForType(): void
@@ -103,6 +117,12 @@ class CreateInvoice extends Component
 
     protected function onOwnerChanged(): void
     {
+        // Reset premises when owner changes
+        $this->premises_id = null;
+
+        // Load premises for the selected owner
+        $this->loadPremisesForOwner();
+
         if (! $this->owner_id) {
             return;
         }
@@ -138,12 +158,13 @@ class CreateInvoice extends Component
 
         $this->recalculateTotals();
     }
-    // Calculating totals for each item selected in the invoice
+
     protected function recalculateTotals(): void
     {
         $subtotal = 0;
 
         foreach ($this->items as $i => &$item) {
+            // Auto-populate from activity if selected
             if (! empty($item['prescribed_activity_id'])) {
                 $act = $this->availableActivities
                     ->firstWhere('id', (int) $item['prescribed_activity_id']);
@@ -174,7 +195,7 @@ class CreateInvoice extends Component
 
     protected function rules(): array
     {
-        return [
+        $rules = [
             'invoice_type'  => 'required|in:premises,classification',
             'invoice_date'  => 'required|date',
             'due_date'      => 'required|date|after_or_equal:invoice_date',
@@ -190,9 +211,28 @@ class CreateInvoice extends Component
             'items.*.description'            => 'required|string',
             'items.*.quantity'               => 'required|integer|min:1',
             'items.*.unit_amount'            => 'required|numeric|min:0',
+        ];
 
-            // For classification invoices, each line must have a classification_item_id
-            'items.*.classification_item_id' => 'required_if:invoice_type,classification|nullable|exists:classifications,id',
+        // For classification invoices, each line item MUST have a classification_item_id
+        if ($this->invoice_type === 'classification') {
+            $rules['items.*.classification_item_id'] = 'required|exists:classifications,id';
+        }
+
+        return $rules;
+    }
+
+    protected function validationAttributes(): array
+    {
+        return [
+            'owner_id' => 'owner',
+            'premises_id' => 'premises',
+            'invoice_date' => 'invoice date',
+            'due_date' => 'due date',
+            'items.*.prescribed_activity_id' => 'activity',
+            'items.*.classification_item_id' => 'classification item',
+            'items.*.description' => 'description',
+            'items.*.quantity' => 'quantity',
+            'items.*.unit_amount' => 'unit amount',
         ];
     }
 
@@ -243,6 +283,7 @@ class CreateInvoice extends Component
 
             session()->flash('message', 'Invoice created successfully.');
 
+            // Reset form but maintain invoice type
             $type = $this->invoice_type;
             $this->reset();
             $this->invoice_type = $type;
