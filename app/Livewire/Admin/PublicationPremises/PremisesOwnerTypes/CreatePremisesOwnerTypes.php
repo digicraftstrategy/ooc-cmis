@@ -44,7 +44,9 @@ class CreatePremisesOwnerTypes extends Component
 
         $this->dispatch('refreshPremisesOwnerTypes');
         session()->flash('message', 'Premises owner type created successfully.');
-        $this->closeModal();
+        //$this->closeModal();
+        return redirect()->route('admin.publication-premises.premises-owner-types');
+
     }
 
     public function render()
