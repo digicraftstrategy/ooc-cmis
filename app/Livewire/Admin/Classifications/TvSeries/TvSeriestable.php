@@ -142,6 +142,7 @@ class TvSeriestable extends Component
             });
     }
 
+
     public function render()
     {
         $baseQuery = $this->getBaseQuery();
